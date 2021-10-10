@@ -1,0 +1,177 @@
+@media (min-width: 300px) and (max-width: 499px) {
+    .nav{
+        padding: 0 !important;
+        ul{
+            li{
+                display: none !important;
+            }
+            li:nth-child(1){
+                flex-grow: 8 !important;
+                display: inline !important;
+            }
+            li:nth-child(2){
+                flex-grow: 1 !important;
+                display: inline !important;
+            }
+
+        }
+    }
+    .home-container{
+        header{
+            .centerText{
+                .textList{
+                    width: 95vw !important;
+                    .line{
+                        font-size: 14px !important;
+                    }
+                }
+            }
+        }
+    }
+    .index{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        .left{
+            margin: 15px 20px !important;
+            width: 90vw !important;
+            .avatar{
+                width: 10vw !important;
+                height: 10vw !important;
+            }
+            .weather{
+                .today{
+                    i{
+                        font-size: 3vw !important;
+                    }
+                    span{
+                        font-size: 1.5vw !important;
+                    }
+                }
+                span{
+                    font-size: 1.5vw !important;
+                }
+            }
+            h5{
+                font-size: 2vw !important;
+            }
+        }
+        .main{
+            margin: 15px 20px !important;
+            width: 90vw !important;
+        }
+        .right{
+            margin: 15px 20px !important;
+            width: 90vw !important;
+        }
+    }
+}
+@media (min-width: 500px) and (max-width: 991px) { 
+    .nav{
+        padding: 0 !important;
+        ul{
+            li{
+                display: none !important;
+            }
+            li:nth-child(1){
+                flex-grow: 8 !important;
+                display: inline !important;
+            }
+            li:nth-child(2){
+                flex-grow: 1 !important;
+                display: inline !important;
+            }
+
+        }
+    }
+    .index{
+        .left{
+            margin: 15px 20px !important;
+            .avatar{
+                width: 10vw !important;
+                height: 10vw !important;
+            }
+            .weather{
+                .today{
+                    i{
+                        font-size: 3vw !important;
+                    }
+                    span{
+                        font-size: 1.5vw !important;
+                    }
+                }
+                span{
+                    font-size: 1vw !important;
+                }
+            }
+            h5{
+                font-size: 2vw !important;
+            }
+        }
+        .right{
+            margin: 15px 20px !important;
+            .memo{
+                .el-card{
+                    ::v-deep .clearfix>span{
+                        display: none !important;
+                    }
+                    ::v-deep .el-card__body{
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+ }
+
+
+// Large devices (desktops, 992px and up)
+@media screen and (min-width: 992px) and (max-width: 1199px) { 
+    li:nth-child(1){
+        flex-grow: 16 !important;
+    }
+    .index{
+        .left{
+            margin: 15px 20px !important;
+            .avatar{
+                width: 10vw !important;
+                height: 10vw !important;
+            }
+            .weather{
+                .today{
+                    i{
+                        font-size: 3vw !important;
+                    }
+                    span{
+                        font-size: 1.5vw !important;
+                    }
+                }
+            }
+        }
+        .right{
+            margin: 15px 20px !important;
+        }
+    }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media screen and (min-width: 1200px) { 
+    ul{
+        padding: 0 60px !important;
+    }
+    li:nth-child(1){
+        flex-grow: 50 !important;
+    }
+    .index{
+        .left{
+            width: 250px !important;
+        }
+        .main{
+            width: 50vw !important;
+        }
+        .right{
+            width: 400px !important;
+        }
+    }
+ }
