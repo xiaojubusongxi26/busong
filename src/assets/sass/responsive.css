@@ -1,4 +1,6 @@
+@charset "UTF-8";
 @media (min-width: 300px) and (max-width: 499px) {
+  /* 导航栏 */
   .nav {
     padding: 0 !important;
   }
@@ -19,6 +21,7 @@
   .home-container header .centerText .textList .line {
     font-size: 14px !important;
   }
+  /* 主页 */
   .index {
     display: flex;
     justify-content: center;
@@ -30,8 +33,8 @@
     width: 90vw !important;
   }
   .index .left .avatar {
-    width: 10vw !important;
-    height: 10vw !important;
+    width: 20vw !important;
+    height: 20vw !important;
   }
   .index .left .weather .today i {
     font-size: 3vw !important;
@@ -52,6 +55,33 @@
   .index .right {
     margin: 15px 20px !important;
     width: 90vw !important;
+  }
+  .index .right .memo {
+    width: 100% !important;
+  }
+  .index .right .memo .el-card {
+    max-width: 90vw !important;
+    width: 90vw !important;
+  }
+  /* 日常组件 */
+  .daily-container {
+    padding: 10px;
+  }
+  .daily-container .myText .myHeader .nTime .time {
+    font-size: 12px;
+  }
+  .daily-container .myText .myBody .text {
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .daily-container .myText .myBody ::v-deep .demo-image__preview {
+    width: 50vw !important;
+  }
+  .daily-container .myText .myBody ::v-deep .demo-image__preview img {
+    width: 15vw !important;
+    height: 15vw !important;
   }
 }
 
@@ -98,6 +128,22 @@
   .index .right .memo .el-card ::v-deep .el-card__body {
     font-size: 14px;
   }
+  .daily-container .myText .myHeader .nTime .time {
+    font-size: 12px;
+  }
+  .daily-container .myText .myBody .text {
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .daily-container .myText .myBody ::v-deep .demo-image__preview {
+    width: 35vw !important;
+  }
+  .daily-container .myText .myBody ::v-deep .demo-image__preview img {
+    width: 10vw !important;
+    height: 10vw !important;
+  }
 }
 
 @media screen and (min-width: 992px) and (max-width: 1199px) {
@@ -120,6 +166,13 @@
   .index .right {
     margin: 15px 20px !important;
   }
+  .daily-container .myText .myBody ::v-deep .demo-image__preview {
+    width: 400px !important;
+  }
+  .daily-container .myText .myBody ::v-deep .demo-image__preview img {
+    width: 10vw !important;
+    height: 10vw !important;
+  }
 }
 
 @media screen and (min-width: 1200px) {
@@ -130,12 +183,23 @@
     flex-grow: 50 !important;
   }
   .index .left {
-    width: 250px !important;
+    width: 300px !important;
   }
   .index .main {
+    max-width: 800px !important;
     width: 50vw !important;
   }
   .index .right {
-    width: 400px !important;
+    width: 300px !important;
+  }
+  /* 音乐模块 */
+  .music-container .music .search .search_sings .search_sings_list .search_sing .collect_sing {
+    margin: 0 10px !important;
+  }
+  .music-container .music .search .search_sings .search_sings_list .search_sing .sing_name {
+    padding: 0 10px !important;
+  }
+  .music-container .music .search .search_sings .search_sings_list .search_sing .sing_mv {
+    margin: 0 10px !important;
   }
 }

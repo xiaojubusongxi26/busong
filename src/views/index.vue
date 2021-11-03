@@ -1,11 +1,34 @@
 <template>
   <div class="index">
     <div class="left">
-      <div class="avatar"></div>
-      <div class="name">
-        <h5>小橘不颂兮</h5>
+      <div class="perInfo">
+        <div class="avatar"></div>
+        <div class="name">
+          <h5>小橘不颂兮</h5>
+        </div>
+        <!-- 统计 -->
+        <div class="statistics">
+          <div class="dailyNum">
+            日常
+            <p>183</p>
+          </div>
+          <div class="notesNum">
+            笔记
+            <p>26</p>
+          </div>
+          <div class="bookNum">
+            书籍
+            <p>3</p>
+          </div>
+        </div>
       </div>
       <div class="weather">
+        <div class="today">
+          <i :class="climateType" :style="{ color: climateColor }"></i>
+          <span :style="{ color: climateColor }">{{ this.nowTem | temperature }} {{ this.type }}</span>
+          <p>{{ this.nowTime + ' ' + this.lowTem + '~' + this.hightTem}}</p>
+        </div>
+        <span>{{ this.tell }}</span>
         <div class="city">
           <div class="demo-input-suffix" @keyup.enter="changeCity">
             <el-input
@@ -15,16 +38,10 @@
             </el-input>
           </div>
         </div>
-        <div class="today">
-          <i :class="climateType" :style="{ color: climateColor }"></i>
-          <span :style="{ color: climateColor }">{{ this.nowTem | temperature }} {{ this.type }}</span>
-          <p>{{ this.nowTime + ' ' + this.lowTem + '~' + this.hightTem}}</p>
-        </div>
-        <span>{{ this.tell }}</span>
       </div>
     </div>
     <div class="main">
-      <Audio></Audio>
+      <daily></daily>
     </div>
     <div class="right">
       <div class="memo">
@@ -33,7 +50,7 @@
             <span>任务清单</span>
             <el-button type="text" @click="getFocus" v-if="!isInput">添加</el-button>
             <!-- <el-button type="text" v-else @click="isInupt = !isInput">关闭</el-button> -->
-            <el-button type="text" @click="changeTask">
+            <el-button type="text" @click="isTask = !isTask">
               <i class="" :class="[isTask ? 'el-icon-arrow-up' : 'el-icon-arrow-down']"></i>
             </el-button>
             <el-collapse-transition>
@@ -64,7 +81,7 @@
 </template>
 
 <script>
-import Audio from '@/components/Audio.vue'
+import Daily from '@/components/Daily.vue'
 
 export default {
   name: 'index',
@@ -79,12 +96,6 @@ export default {
       tell: '',
       type: '',
       currentCity: '成都',
-      city: [
-        '成都',
-        '重庆',
-        '武汉',
-        '杭州'
-      ],
       // 当前天气状态，晴为1，多云为2,阴天为3,小雨为4，大雨为5
       climate: 0,
       // 对应的样式名字,颜色
@@ -107,7 +118,7 @@ export default {
     }
   },
   components: {
-    Audio
+    Daily
   },
   mounted () {
     this.searchWeather()
@@ -164,18 +175,12 @@ export default {
     changeCity () {
       this.searchWeather()
     },
-    // 更改标签展开状态
-    changeTask () {
-      this.isTask = !this.isTask
-    },
-    // 获取焦点
+    // 任务添加输入框获取焦点
     getFocus () {
       this.isInput = !this.isInput
-      // this.$refs.task_input.focus()
       if (this.isInput) {
         this.$nextTick(() => {
           this.$refs.task_input.focus()
-          // console.log(this.$refs.task_input.blur())
         })
       }
       console.log(this.$refs.task_input.focus())
@@ -224,35 +229,73 @@ export default {
   display: flex;
   justify-content: center;
   // width: 100vw;
+  padding: 50px 0;
   backdrop-filter: blur(3px);
+  /* 主页左侧区域：个人头像以及天气 */
   .left{
     display: flex;
     align-items: center;
     flex-direction: column;
     margin: 15px 50px;
-    padding: 20px;
+    // padding: 20px 0;
     width: 20vw;
-    height: 500px;
-    background-color: rgba($color: $colorG, $alpha: 0.95);
+    height: 600px;
+    // background-color: rgba($color: $colorG, $alpha: 0.95);
     border-radius: 15px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
-    .avatar{
-      width: 150px;
-      height: 150px;
-      background: url('~@/assets/images/mmexport1602954427757.jpg') no-repeat;
-      background-size: cover;
-      border-radius: 100px;
-      margin: 20px 0;
+    // box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    .perInfo{
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      width: 100%;
+      background-color: $colorG;
+      border-radius: 15px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+      /* 个人头像面板 */
+      .avatar{
+        width: 150px;
+        height: 150px;
+        background: url('~@/assets/images/mmexport1602954427757.jpg') no-repeat;
+        background-size: cover;
+        border-radius: 100px;
+        margin: 20px 0;
+      }
+      .name{
+        h5{
+          font-weight: bolder;
+        }
+      }
+      /* 数量统计 */
+      .statistics{
+        display: flex;
+        height: 60px;
+        margin-top: 15px;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        div{
+          text-align: center;
+          width: 30%;
+          p{
+            text-align: center;
+          }
+        }
+      }
     }
+    /* 天气展示面板 */
     .weather{
       margin-top: 20px;
+      padding: 10px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       text-align: center;
       align-items: center;
+      background-color: $colorG;
+      border-radius: 15px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
       .city{
-        margin-bottom: 8px;
+        // margin-bottom: 8px;
         user-select: none;
         i{
           font-size: $fontI;
@@ -276,8 +319,9 @@ export default {
       .city:hover{
         cursor: pointer;
       }
+      /* 今日天气显示 */
       .today{
-        margin: 0 auto;
+        padding: 20px 0;
         width: 100%;
         border-bottom: 1px $colorE solid;
         color: $colorI;
@@ -297,28 +341,30 @@ export default {
       }
       span{
         margin-top: 2px;
+        padding: 20px 0;
         font-size: $fontK;
         color: #333;
       }
     }
   }
+  /* 主页中间区域：日常动态展示以及发布 */
   .main{
-    display: flex;
     margin-top: 15px;
     width: 800px;
-    height: 1500px;
-    background-color: rgba($color: $colorL, $alpha: 0.25);
-    border-radius: 15px 15px 0 0;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    overflow: hidden;
+    // height: 1500px;
+    // background-color: rgba($color: $colorL, $alpha: 0.25);
+    border-radius: 10px;
+    // box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
   }
+  /* 主页右侧区域：今日任务栏 */
   .right{
     margin: 15px 50px;
-    // padding: 20px;
     width: 30vw;
-    height: 0;
-    background-color: rgba($color: $colorG, $alpha: 0.25);
+    min-height: 500px;
+    // background-color: rgba($color: $colorG, $alpha: 0.25);
     border-radius: 15px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    // box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
     .memo{
       .el-card{
         max-width: 300px;
@@ -327,6 +373,7 @@ export default {
         background: url('~@/assets/images/加油猫.png') no-repeat center;
         background-size: 75%;
         background-color: #fffbee;
+        /* 任务栏头部 */
         ::v-deep .clearfix{
           color: $colorF;
           display: flex;
@@ -340,9 +387,9 @@ export default {
             flex-grow: 1;
           }
           div{
-            // flex-shrink: 0;
             width: 100%;
           }
+          /* 任务添加输入框，默认隐藏 */
           .el-input{
             .el-input__inner{
               margin-top: 12px;
@@ -351,6 +398,7 @@ export default {
           }
           }
         }
+        /* 任务展示面板 */
         ::v-deep .el-card__body {
           padding: 10px 20px 30px 20px !important;
           .text{
@@ -365,17 +413,15 @@ export default {
               flex-grow: 8;
             }
             i{
-              // right: 0;
-              // position: absolute;
               flex-grow: 1;
             }
             .el-icon-close:hover{
               cursor: pointer;
               color: $colorF;
-              transform:scale(1.5) .5s !important;
             }
           }
         }
+        /* 收起任务栏 */
         .closeTask{
           display: none !important;
           animation: task .5s linear !important;

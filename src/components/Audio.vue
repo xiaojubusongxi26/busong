@@ -13,10 +13,12 @@ export default {
 
 .audio-container{
   z-index: 999;
-  bottom: 0 !important;
-  width: 100%;
+  display: initial;
   position: fixed;
-  align-self: flex-end;
+  bottom: 0;
+  width: 42.5%;
+  // align-self: flex-end;
+  overflow: hidden;
   height: 70px;
   background-color: $colorG;
 }

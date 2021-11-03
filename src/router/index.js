@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Home from '@/views/home.vue'
 import Index from '@/views/index.vue'
 import Music from '@/views/music.vue'
+import Task from '@/views/task.vue'
 
 Vue.use(VueRouter)
 
@@ -24,6 +25,11 @@ const routes = [
     path: '/music',
     name: 'music',
     component: Music
+  },
+  {
+    path: '/task',
+    name: 'task',
+    component: Task
   }
 ]
 

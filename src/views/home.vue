@@ -1,24 +1,22 @@
 <template>
   <div class="home-container">
     <div class="bg"></div>
-    <nav-header></nav-header>
     <header class="backimg">
       <div class="centerText">
-        <h1>Happy Coding</h1>
+        <h1>诗酒趁年华</h1>
         <div class="textList">
           <div class="line" v-for="(item,index) in textList" :key="index">{{ item }}</div>
         </div>
       </div>
     </header>
     <div class="">
-      <!-- <router-view/> -->
       <index></index>
     </div>
   </div>
 </template>
 
 <script>
-import NavHeader from '@/components/NavHeader.vue'
+// import NavHeader from '@/components/NavHeader.vue'
 import Index from '@/views/index.vue'
 
 // 页面精灵
@@ -27,7 +25,7 @@ import { L2Dwidget } from 'live2d-widget'
 export default {
   name: 'home',
   components: {
-    NavHeader,
+    // NavHeader,
     Index
   },
   data () {

@@ -1,4 +1,5 @@
 @media (min-width: 300px) and (max-width: 499px) {
+    /* 导航栏 */
     .nav{
         padding: 0 !important;
         ul{
@@ -28,6 +29,7 @@
             }
         }
     }
+    /* 主页 */
     .index{
         display: flex;
         justify-content: center;
@@ -37,8 +39,8 @@
             margin: 15px 20px !important;
             width: 90vw !important;
             .avatar{
-                width: 10vw !important;
-                height: 10vw !important;
+                width: 20vw !important;
+                height: 20vw !important;
             }
             .weather{
                 .today{
@@ -62,8 +64,43 @@
             width: 90vw !important;
         }
         .right{
+            .memo{
+                width: 100% !important;
+                .el-card{
+                    max-width: 90vw !important;
+                    width: 90vw !important;
+                }
+            }
             margin: 15px 20px !important;
             width: 90vw !important;
+        }
+    }
+    /* 日常组件 */
+    .daily-container{
+        padding: 10px;
+        .myText{
+            .myHeader{
+                .nTime{
+                    .time{
+                        font-size: 12px;
+                    }
+                }
+            }
+            .myBody{
+                .text{
+                    font-size: 14px;
+                    overflow:hidden;
+                    text-overflow:ellipsis;
+                    white-space:nowrap;
+                }
+                ::v-deep .demo-image__preview{
+                    width: 50vw !important;
+                    img{
+                        width: 15vw !important;
+                        height: 15vw !important;
+                    }
+                }
+            }
         }
     }
 }
@@ -123,6 +160,33 @@
             }
         }
     }
+    .daily-container{
+        // padding: 10px;
+        .myText{
+            .myHeader{
+                .nTime{
+                    .time{
+                        font-size: 12px;
+                    }
+                }
+            }
+            .myBody{
+                .text{
+                    font-size: 14px;
+                    overflow:hidden;
+                    text-overflow:ellipsis;
+                    white-space:nowrap;
+                }
+                ::v-deep .demo-image__preview{
+                    width: 35vw !important;
+                    img{
+                        width: 10vw !important;
+                        height: 10vw !important;
+                    }
+                }
+            }
+        }
+    }
  }
 
 
@@ -153,6 +217,19 @@
             margin: 15px 20px !important;
         }
     }
+    .daily-container{
+        .myText{
+            .myBody{
+                ::v-deep .demo-image__preview{
+                    width: 400px !important;
+                    img{
+                        width: 10vw !important;
+                        height: 10vw !important;
+                    }
+                }
+            }
+        }
+    }
 }
 
 // Extra large devices (large desktops, 1200px and up)
@@ -165,13 +242,36 @@
     }
     .index{
         .left{
-            width: 250px !important;
+            width: 300px !important;
         }
         .main{
+            max-width: 800px !important;
             width: 50vw !important;
         }
         .right{
-            width: 400px !important;
+            width: 300px !important;
+        }
+    }
+    /* 音乐模块 */
+    .music-container{
+        .music{
+            .search{
+                .search_sings{
+                    .search_sings_list{
+                        .search_sing{
+                            .collect_sing{
+                                margin: 0 10px !important;
+                            }
+                            .sing_name{
+                                padding: 0 10px !important;
+                            }
+                            .sing_mv{
+                                margin: 0 10px !important;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
  }
