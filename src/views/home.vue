@@ -5,6 +5,7 @@
       <div class="centerText">
         <h1>诗酒趁年华</h1>
         <div class="textList">
+
           <div class="line" v-for="(item,index) in textList" :key="index">{{ item }}</div>
         </div>
       </div>
@@ -25,7 +26,6 @@ import { L2Dwidget } from 'live2d-widget'
 export default {
   name: 'home',
   components: {
-    // NavHeader,
     Index
   },
   data () {
@@ -36,7 +36,18 @@ export default {
         '且将新华试新茶，诗酒趁年华。 ——苏轼·《望江南·超然台作》',
         '欲说还休，却道天凉好个秋。 ——辛弃疾·《丑奴儿·书博山道中壁》',
         '谁也不懂天上的星，谁都喜欢看星星。——木心'
-      ]
+      ],
+      strs: [
+        {
+          title: '欲上层楼，为赋新词强说愁',
+          stop: 5
+        },
+        {
+          title: '欲说还休，却道天凉好个秋',
+          stop: 10
+        }
+      ],
+      timer: null
     }
   },
   created () {
@@ -59,6 +70,8 @@ export default {
         react: { opacityDefault: 0.7, opacityOnHover: 0.2 }
       })
     }, 0)
+  },
+  methods: {
   }
 }
 </script>
@@ -73,7 +86,7 @@ export default {
   // 开启3d效果
   // transform-style: preserve-3d;
   .bg{
-    background: url('~@/assets/images/wallhaven-l3k5gp.jpg');  /* fallback for old browsers */
+    background: url('~@/assets/images/home/bg-logo.svg');  /* fallback for old browsers */
     width: 100vw;
     height: 100vh;
     background-size: cover;
@@ -99,7 +112,7 @@ export default {
         font-size: 8vmin;
         font-weight: 900;
         color: #ee711e;
-        text-shadow: 1px 1px 4px #fff, 0px 0px 15px #ee5f00, 0 0 15px #c79a06;
+        // text-shadow: 1px 1px 4px #fff, 0px 0px 15px #ee5f00, 0 0 15px #c79a06;
 
         /* 将背景裁剪为文字 */
         background-clip: text;

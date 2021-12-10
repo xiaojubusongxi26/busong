@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import App from '@/App.vue'
-import Home from '@/views/home.vue'
 import router from './router'
 import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+
+// 引入markdown
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
 // 引入swipper
 import VueAwesomeSwiper from 'vue-awesome-swiper'
@@ -20,9 +23,25 @@ import 'bootstrap/dist/js/bootstrap.min'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+// 引入qs
+import qs from 'qs'
+
+Vue.prototype.$qs = qs
+
+Vue.prototype.$axios = axios
+
+/* 动态修改网页标题 */
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
+  next()
+})
+
 Vue.use(VueAxios, axios)
 Vue.use(ElementUI)
 Vue.use(VueAwesomeSwiper)
+Vue.use(mavonEditor)
 
 Vue.config.productionTip = false
 

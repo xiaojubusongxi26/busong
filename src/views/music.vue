@@ -41,6 +41,7 @@
             </div>
           </div>
         </div>
+        <br>
         <div class="mv_video">
           <a @click="playMv(5779666)" target="_blank">
             <img src="@/assets/images/music/sing/张杰-天下.jpg" alt="">
@@ -70,7 +71,7 @@
           <div class="sing_info">
             <h6>句号</h6>
             <div class="singer">
-              <p>邓紫棋</p> / <p>张靓颖</p>
+              <p>邓紫棋</p>
             </div>
           </div>
         </div>
@@ -158,7 +159,7 @@
         <div class="search_sings">
           <div class="search_sings_list">
             <div class="search_header">搜索列表</div>
-            <div class="search_sing" v-for="(item,index) in musicList" :key="index">
+            <div class="search_sing" v-for="(item,index) in musicList" @touchmove.prevent :key="index">
               <div class="collect_sing" @click="addLove(item)">
                 <img :src="judgeLove(item.id) ? loveImg2 : loveImg1" alt="">
               </div>
@@ -248,11 +249,16 @@ export default {
     }
   },
   mounted () {
+    // 实时刷新播放音乐进度
     this.timer = setInterval(() => {
       if (this.nowSongName !== '') {
         setTimeout(this.audioInfo, 0)
       }
     }, 0)
+    this.axios.get('http://1.117.145.128:5000/personalized/mv').then(response => {
+      // 保存内容
+      console.log(response)
+    })
   },
   methods: {
     // 点击进度条改变音乐进度
@@ -292,7 +298,7 @@ export default {
       if (this.query === 0) {
         return 0
       }
-      this.axios.get('http://localhost:3000/search?keywords=' + this.query).then(response => {
+      this.axios.get('http://1.117.145.128:5000/search?keywords=' + this.query).then(response => {
         // 保存内容
         // console.log(response)
         this.musicList = response.data.result.songs
@@ -306,13 +312,13 @@ export default {
     // 播放歌曲
     playMusic (music) {
       // 获取歌曲url
-      this.axios.get('http://localhost:3000/song/url?id=' + music.id).then(response => {
+      this.axios.get('http://1.117.145.128:5000/song/url?id=' + music.id).then(response => {
         // 保存歌曲url地址
         // console.log(response)
         this.musicUrl = response.data.data[0].url
       })
       // 获取歌曲封面
-      this.axios.get('http://localhost:3000/song/detail?ids=' + music.id).then(response => {
+      this.axios.get('http://1.117.145.128:5000/song/detail?ids=' + music.id).then(response => {
         // console.log(response)
         // 设置封面
         this.coverUrl = response.data.songs[0].al.picUrl
@@ -329,13 +335,13 @@ export default {
     },
     playMusicMy (value, index) {
       // 获取歌曲url
-      this.axios.get('http://localhost:3000/song/url?id=' + value.songId).then(response => {
+      this.axios.get('http://1.117.145.128:5000/song/url?id=' + value.songId).then(response => {
         // 保存歌曲url地址
         // console.log(response)
         this.musicUrl = response.data.data[0].url
       })
       // 获取歌曲封面
-      this.axios.get('http://localhost:3000/song/detail?ids=' + value.songId).then(response => {
+      this.axios.get('http://1.117.145.128:5000/song/detail?ids=' + value.songId).then(response => {
         // console.log(response)
         // 设置封面
         this.coverUrl = response.data.songs[0].al.picUrl
@@ -472,7 +478,7 @@ export default {
       if (vid) {
         this.showVideo = true
         // 获取mv信息
-        this.axios.get('https://autumnfish.cn/mv/url?id=' + vid).then(response => {
+        this.axios.get('http://1.117.145.128:5000/mv/url?id=' + vid).then(response => {
           // console.log(response)
           // 暂停歌曲播放
           this.$refs.audio.pause()
@@ -487,6 +493,7 @@ export default {
       this.showVideo = false
       this.$refs.video.pause()
     },
+    // 实时刷新播放音乐进度
     audioInfo () {
       if (this.$refs.audio.currentTime) {
         this.nowTimeOne = this.$refs.audio.currentTime
@@ -562,6 +569,8 @@ export default {
       color: #999;
       .mv_video{
         display: flex;
+        flex-wrap: wrap;
+        align-content: stretch;
         position: relative;
         align-items: center;
         flex-direction: column;
@@ -569,11 +578,11 @@ export default {
         margin: 0px auto;
         width: 30%;
         img{
-          width: 278px;
-          height: 156px;
+          width: 100%;
+          max-width: 300px;
+          // height: 120px;
           object-fit:cover;
           transition: .5s;
-          object-fit: cover;
         }
         img:hover{
           transform: scale(1.03);
@@ -581,7 +590,8 @@ export default {
           cursor: pointer;
         }
         .sing_info{
-          width: 278px;
+          width: 100%;
+          max-width: 300px;
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
@@ -609,17 +619,17 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    // flex-direction: column;
     width: 80vw;
     max-width: 1580px;
     height: 80vh;
     border-radius: 15px;
     margin-bottom: 50px;
-    padding: 15px 0;
+    padding: 15px;
     background-color: rgba($color: $colorG, $alpha: 0.25);
     .my_music{
       width: 70%;
       height: 100%;
-      margin: 0 15px;
       background-color: rgba($color: $colorG, $alpha: 0.98);
       border-radius: 15px;
       .my_head{
@@ -845,8 +855,8 @@ export default {
       width: 30%;
       height: 100%;
       max-width: 400px;
-      min-width: 300px;
-      margin: 0 15px;
+      // min-width: 300px;
+      padding-left: 15px;
       border-radius: 15px;
       // background-color: rgba($color: $colorG, $alpha: 0.98);
       .search_bar{
@@ -888,12 +898,12 @@ export default {
         }
       }
       .search_sings{
-        height: calc(100% - 95px);
+        height: calc(100% - 87px);
         width: 100%;
         border-radius: 15px;
         margin: 30px 0;
-        padding: 10px;
-        background-color: rgba($color: $colorG, $alpha: 0.4);
+        // padding: 10px;
+        // background-color: rgba($color: $colorG, $alpha: 0.4);
         .search_sings_list{
           background-color: #fafafa;
           /* 隐藏滚动条 */
@@ -991,8 +1001,10 @@ export default {
     }
     .video_con video {
       position: fixed;
-      width: 800px;
-      height: 546px;
+      width: 80vw;
+      height: auto;
+      max-width: 800px;
+      max-height: 546px;
       left: 50%;
       top: 50%;
       margin-top: -273px;

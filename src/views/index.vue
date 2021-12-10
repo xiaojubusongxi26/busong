@@ -161,7 +161,7 @@ export default {
         this.climateType = 'el-icon-heavy-rain'
         this.climateColor = '#045da8'
         this.climate = 5
-      } else if (this.type === '阴') {
+      } else if (this.type === '阴' || this.type === '霾') {
         this.climateType = 'el-icon-partly-cloudy'
         this.climateColor = '#555'
         this.climate = 3
@@ -230,25 +230,38 @@ export default {
   justify-content: center;
   // width: 100vw;
   padding: 50px 0;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(2px);
+  // 改变文字被选中时的颜色及背景
+  ::selection {
+    background:#dbedfa;
+    color:#FF6600;
+  }
+  ::-moz-selection {
+    background:#dbedfa;
+    color:#FF6600;
+  }
+  ::-webkit-selection {
+    background:#dbedfa;
+    color:#FF6600;
+  }
   /* 主页左侧区域：个人头像以及天气 */
   .left{
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin: 15px 50px;
+    margin: 15px 30px;
     // padding: 20px 0;
     width: 20vw;
+    max-width: 220px;
     height: 600px;
-    // background-color: rgba($color: $colorG, $alpha: 0.95);
+    background-color: rgba($color: $colorG, $alpha: 0.85);
     border-radius: 15px;
-    // box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
     .perInfo{
       display: flex;
       align-items: center;
       flex-direction: column;
       width: 100%;
-      background-color: $colorG;
+      background-color: rgba($color: $colorG, $alpha: 0.85);
       border-radius: 15px;
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
       /* 个人头像面板 */
@@ -351,16 +364,18 @@ export default {
   .main{
     margin-top: 15px;
     width: 800px;
-    overflow: hidden;
-    // height: 1500px;
+    min-width: 320px;
+    padding: 0 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
     // background-color: rgba($color: $colorL, $alpha: 0.25);
     border-radius: 10px;
-    // box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
   }
   /* 主页右侧区域：今日任务栏 */
   .right{
-    margin: 15px 50px;
+    margin: 15px 30px;
     width: 30vw;
+    max-width: 300px;
     min-height: 500px;
     // background-color: rgba($color: $colorG, $alpha: 0.25);
     border-radius: 15px;

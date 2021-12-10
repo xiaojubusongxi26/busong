@@ -14,4 +14,18 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+
+  <style>
+    /* 取消侧边滚动条 */
+    body{
+      scrollbar-width: none; /* firefox */
+      -ms-overflow-style: none; /* IE 10+ */
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    /* 隐藏滚动条 */
+    body::-webkit-scrollbar {
+      display: none !important;
+    }
+  </style>
 </html>

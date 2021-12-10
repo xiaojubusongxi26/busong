@@ -127,7 +127,7 @@ export default {
           username: '小橘不颂兮',
           userAvatar: require('@/assets/images/mmexport1602954427757.jpg'),
           releaseTime: '2021-10-11 05:20',
-          textMain: '今天是个好天气！',
+          textMain: '你好，欢迎来到我的主页~',
           imgs: [
             require('@/assets/images/dailyImgs/pexels-alex-brites-7051439.jpg'),
             require('@/assets/images/dailyImgs/pexels-any-lane-5945758.jpg'),
@@ -145,7 +145,7 @@ export default {
           username: '小橘不颂兮',
           userAvatar: require('@/assets/images/mmexport1602954427757.jpg'),
           releaseTime: '2021-10-11 05:20',
-          textMain: '今天是个好天气！',
+          textMain: '你好，欢迎来到我的主页~',
           imgs: [
             require('@/assets/images/dailyImgs/pexels-alex-brites-7051439.jpg'),
             require('@/assets/images/dailyImgs/pexels-any-lane-5945758.jpg'),
@@ -163,7 +163,25 @@ export default {
           username: '小橘不颂兮',
           userAvatar: require('@/assets/images/mmexport1602954427757.jpg'),
           releaseTime: '2021-10-11 05:20',
-          textMain: '今天是个好天气！',
+          textMain: '你好，欢迎来到我的主页~',
+          imgs: [
+            require('@/assets/images/dailyImgs/pexels-alex-brites-7051439.jpg'),
+            require('@/assets/images/dailyImgs/pexels-any-lane-5945758.jpg'),
+            require('@/assets/images/dailyImgs/pexels-lisa-9587579.jpg'),
+            require('@/assets/images/dailyImgs/pexels-maria-orlova-4946930.jpg'),
+            require('@/assets/images/dailyImgs/pexels-rafael-paul-4797134.jpg'),
+            require('@/assets/images/dailyImgs/pexels-hakeem-james-hausley-4516067.jpg'),
+            require('@/assets/images/dailyImgs/pexels-jess-loiterton-4321505.jpg'),
+            require('@/assets/images/dailyImgs/pexels-lina-kivaka-1533648.jpg'),
+            require('@/assets/images/dailyImgs/pexels-tanner-vote-3612406.jpg')
+          ]
+        },
+        {
+          id: '1',
+          username: '小橘不颂兮',
+          userAvatar: require('@/assets/images/mmexport1602954427757.jpg'),
+          releaseTime: '2021-10-11 05:20',
+          textMain: '你好，欢迎来到我的主页~',
           imgs: [
             require('@/assets/images/dailyImgs/pexels-alex-brites-7051439.jpg'),
             require('@/assets/images/dailyImgs/pexels-any-lane-5945758.jpg'),
@@ -189,13 +207,28 @@ export default {
     },
     // 发布日常动态函数
     releaseMyDaily () {
-      this.release.releaseTime = this.dateFormat('YYYY-mm-dd HH:MM', new Date())
+      if (this.release.textMain === '' && this.release.imgs.length === 0) {
+        return
+      }
+      const day = {
+        id: '1',
+        username: '小橘不颂兮',
+        userAvatar: require('@/assets/images/mmexport1602954427757.jpg'),
+        releaseTime: '',
+        textMain: '',
+        imgs: []
+      }
+      day.releaseTime = this.dateFormat('YYYY-mm-dd HH:MM', new Date())
+      day.textMain = this.release.textMain
+      day.imgs = this.release.imgs
       // console.log(this.release.releaseTime)
-      console.dir(this.release)
+      // console.dir(this.release)
       // 将新添加的动态发布到我的日常里面
-      this.daily.unshift(this.release)
+      this.daily.unshift(day)
       // 发布动态以后，删除已经上传的图片
       this.$refs.upload.clearFiles()
+      this.release.textMain = ''
+      this.release.imgs = []
     },
     // 时间格式化
     dateFormat (fmt, date) {
@@ -229,6 +262,7 @@ export default {
     handlePictureCardPreview (file) {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
+      console.log('这里')
     },
     handleDownload (file) {
       console.log(file)
@@ -254,6 +288,8 @@ export default {
     margin: 0;
     padding: 25px 20px 5px;
     background-color: $colorF;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px 0 rgba(97, 97, 97, 0.2), 0 6px 20px 0 rgba(63, 63, 63, 0.19);
     color: $colorJ;
     border-bottom: 1px $colorG solid;
     position: relative;
@@ -269,11 +305,11 @@ export default {
       bottom: 0;
       right: 20px;
       margin-bottom: 7px;
+      font-size: 20px;
       transition: .2s !important;
     }
     i:hover{
       color: $colorG;
-      transform: scale(1.3) !important;
     }
   }
   /* 发布日常 */
@@ -369,7 +405,7 @@ export default {
     border-bottom: 1px $colorE solid;
     border-radius: 15px;
     margin: 10px 20px;
-    padding: 10px 20px;
+    padding: 34px;
     .myHeader{
       margin: 10px 0;
       height: 40px;
