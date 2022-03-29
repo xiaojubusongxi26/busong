@@ -1,4 +1,4 @@
-@media (min-width: 300px) and (max-width: 499px) {
+@media screen and (max-width: 499px) {
     /* 导航栏 */
     .nav{
         padding: 0 !important;
@@ -590,13 +590,24 @@
             }
         }
     }
+    // 音乐组件
+    .music-contain {
+        .musicbar {
+            .song-control {
+                width: 120px !important;
+                padding: 0 10px !important;
+            }
+            .song-features {
+                width: 180px !important;
+            }
+        }
+    }
     // 轮播图组件
     .carousel {
         width: 90vw !important;
         height: 45vw !important;
     }
  }
-
 
 // Large devices (desktops, 992px and up)
 @media screen and (min-width: 992px) and (max-width: 1199px) { 
@@ -692,8 +703,8 @@
             width: 300px !important;
         }
         .main{
-            max-width: 800px !important;
             width: 50vw !important;
+            max-width: 754px !important;
         }
         .right{
             width: 300px !important;

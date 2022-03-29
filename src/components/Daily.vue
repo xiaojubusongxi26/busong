@@ -69,11 +69,12 @@
     <div class="myText" v-for="(textItem,textIndex) in daily" :key="textIndex">
       <!-- 头像，名称，发布日常 -->
       <div class="myHeader">
-        <img src="@/assets/images/mmexport1602954427757.jpg" alt="">
+        <img src="@/assets/images/avatar/mmexport1603512250737.jpg" alt="">
         <div class="nTime">
           <span class="userName">{{ textItem.username }}</span>
           <span class="time">{{ textItem.releaseTime }}</span>
         </div>
+        <i class="el-icon-close" @click="delDaily =  textIndex "></i>
       </div>
       <!-- 主体内容 -->
       <div class="myBody">
@@ -82,10 +83,10 @@
         </div>
         <div class="demo-image__preview">
           <el-image
-            v-for="(item,index) in textItem.imgs" :key="index+1"
+            v-for="(item,index) in textItem.dailyImgs" :key="index+1"
             :src="item"
             fit="cover"
-            :preview-src-list="daily[0].imgs"
+            :preview-src-list="textItem.dailyImgs"
             lazy>
             <div slot="placeholder" class="image-slot">
               <img src="@/assets/images/lazy/加载中.png" alt="">
@@ -96,10 +97,24 @@
       <!-- 底部点赞，收藏，分享，以及评论 -->
       <div class="myFooter"></div>
     </div>
+    <!--  添加悬浮卡片层  -->
+    <model
+      title="删除任务"
+      color="#bed7b4"
+      submit='删除'
+      :showModal="delDaily != -1"
+      @cancel="delDaily = -1"
+      @submit="deleteDaily()"
+    >
+      <template v-slot:body>
+        <div>确认要删除这条动态吗？</div>
+      </template>
+    </model>
   </div>
 </template>
 
 <script>
+import Model from '@/components/Model.vue'
 export default {
   name: 'Daily',
   data () {
@@ -109,11 +124,13 @@ export default {
       release: {
         id: '1',
         username: '小橘不颂兮',
-        userAvatar: require('@/assets/images/mmexport1602954427757.jpg'),
+        userAvatar: require('@/assets/images/avatar/mmexport1603512250737.jpg'),
         releaseTime: '',
         textMain: '',
-        imgs: []
+        dailyImgs: []
       },
+      // 删除动态
+      delDaily: -1,
       // 照片上传
       dialogImageUrl: '',
       dialogVisible: false,
@@ -125,89 +142,51 @@ export default {
         {
           id: '1',
           username: '小橘不颂兮',
-          userAvatar: require('@/assets/images/mmexport1602954427757.jpg'),
-          releaseTime: '2021-10-11 05:20',
-          textMain: '你好，欢迎来到我的主页~',
-          imgs: [
-            require('@/assets/images/dailyImgs/pexels-alex-brites-7051439.jpg'),
-            require('@/assets/images/dailyImgs/pexels-any-lane-5945758.jpg'),
-            require('@/assets/images/dailyImgs/pexels-lisa-9587579.jpg'),
-            require('@/assets/images/dailyImgs/pexels-maria-orlova-4946930.jpg'),
-            require('@/assets/images/dailyImgs/pexels-rafael-paul-4797134.jpg'),
-            require('@/assets/images/dailyImgs/pexels-hakeem-james-hausley-4516067.jpg'),
-            require('@/assets/images/dailyImgs/pexels-jess-loiterton-4321505.jpg'),
-            require('@/assets/images/dailyImgs/pexels-lina-kivaka-1533648.jpg'),
-            require('@/assets/images/dailyImgs/pexels-tanner-vote-3612406.jpg')
+          userAvatar: require('@/assets/images/avatar/mmexport1603512250737.jpg'),
+          releaseTime: '2021-12-30 12:00',
+          textMain: '新年快乐~',
+          dailyImgs: [
+            require('@/assets/images/dailyImgs/wallhaven-3z7exy.jpg')
           ]
         },
         {
           id: '1',
           username: '小橘不颂兮',
-          userAvatar: require('@/assets/images/mmexport1602954427757.jpg'),
+          userAvatar: require('@/assets/images/avatar/mmexport1603512250737.jpg'),
           releaseTime: '2021-10-11 05:20',
-          textMain: '你好，欢迎来到我的主页~',
-          imgs: [
-            require('@/assets/images/dailyImgs/pexels-alex-brites-7051439.jpg'),
-            require('@/assets/images/dailyImgs/pexels-any-lane-5945758.jpg'),
-            require('@/assets/images/dailyImgs/pexels-lisa-9587579.jpg'),
-            require('@/assets/images/dailyImgs/pexels-maria-orlova-4946930.jpg'),
-            require('@/assets/images/dailyImgs/pexels-rafael-paul-4797134.jpg'),
-            require('@/assets/images/dailyImgs/pexels-hakeem-james-hausley-4516067.jpg'),
-            require('@/assets/images/dailyImgs/pexels-jess-loiterton-4321505.jpg'),
-            require('@/assets/images/dailyImgs/pexels-lina-kivaka-1533648.jpg'),
-            require('@/assets/images/dailyImgs/pexels-tanner-vote-3612406.jpg')
-          ]
-        },
-        {
-          id: '1',
-          username: '小橘不颂兮',
-          userAvatar: require('@/assets/images/mmexport1602954427757.jpg'),
-          releaseTime: '2021-10-11 05:20',
-          textMain: '你好，欢迎来到我的主页~',
-          imgs: [
-            require('@/assets/images/dailyImgs/pexels-alex-brites-7051439.jpg'),
-            require('@/assets/images/dailyImgs/pexels-any-lane-5945758.jpg'),
-            require('@/assets/images/dailyImgs/pexels-lisa-9587579.jpg'),
-            require('@/assets/images/dailyImgs/pexels-maria-orlova-4946930.jpg'),
-            require('@/assets/images/dailyImgs/pexels-rafael-paul-4797134.jpg'),
-            require('@/assets/images/dailyImgs/pexels-hakeem-james-hausley-4516067.jpg'),
-            require('@/assets/images/dailyImgs/pexels-jess-loiterton-4321505.jpg'),
-            require('@/assets/images/dailyImgs/pexels-lina-kivaka-1533648.jpg'),
-            require('@/assets/images/dailyImgs/pexels-tanner-vote-3612406.jpg')
-          ]
-        },
-        {
-          id: '1',
-          username: '小橘不颂兮',
-          userAvatar: require('@/assets/images/mmexport1602954427757.jpg'),
-          releaseTime: '2021-10-11 05:20',
-          textMain: '你好，欢迎来到我的主页~',
-          imgs: [
-            require('@/assets/images/dailyImgs/pexels-alex-brites-7051439.jpg'),
-            require('@/assets/images/dailyImgs/pexels-any-lane-5945758.jpg'),
-            require('@/assets/images/dailyImgs/pexels-lisa-9587579.jpg'),
-            require('@/assets/images/dailyImgs/pexels-maria-orlova-4946930.jpg'),
-            require('@/assets/images/dailyImgs/pexels-rafael-paul-4797134.jpg'),
-            require('@/assets/images/dailyImgs/pexels-hakeem-james-hausley-4516067.jpg'),
-            require('@/assets/images/dailyImgs/pexels-jess-loiterton-4321505.jpg'),
-            require('@/assets/images/dailyImgs/pexels-lina-kivaka-1533648.jpg'),
-            require('@/assets/images/dailyImgs/pexels-tanner-vote-3612406.jpg')
+          textMain: '赏心悦目如是也',
+          dailyImgs: [
+            require('@/assets/images/dailyImgs/wallhaven-3z2rvy.jpg'),
+            require('@/assets/images/dailyImgs/wallhaven-57mly5.jpg'),
+            require('@/assets/images/dailyImgs/wallhaven-57rmj5.jpg'),
+            require('@/assets/images/dailyImgs/wallhaven-72lvqe.jpg'),
+            require('@/assets/images/dailyImgs/wallhaven-g71pve.jpg'),
+            require('@/assets/images/dailyImgs/wallhaven-g718wd.jpg')
           ]
         }
       ]
     }
   },
+  components: {
+    Model
+  },
   methods: {
+    // 删除动态
+    deleteDaily () {
+      console.dir(this.delDaily)
+      this.daily.splice(this.delDaily, 1)
+      this.delDaily = -1
+    },
     // 当上传九张图片后，禁止上传
     addImgs (file, fileList) {
       if (fileList.length === 9) {
         this.hiddenUp = true
       }
-      this.release.imgs.push(file.url)
+      this.release.dailyImgs.push(file.url)
     },
     // 发布日常动态函数
     releaseMyDaily () {
-      if (this.release.textMain === '' && this.release.imgs.length === 0) {
+      if (this.release.textMain === '' && this.release.dailyImgs.length === 0) {
         return
       }
       const day = {
@@ -216,11 +195,11 @@ export default {
         userAvatar: require('@/assets/images/mmexport1602954427757.jpg'),
         releaseTime: '',
         textMain: '',
-        imgs: []
+        dailyImgs: []
       }
       day.releaseTime = this.dateFormat('YYYY-mm-dd HH:MM', new Date())
       day.textMain = this.release.textMain
-      day.imgs = this.release.imgs
+      day.dailyImgs = this.release.dailyImgs
       // console.log(this.release.releaseTime)
       // console.dir(this.release)
       // 将新添加的动态发布到我的日常里面
@@ -228,7 +207,7 @@ export default {
       // 发布动态以后，删除已经上传的图片
       this.$refs.upload.clearFiles()
       this.release.textMain = ''
-      this.release.imgs = []
+      this.release.dailyImgs = []
     },
     // 时间格式化
     dateFormat (fmt, date) {
@@ -262,7 +241,6 @@ export default {
     handlePictureCardPreview (file) {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
-      console.log('这里')
     },
     handleDownload (file) {
       console.log(file)
@@ -282,12 +260,13 @@ export default {
   // background-color: rgba($color: $colorG, $alpha: 0.85);
   align-items: center;
   flex-direction: column;
+  margin-bottom: 20px;
   /* 日常模块头部 */
   .write{
     width: 100%;
     margin: 0;
-    padding: 25px 20px 5px;
-    background-color: $colorF;
+    padding: 10px 20px 8px;
+    background-color: $colorK;
     border-radius: 6px;
     box-shadow: 0 4px 8px 0 rgba(97, 97, 97, 0.2), 0 6px 20px 0 rgba(63, 63, 63, 0.19);
     color: $colorJ;
@@ -317,14 +296,14 @@ export default {
     width: 100%;
     .releaseMain{
       padding: 10px 20px 0 20px;
-      margin-top: 10px;
+      margin-top: 15px;
       border-radius: 6px;
-      background: rgba($color: $colorL, $alpha: 0.9);
+      background: rgba($color: $colorG, $alpha: 1);
       box-shadow: 0 4px 8px 0 rgba(97, 97, 97, 0.2), 0 6px 20px 0 rgba(63, 63, 63, 0.19);
-      border: 1px $colorF solid;
+      border: 1px $colorG solid;
       span{
-        color: $colorB;
-        text-shadow: 1px 1px 2px $colorF;
+        color: $colorK;
+        text-shadow: 1px 1px 2px $colorK;
         margin: 5px 0;
         display: block;
       }
@@ -337,7 +316,7 @@ export default {
           border: 1px solid $colorC !important;
         }
         .el-textarea__inner:focus{
-          border: 1px solid $colorF !important;
+          border: 1px solid $colorK !important;
         }
       }
       /* 上传文件卡片样式 */
@@ -349,12 +328,12 @@ export default {
         margin-bottom: 10px;
         line-height: 120px;
         i{
-          color: $colorF;
+          color: $colorK;
         }
       }
       ::v-deep .el-upload--picture-card:hover, .el-upload:focus{
-        border-color: $colorF;
-        color: $colorF;
+        border-color: $colorK;
+        color: $colorK;
       }
       // 改变已上传照片的大小
       .upImgs{
@@ -392,8 +371,8 @@ export default {
           background-color: $colorE;
         }
         .el-button--primary{
-          background-color: $colorF;
-          border: $colorF;
+          background-color: $colorK;
+          border: $colorK;
         }
       }
     }
@@ -410,6 +389,7 @@ export default {
       margin: 10px 0;
       height: 40px;
       display: flex;
+      position: relative;
       img {
         display: inline;
         width: 40px;
@@ -425,8 +405,15 @@ export default {
         flex-direction: column;
         .time{
           font-size: $fontK;
-          color: $colorD;
+          color: #a5a5a5;
         }
+      }
+      .el-icon-close {
+        display: inline-block;
+        font-size: 20px;
+        position: absolute;
+        right: 0;
+        cursor: pointer;
       }
     }
     .myBody{

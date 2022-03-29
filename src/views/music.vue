@@ -201,6 +201,7 @@ export default {
       musicUrl: '',
       // 是否正在播放
       isPlay: false,
+      nowId: '',
       nowSongName: '',
       nowSinger: '',
       nowTime: '',
@@ -229,13 +230,15 @@ export default {
       playImg: require('@/assets/images/music/botton/播放中.png'),
       pauseImg: require('@/assets/images/music/botton/暂停.png'),
       sings: [
-        { albumName: '起风了', isLove: true, mvId: 10782615, singerName: '买辣椒也用券', songId: 1330348068, songName: '起风了', songTime: 325 },
+        { albumName: '不如吃茶去', isLove: true, mvId: 302093, singerName: '许嵩', songId: 28854182, songName: '惊鸿一面', songTime: 256 },
+        { albumName: '少年中国说', isLove: true, mvId: 14383247, singerName: '张杰', songId: 1885551650, songName: '少年中国说', songTime: 201 },
+        { albumName: '忘记 transfer', isLove: true, mvId: 0, singerName: '周传雄', songId: 190062, songName: '记事本', songTime: 261 },
         { albumName: '半城烟沙', isLove: true, mvId: 0, singerName: '许嵩', songId: 167744, songName: '半城烟沙', songTime: 294 },
-        { albumName: '摩天动物园', isLove: true, mvId: 10906470, singerName: 'G.E.M.邓紫棋', songId: 1405283464, songName: '句号', songTime: 235 },
+        { albumName: '忘记 transfer', isLove: true, mvId: 5441483, singerName: '周传雄', songId: 190072, songName: '黄昏', songTime: 344 },
         { albumName: '倾尽天下', isLove: true, mvId: 333042, singerName: '河图', songId: 27571867, songName: '倾尽天下', songTime: 265 },
         { albumName: '腐草为萤', isLove: true, mvId: 0, singerName: '银临', songId: 28188425, songName: '瀘沽寻梦', songTime: 224 },
         { albumName: '小黄', isLove: true, mvId: 0, singerName: '李荣浩', songId: 133998, songName: '老街', songTime: 318 },
-        { albumName: 'Xposed', isLove: true, mvId: 221004, singerName: 'G.E.M.邓紫棋', songId: 233931, songName: '泡沫', songTime: 258 },
+        { albumName: '滚石香港黄金十年 伍佰精选', isLove: true, mvId: 10930176, singerName: '伍佰', songId: 156915, songName: '挪威的森林', songTime: 392 },
         { albumName: '明天过后', isLove: true, mvId: 5779666, singerName: '张杰', songId: 191254, songName: '天下', songTime: 219 }
       ],
       // 定时器
@@ -326,12 +329,11 @@ export default {
       // 歌曲为播放中
       this.isPlay = !this.isPlay
       if (music) {
+        this.nowId = music.id
         this.nowSongName = music.name
         this.nowSinger = music.artists[0].name
         this.nowTime = Math.floor(music.duration / 1000)
       }
-      // console.log(this.nowTime)
-      // console.dir(this.sings)
     },
     playMusicMy (value, index) {
       // 获取歌曲url
@@ -362,6 +364,7 @@ export default {
           return 0
         }
       }
+      // 定义对象
       function Song () {
       }
       const songNow = new Song()
@@ -373,6 +376,7 @@ export default {
       songNow.isLove = true
       songNow.songTime = Math.floor(song.duration / 1000)
       this.sings.unshift(songNow)
+      console.log(songNow)
     },
     // 判断是否为我喜欢
     judgeLove (num) {
@@ -527,6 +531,7 @@ export default {
   background-size: 400%;
   overflow: hidden;
   overflow-x: auto;
+  // 文本不换行
   white-space: nowrap;
   background-position: bottom;
   z-index: -9;
@@ -675,10 +680,10 @@ export default {
             justify-content: center;
             align-items: center;
           }
-          .my_song_single:nth-child(odd){
+          .my_song_single:nth-child(even){
             background-color: #fafafa;
           }
-          .my_song_single:nth-child(even){
+          .my_song_single:nth-child(odd){
             background-color: #f7f7f7;
           }
           .my_love{

@@ -15,48 +15,65 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home,
+    redirect: '/index',
     meta: {
-      title: '小橘不颂兮'
+      title: '不颂'
     },
     children: [
       {
         path: '/index',
         name: 'index',
         component: Index
+      },
+      {
+        path: '/music',
+        name: 'music',
+        component: Music,
+        meta: {
+          title: '来听听音乐吧~'
+        }
+      },
+      {
+        path: '/task',
+        name: 'task',
+        component: Task,
+        meta: {
+          title: '历程'
+        }
+      },
+      {
+        path: '/notes',
+        name: 'notes',
+        component: Notes,
+        meta: {
+          title: '笔记'
+        }
+      },
+      {
+        path: '/user',
+        name: 'user',
+        component: User,
+        meta: {
+          title: '个人信息'
+        }
       }
     ]
   },
   {
-    path: '/music',
-    name: 'music',
-    component: Music,
+    path: '/login',
+    name: 'login',
     meta: {
-      title: '来听听音乐吧~'
-    }
+      title: '不颂'
+    },
+    component: () => import('@/views/login')
   },
   {
-    path: '/task',
-    name: 'task',
-    component: Task,
+    path: '/tailoring',
+    name: 'tailoring',
     meta: {
-      title: '历程'
-    }
-  },
-  {
-    path: '/notes',
-    name: 'notes',
-    component: Notes,
-    meta: {
-      title: '笔记'
-    }
-  },
-  {
-    path: '/user',
-    name: 'user',
-    component: User,
-    meta: {
-      title: '个人信息'
-    }
+      title: '不颂'
+    },
+    component: () => import('@/views/Tailoring.vue')
   }
 ]
 

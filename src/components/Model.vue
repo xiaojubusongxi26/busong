@@ -11,7 +11,7 @@
           <slot name="body"></slot>
         </div>
         <div class="model-footer">
-          <a href="javascript:;" class="btn" :style="{ backgroundColor: color + '!important' }" v-on:click="$emit('submit')">添加</a>
+          <a href="javascript:;" class="btn" :style="{ backgroundColor: color + '!important' }" v-on:click="$emit('submit')">{{ submit }}</a>
         </div>
       </div>
     </div>
@@ -23,6 +23,8 @@ export default {
   name: 'Model',
   props: {
     title: String,
+
+    submit: String,
 
     color: String,
 

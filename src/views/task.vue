@@ -5,7 +5,7 @@
     <!-- 网页指示卡片 -->
     <div class="task-header">
       <div class="countdown">
-        <div class="countdown-top">春节倒计时</div>
+        <div class="countdown-top">考研倒计时</div>
         <div class="countdown-main">
           <span class="time">{{ countdown }}</span>
           <span>天</span>
@@ -142,6 +142,8 @@
     <!--  添加悬浮卡片层  -->
     <model
       title="日常任务"
+      color="#bed7b4"
+      submit='添加'
       :showModal="showEditModal"
       @cancel="showEditModal=false"
       @submit="addDailyTask()"
@@ -227,6 +229,9 @@ export default {
       if (this.time[0] < 10) {
         this.time[0] = '0' + this.time[0]
       }
+      if (f === '上午' && this.time[0] === '12') {
+        this.time[0] = '0' + 0
+      }
       // 设置为24小时制
       if (f === '下午') {
         if (parseInt(this.time[0]) !== 0) {
@@ -247,8 +252,8 @@ export default {
       const leftDay = new Date()
       const today = new Date()
       /* 目标日期 */
-      // leftDay.setFullYear(2022, 1, 24)
-      leftDay.setFullYear(2022, 2, 1)
+      leftDay.setFullYear(2022, 11, 23)
+      // leftDay.setFullYear(2022, 1, 0)
       /* 计算当前日期——目标日期的毫秒差 */
       this.countdown = leftDay.getTime() - today.getTime()
       /* 将时间差转换为天数 */
@@ -316,6 +321,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/sass/responsive.scss';
+@import '@/assets/sass/config.scss';
 
 *{
   margin: 0;
@@ -331,7 +337,7 @@ export default {
     width: 100%;
     height: 100vh;
     min-height: 500px;
-    background: url('~@/assets/images/DSC02497.jpg');
+    background: url('~@/assets/images/home/a9061e6fgy1gx6egjec84j23e82jo1ky.jpg');
     background-size: cover;
     background-position: bottom;
     position: fixed;
@@ -353,14 +359,14 @@ export default {
       border-radius: 26px;
       user-select: none;
       // backdrop-filter: blur(3px);
-      background-color: rgba($color: #ffffff, $alpha: 0.5);
+      background-color: rgba($color: #ffffff, $alpha: 0.6);
       /* 计时器主题：考研倒计时 */
       .countdown-top{
         width: 100%;
         height: 70px;
         font-size: 42px;
         letter-spacing: 8px;
-        background-image: linear-gradient(120deg, #0e3671 0%, #b6c7db 100%);
+        background-image: linear-gradient(120deg, #ffffff 0%, #ffffff 100%);
         background-clip:text;
         -webkit-background-clip:text;
         color: transparent;
@@ -375,7 +381,7 @@ export default {
         text-align: center;
         span{
           font-size: 26px;
-          background-image: linear-gradient(120deg, #0e3671 0%, #b6c7db 100%);
+          background-image: linear-gradient(120deg, #c96a4a 0%, #fe6659 100%);
           background-clip:text;
           -webkit-background-clip:text;
           color: transparent;
@@ -384,7 +390,7 @@ export default {
         .time{
           font-size: 168px;
           letter-spacing: 26px;
-          background-image: linear-gradient(to top, #264d88 0%, #6295d8 100%);
+          background-image: linear-gradient(120deg, #faac67 0%, #fa6b43 100%);
           background-clip:text;
           -webkit-background-clip:text;
           color: transparent;
@@ -405,7 +411,7 @@ export default {
           width: 20%;
           flex-grow: 1;
           text-align: center;
-          background-image: linear-gradient(120deg, #0e3671 0%, #b6c7db 100%);
+          background-image: linear-gradient(120deg, #ffffff 0%, #ffffff 100%);
           background-clip:text;
           -webkit-background-clip:text;
           color: transparent;
@@ -424,7 +430,7 @@ export default {
           height: 100%;
           flex-grow: 3;
           text-align: center;
-          background-image: linear-gradient(120deg, #48699b 0%, #b6c7db 100%);
+          background-image: linear-gradient(120deg, #ffffff 0%, #ffffff 100%);
           background-clip:text;
           -webkit-background-clip:text;
           color: transparent;
@@ -473,7 +479,7 @@ export default {
       }
       i:hover{
         transform: scale(1.2);
-        color: #0e3671;
+        color: #fa7b4c;
       }
       input{
         outline-style: none;
@@ -484,7 +490,7 @@ export default {
         padding-right: 20px;
         border-radius: 25px;
         border: 2px #fff solid;
-        color: #0e3671;
+        color: #fa7b4c;
         font-size: 16px;
       }
       input:focus{
@@ -516,14 +522,14 @@ export default {
       height: 80vh;
       margin: 10px;
       display: flex;
-      border: 15px #31568e solid;
+      border: 2px #fff solid;
       border-left: 0px;
       background-color: rgba($color: #fff, $alpha: 0.95);
       /* 任务导航栏 */
       .task-list-nav {
         width: 50px;
         height: 100%;
-        background-color: rgba($color: #264d88, $alpha: 0.95);
+        background-color: rgba($color: #ec8478, $alpha: 0.95);
         ul{
           user-select: none;
           padding: 15px 0;
@@ -557,13 +563,13 @@ export default {
       /* 任务导航栏悬停 */
       .task-list-nav:hover {
         width: 200px;
-        background-color: rgba($color: #264d88, $alpha: 0.95);
+        background-color: rgba($color: #eb6e5e, $alpha: 0.95);
       }
       .task-list-main{
         width: 100%;
         height: 100%;
         padding: 30px;
-        color: #3e659e;
+        color: #4e4e4e;
         /* 隐藏滚动条 */
         scrollbar-width: none !important; /* firefox */
         -ms-overflow-style: none !important; /* IE 10+ */
@@ -574,7 +580,7 @@ export default {
           height: 70px;
           text-align: center;
           background: rgba($color: rgb(233, 233, 233), $alpha: 0.1);
-          border-bottom: 2px solid #264d88;
+          border-bottom: 2px solid #4e4e4e;
           font-family:'Courier New', Courier, monospace;
           font-weight: bolder;
           display: flex;
@@ -632,7 +638,7 @@ export default {
                   box-sizing: border-box;
                   width: 20px;
                   height: 20px;
-                  border: 1px solid#409EFF;
+                  border: 1px solid#409eff;
                 }
                 ::v-deep .el-checkbox__inner::after {
                   border: 4px solid #FFF;
@@ -644,7 +650,7 @@ export default {
               }
               /* 任务时间 */
               span{
-                color: #5b95f3;
+                color: #4e4e4e;
                 margin: 0 10px;
                 img {
                   margin: 0 10px;
@@ -679,7 +685,7 @@ export default {
               // height: 100%;
               top: 50%;
               text-align: center;
-              color: #4880ca;
+              color: #4e4e4e;
               overflow: hidden;
               user-select: none;
             }
@@ -689,7 +695,7 @@ export default {
               width: 170px;
               height: 26px;
               overflow: hidden;
-              border-right: 2px solid #264d88;
+              border-right: 2px solid #4e4e4e;
             }
             .animation-text {
               animation:  grow  3s  steps(36)  2s infinite  both,
@@ -705,7 +711,7 @@ export default {
             }
             @keyframes blink {
               from {
-                border-right-color: #264d88;
+                border-right-color: #4e4e4e;
               }
               to {
                 border-right-color: transparent;
@@ -725,7 +731,7 @@ export default {
       width: 20%;
       max-width: 246px;
       height: 80vh;
-      border: 15px #31568e solid;
+      border: 2px #fff solid;
       background-color: rgba($color: #fff, $alpha: 0.95);
       /* 常用网站组 */
       .nets-list{
@@ -749,13 +755,13 @@ export default {
             border-radius: 6px;
             width: 100%;
             font-size: 16px;
-            color: #31568e;
+            color: #5d5d5d;
             list-style: none;
             text-decoration: none;
             text-transform: capitalize;
             background: transparent;
             letter-spacing: 2px;
-            border: 5px solid #31568e;
+            border: 5px solid #5d5d5d;
             transition: .3s;
             z-index: 5;
             span {
@@ -787,7 +793,7 @@ export default {
           a:hover:before {
             transform: translate(-50%, -50%) rotate(-90deg);
             width: 100%;
-            background: #5fabf3;
+            background: #eb6e5e;
           }
         }
         li:hover{

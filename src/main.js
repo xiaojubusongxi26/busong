@@ -26,6 +26,9 @@ import 'element-ui/lib/theme-chalk/index.css'
 // 引入qs
 import qs from 'qs'
 
+// 引入切图插件
+import VueCropper from 'vue-cropper'
+
 Vue.prototype.$qs = qs
 
 Vue.prototype.$axios = axios
@@ -42,6 +45,7 @@ Vue.use(VueAxios, axios)
 Vue.use(ElementUI)
 Vue.use(VueAwesomeSwiper)
 Vue.use(mavonEditor)
+Vue.use(VueCropper)
 
 Vue.config.productionTip = false
 

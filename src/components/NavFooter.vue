@@ -1,8 +1,21 @@
 <template>
   <div class="footer">
     <div class="mark-footer">
-      <p>@2021-2022 By 小橘不颂兮</p>
-      <p>直上青天揽日月，欲倾东海洗乾坤</p>
+      <ul>
+        <li><a href="">关于不颂</a></li>
+        <li><a href="">联系小橘</a></li>
+        <li><a href="">公共资源</a></li>
+        <li><a href="">壁纸站</a></li>
+      </ul>
+      <div style="width:300px;margin:0 auto; padding:20px 0;" class="beian">
+        <!-- http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51012202001137 -->
+        <a target="_blank" href="http://www.beian.gov.cn" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;">
+          <img src="@/assets/images/备案图标.png" style="float:left;"/>
+          <p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px;">
+            川公网安备 51012202001137号
+          </p>
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -14,16 +27,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/sass/config.scss';
 
 .footer{
   width: 100%;
   height: 30vh;
   display: block;
-  background-color: rgba($color: #eefaff, $alpha: 0);
+  background: #ccccccb4;
   background-position: center;
   background-size: cover;
   position: relative;
-  z-index: 0;
+  z-index: 2;
+  a{
+    text-decoration: none;
+    color: #ffffff;
+  }
   .mark-footer{
     width: 100%;
     height: 100%;
@@ -33,20 +51,31 @@ export default {
     justify-content: center;
     p{
       text-align: center;
-      color: #fff;
-      font-size: 20px;
-      font-weight: bold;
-      z-index: 2;
     }
-  }
-  .mark-footer::before{
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #22222288;
-    opacity: 0.3;
-    z-index: 1;
+    ul{
+      list-style: none;
+      margin: 0 auto;
+      li{
+        display: inline-block;
+        a {
+          padding: 0 20px;
+          &:hover{
+            color: #f5f5f5;
+          }
+        }
+      }
+      li:not(:last-child) {
+        a {
+          border-right: 2px solid #e2e2e2;
+        }
+      }
+    }
+    .beian{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+    }
   }
 }
 </style>

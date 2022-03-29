@@ -35,6 +35,7 @@
     <model
       title="ヾ(❀^ω^)ﾉﾞ崽~快来写一篇笔记吧"
       color="#FCB69F"
+      submit="添加"
       :showModal="showEditModal"
       @cancel="showEditModal=false"
       @submit="addNote()"
@@ -63,12 +64,12 @@
           <!-- 笔记 -->
           <div class="category" v-show="!addShow">
             <span>
-              (๑╹◡╹)ﾉ"""好耶！又多一篇笔记~
+              (๑╹◡╹)ﾉ"""好耶!又多一篇笔记~
               <img src="~@/assets/images/notes/星星.png" alt="">
             </span>
             <el-input placeholder="请给我取一个好听又好用的名字吧~" v-model="newNoteName"
             class="input-with-select" @keydown.enter.native="addNote()">
-              <el-select v-model="selectClass" slot="prepend" placeholder="选我！选我！">
+              <el-select v-model="selectClass" slot="prepend" placeholder="选我!选我!">
                 <el-option :label="item.notesClassName" v-for="(item, index) in notesClass"
                    :key="index" :value="item.notesClassName"></el-option>
               </el-select>
@@ -414,6 +415,7 @@ export default {
       }
     }
   }
+  // 悬浮展开
   .notes-sort:hover{
     width: 300px;
   }

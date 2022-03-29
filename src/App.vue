@@ -1,21 +1,15 @@
 <template>
   <div id="app">
-    <nav-header></nav-header>
     <router-view/>
-    <nav-footer></nav-footer>
     <div class="scroll" :style="changeScroll"></div>
   </div>
 </template>
 
 <script>
-import NavHeader from '@/components/NavHeader.vue'
-import NavFooter from '@/components/NavFooter.vue'
 
 export default {
   name: 'App',
   components: {
-    NavHeader,
-    NavFooter
   },
   data () {
     return {
@@ -34,8 +28,13 @@ export default {
   },
   methods: {
     setScroll () {
-      /** 滚动条的高度 = 当前窗口的高度 / 整个页面的总宽度 */
+      /** 滚动条的高度 = 当前窗口的高度 / 整个页面的总高度 */
       const widthScroll = (window.innerHeight / document.body.clientHeight)
+      // console.log(widthScroll)
+      if (widthScroll >= 1.29) {
+        this.changeScroll.height = 0 + '%'
+        return
+      }
       this.changeScroll.height = widthScroll * 100 + '%'
       /* 滚动条离顶部的距离 = （当前窗口位置顶部被卷去的高度 / 页面的总高度） * 当前窗口的高度 */
       const topScroll = (window.pageYOffset / document.body.clientHeight)
@@ -65,13 +64,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/sass/config.scss';
+
 .scroll{
-  z-index: 9;
+  z-index: 8;
   position: fixed;
   top: 0;
-  width: 4px;
+  width: 3px;
   right: 0;
-  background: #ff6600;
+  background: $colorK;
   height: 100%;
   animation: scrollto 2s;
   @keyframes scrollto {
