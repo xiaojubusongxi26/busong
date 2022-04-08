@@ -1,30 +1,23 @@
-<!--
- * @Author: xiaojubusong
- * @Date: 2021-10-07 22:29:09
- * @LastEditors: xiaojubusong
- * @LastEditTime: 2022-04-08 10:32:29
- * @FilePath: \xiaoju\src\views\home.vue
- * @Description:
- *
--->
 <template>
   <div class="home-container">
     <nav-header></nav-header>
     <router-view></router-view>
     <nav-footer></nav-footer>
     <music></music>
+    <!-- <MaskBg v-if="$store.state.isMask"></MaskBg> -->
   </div>
 </template>
 
 <script>
 // import NavHeader from '@/components/NavHeader.vue'
-import NavHeader from '@/components/NavHeader.vue'
-import NavFooter from '@/components/NavFooter.vue'
+import NavHeader from '@/components/common/NavHeader.vue'
+import NavFooter from '@/components/common/NavFooter.vue'
 import Music from '@/components/Music.vue'
 /*
 // 页面精灵
 import { L2Dwidget } from 'live2d-widget' */
 import axios from 'axios'
+// import MaskBg from '../components/common/MaskBg.vue'
 
 export default {
   name: 'home',
@@ -103,5 +96,6 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/sass/config.scss';
 @import '@/assets/sass/responsive.scss';
+@import '@/assets/sass/elDialog.scss'
 
 </style>

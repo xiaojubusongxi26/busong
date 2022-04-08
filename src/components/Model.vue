@@ -1,9 +1,9 @@
 <template>
   <transition name="slide">
     <div class="model" v-show="showModal">
-      <div class="mask" @click="$emit('cancel')"></div>
+      <!-- <div class="mask" @click="$emit('cancel')"></div> -->
       <div class="model-dialog">
-        <div class="model-header" :style="{ backgroundColor: color + '!important' }">
+        <div class="model-header">
           <span>{{title}}</span>
           <a href="javascript:;" class="icon-close" @click="$emit('cancel')"></a>
         </div>
@@ -11,7 +11,7 @@
           <slot name="body"></slot>
         </div>
         <div class="model-footer">
-          <a href="javascript:;" class="btn" :style="{ backgroundColor: color + '!important' }" v-on:click="$emit('submit')">{{ submit }}</a>
+          <a href="javascript:;" class="btn"  v-on:click="$emit('submit')">{{ submit }}</a>
         </div>
       </div>
     </div>
@@ -25,8 +25,6 @@ export default {
     title: String,
 
     submit: String,
-
-    color: String,
 
     showModal: Boolean
   },
@@ -42,22 +40,23 @@ export default {
 @import '@/assets/sass/responsive.scss';
 
 .model {
-  position: fixed;
+  // position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 10;
+  // z-index: 10;
   transition: all .2s;
-  .mask{
-    position: fixed;
+  /* .mask{
+    position: absolute;
+    z-index: 11;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: #000000;
     opacity: 0.3;
-  }
+  } */
   &.slide-enter-active{
     top: 0;
   }
@@ -69,8 +68,9 @@ export default {
   }
   .model-dialog{
     position: absolute;
-    top:40%;
+    top: 40%;
     left: 50%;
+    // z-index: 12;
     width: 90vw;
     max-width: 660px;
     height: auto;
@@ -79,12 +79,14 @@ export default {
     transform: translate(-50%,-50%);
     .model-header{
       height: 60px;
-      background-color: #4372af;
-      border-radius: 15px 15px 0 0;
+      background-color: #ffffff;
+      border-radius: 5px 5px 0 0;
       padding: 0 25px;
       line-height: 60px;
-      color: #fff;
-      font-size: 16px;
+      color: #000000;
+      font-weight: bold;
+      letter-spacing: 5px;
+      font-size: 20px;
       .icon-close{
         position: absolute;
         top: 21px;
@@ -107,6 +109,7 @@ export default {
       height: 82px;
       line-height: 82px;
       text-align: center;
+      border-radius: 0 0 5px 5px;
       background-color: #f5f5f5;
       .btn{
         display: inline-block;
@@ -114,7 +117,7 @@ export default {
         height: 50%;
         line-height: 30px;
         text-align: center;
-        background-color: #4372af;
+        background-color: #418ac3;
         color: #fff;
         border: none;
         cursor: pointer;

@@ -14,6 +14,7 @@ const state = { // 全局管理的数据存储
     userSign: '',
     userBg: null
   },
+  isMask: false, // 控制遮罩层
   token: localStorage.getItem('token') ? localStorage.getItem('token') : '' // token
 }
 
@@ -38,6 +39,9 @@ export default new Vuex.Store({
     setUserBg (state, value) {
       state.userInfo.userBg = value
       sessionStorage.setItem('userinfo', JSON.stringify(state.userInfo))
+    },
+    updateMask (state, value) {
+      state.isMask = value
     }
   },
   actions: {
@@ -49,6 +53,9 @@ export default new Vuex.Store({
     },
     update_Avatar: (context, payload) => {
       context.commit('setUserAvatar', payload)
+    },
+    update_Mask: (context, payload) => {
+      context.commit('updateMask', payload)
     }
   },
   modules: {

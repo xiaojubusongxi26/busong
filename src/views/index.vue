@@ -10,7 +10,9 @@
         <daily></daily>
       </div>
       <div class="right">
+        <Countdown/>
         <Today/>
+        <Calendar/>
       </div>
     </div>
   </div>
@@ -23,6 +25,8 @@ import Today from '../components/index/Today.vue'
 import Weather from '../components/index/Weather.vue'
 import PerInfo from '../components/index/PerInfo.vue'
 import HeaderHome from '../components/index/HeaderHome.vue'
+import Calendar from '../components/index/Calendar.vue'
+import Countdown from '../components/index/Countdown.vue'
 
 export default {
   name: 'index',
@@ -37,7 +41,9 @@ export default {
     Today,
     Weather,
     PerInfo,
-    HeaderHome
+    HeaderHome,
+    Calendar,
+    Countdown
   },
   computed: {
   },

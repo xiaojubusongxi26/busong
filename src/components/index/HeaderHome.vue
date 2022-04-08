@@ -128,7 +128,7 @@ header{
     top: 0;
   }
   .centerText{
-    z-index: 2;
+    z-index: 0;
     text-align: center;
     margin: auto 0;
     // margin-bottom: 55vh;

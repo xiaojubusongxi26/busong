@@ -110,6 +110,7 @@ export default {
 @import '@/assets/sass/responsive.scss';
 
 .memo{
+  margin-bottom: 20px;
   .el-card{
     max-width: 300px;
     min-width: 110px;

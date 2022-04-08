@@ -74,7 +74,7 @@
           <span class="userName">{{ textItem.username }}</span>
           <span class="time">{{ textItem.releaseTime }}</span>
         </div>
-        <i class="el-icon-close" @click="delDaily =  textIndex "></i>
+        <i class="el-icon-close" @click="deleteModel(textIndex)"></i>
       </div>
       <!-- 主体内容 -->
       <div class="myBody">
@@ -98,9 +98,8 @@
       <div class="myFooter"></div>
     </div>
     <!--  添加悬浮卡片层  -->
-    <model
+    <!-- <model
       title="删除任务"
-      color="#bed7b4"
       submit='删除'
       :showModal="delDaily != -1"
       @cancel="delDaily = -1"
@@ -109,7 +108,24 @@
       <template v-slot:body>
         <div>确认要删除这条动态吗？</div>
       </template>
-    </model>
+    </model> -->
+    <el-dialog title="删除动态"
+     :visible.sync="isMask"
+     append-to-body
+     custom-class='el-dialog-add'
+     :lock-scroll=false
+     top="35vh">
+      <div slot="title" class="dialog-title">
+        <span>删除动态</span>
+      </div>
+      <div class="dialog-body">
+        确认要删除这条动态吗？
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="isMask = false">取 消</el-button>
+        <el-button type="primary" @click="deleteDaily()">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -133,6 +149,8 @@ export default {
       },
       // 删除动态
       delDaily: -1,
+      // 展示弹窗
+      isMask: false,
       // 照片上传
       dialogImageUrl: '',
       dialogVisible: false,
@@ -170,14 +188,20 @@ export default {
     }
   },
   components: {
-    Model
+    // Model
   },
   methods: {
     // 删除动态
     deleteDaily () {
-      console.dir(this.delDaily)
+      // console.dir(this.delDaily)
       this.daily.splice(this.delDaily, 1)
       this.delDaily = -1
+      this.isMask = false
+    },
+    // 打开删除弹窗
+    deleteModel (index) {
+      this.delDaily = index
+      this.isMask = true
     },
     // 当上传九张图片后，禁止上传
     addImgs (file, fileList) {
@@ -256,6 +280,36 @@ export default {
 @import '@/assets/sass/responsive.scss';
 .hidden{
   display: none;
+}
+::v-deep .el-dialog-add {
+  border-radius: 6px !important;
+}
+// 弹窗样式
+.dialog-title {
+  font-size: 22px;
+  font-weight: bold;
+}
+.dialog-body {
+}
+.dialog-footer {
+  display: flex;
+  justify-content: center;
+  .el-button--primary {
+    background: #629ac0;
+    border-color: #629ac0;
+  }
+  .el-button--primary:focus, .el-button--primary:hover {
+    background: #93b5cf;
+    border-color: #93b5cf;
+  }
+}
+.el-button:focus, .el-button:hover {
+    color: #629ac0;
+    border-color: #93b5cf;
+    background-color: #f0f8fd;
+}
+::v-deep .el-dialog__close:hover {
+  color: #629ac0 !important;
 }
 .daily-container{
   display: flex;
