@@ -15,13 +15,13 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home,
-    redirect: '/index',
+    redirect: '/',
     meta: {
       title: '不颂'
     },
     children: [
       {
-        path: '/index',
+        path: '/',
         name: 'index',
         component: Index
       },
@@ -66,14 +66,6 @@ const routes = [
       title: '不颂'
     },
     component: () => import('@/views/login')
-  },
-  {
-    path: '/tailoring',
-    name: 'tailoring',
-    meta: {
-      title: '不颂'
-    },
-    component: () => import('@/views/Tailoring.vue')
   }
 ]
 
@@ -81,6 +73,25 @@ const router = new VueRouter({
   mode: 'hash',
   base: process.env.BASE_URL,
   routes
+})
+
+// 导航守卫
+router.beforeEach(async (to, from, next) => {
+  // 从 Cookie 获取 Token
+  const hasToken = localStorage.getItem('token')
+  if (hasToken !== null) {
+    // 判断目标路径是否为login，是则回到该页面
+    if (to.name === 'login') next(from.name)
+    else {
+      next()
+    }
+  } else {
+    if (to.name !== 'login') next({ name: 'login' })
+    else {
+      next()
+    }
+  }
+  return false
 })
 
 export default router

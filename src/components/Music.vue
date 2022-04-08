@@ -172,7 +172,7 @@ export default {
       // mv地址
       mvUrl: '',
       // 当前音量
-      nowSound: 1,
+      nowSound: 0.3,
       // 音乐条显示
       isBar: false,
       // 声音控制
@@ -220,10 +220,6 @@ export default {
         }, 0)
       }
     }, 0)
-    this.axios.get('http://1.117.145.128:5000/personalized/mv').then(response => {
-      // 保存内容
-      console.log(response)
-    })
   },
   methods: {
     // 点击进度条改变音乐进度
@@ -400,6 +396,7 @@ export default {
     },
     // 鼠标滚动
     mouseWheel (event) {
+      console.log(event)
       if (event.wheelDelta > 0) {
         if (this.nowSound >= 1) {
           this.nowSound = 1

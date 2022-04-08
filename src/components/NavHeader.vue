@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="nav">
+    <div class="nav" :style="{ background: $store.state.userInfo.userBg === undefined ? '#418ac3' : ''}">
       <ul :class="{ 'changeColor': this.isChange }">
         <li class=" ">不颂</li>
         <li class="avatar" @click="unfoldNav()" type="primary">
           <a href="/#/user" ref="avatar" @mouseenter="isShow = true">
-            <img src="@/assets/images/avatar/mmexport1603512250737.jpg" alt="" >
+            <img :src="$store.state.userInfo.userAvatar ? $store.state.userInfo.userAvatar : defaultAvatar" alt="" >
           </a>
           <!-- 头像悬浮卡片 -->
           <div class="avatar_card" v-if="isShow">
@@ -20,7 +20,7 @@
           </div>
         </li>
         <li class=" ">
-          <a href="/#/index">
+          <a href="/#/">
             <i class="el-icon-s-home"></i>
             首页
           </a>
@@ -179,7 +179,9 @@ export default {
       // 头像控制导航栏收缩
       isUnfold: false,
       drawer: false,
-      timer: ''
+      timer: '',
+      // 默认头像
+      defaultAvatar: require('@/assets/images/lazy/加载中.png')
     }
   },
   mounted () {
@@ -212,6 +214,7 @@ export default {
     },
     // 退出登录
     logout () {
+      this.$store.commit('$_removeStorage')
       this.$router.push({
         path: '/login'
       })

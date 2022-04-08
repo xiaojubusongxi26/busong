@@ -1,14 +1,14 @@
 <template>
   <div class="cropper-app">
     <el-form :model="formValidate" :rules="ruleValidate" ref="formValidate" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="封面上传" prop="mainImage">
+      <el-form-item prop="mainImage">
         <div class="list-img-box">
           <div v-if="formValidate.mainImage !== ''">
             <img :src="formValidate.mainImage" style='width:300px;height:150px' alt="自定义封面">
           </div>
-          <div v-else class="upload-btn" style="height: 120px;" @click="uploadPicture('flagImg')">
-            <i class="el-icon-plus" style="font-size: 30px;"></i>
-            <span>封面设置</span>
+          <div v-else class="upload-btn" @click="uploadPicture('flagImg')">
+            <i class="el-icon-picture"></i>
+            <span></span>
           </div>
         </div>
         <input type="hidden" v-model="formValidate.mainImage" placeholder="请添加封面">
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import CropperImage from '@/components/CropperImage'
+import CropperImage from '@/components/user/CropperImage'
 export default {
   name: 'Tailoring',
   components: { CropperImage },
@@ -79,8 +79,58 @@ export default {
   }
 }
 </script>
-<style scoped>
-  .upload-list-cover{
+<style lang="scss" scoped>
+.cropper-app {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+  .el-form {
+    cursor: pointer;
+  }
+  ::v-deep .el-form-item {
+    margin: 0;
+    .el-form-item__content {
+      margin: 0 !important;
+    }
+  }
+  .upload-btn {
+    display: flex;
+    position: relative;
+    // justify-content: end;
+    // align-items: end;
+    height: 55vh;
+    i {
+      position: absolute;
+      right: 7px;
+      bottom: 4px;
+      color: #ffffff;
+      z-index: 2;
+      font-size: 16px;
+    }
+    span {
+      position: absolute;
+      right: -33px;
+      bottom: -26px;
+      transform: rotate(-45deg);
+    }
+    span::after {
+      content: "";
+      width: 0px;
+      height: 0px;
+      border: 30px solid #000;
+      border-top-color: #418bc3c8;
+      transform: rotate(90deg);
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+      border-right-color: transparent;
+    }
+  }
+  ::v-deep .el-dialog__wrapper {
+    overflow: visible;
+  }
+  /* .upload-list-cover{
       position: absolute;
       top: 0;
       bottom: 0;
@@ -120,5 +170,5 @@ export default {
   }
   .upload-btn i{
     margin: 5px;
-  }
+  } */
 </style>

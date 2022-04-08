@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'login',
   data () {
@@ -44,24 +45,27 @@ export default {
   },
   methods: {
     login () {
-      // 获取本地json数据
-      const user = JSON.parse(localStorage.getItem('user'))
-      if (this.username === '' || this.username !== user.username) {
-        this.$message.warning('请输入正确的用户名')
-        return
-      } else if (this.password === '' || this.password !== user.password) {
-        this.$message.warning('请输入正确的密码')
-        return
-      }
-      // 添加
-      /* const user = {
-        username: this.username,
-        password: this.password
-      }
-      localStorage.setItem('user', JSON.stringify(user)) */
-      // 获取
-      this.$router.push({
-        path: '/'
+      axios({
+        method: 'post',
+        url: 'http://localhost:1212/api/login',
+        data: {
+          username: this.username,
+          password: this.password
+        }
+      }).then(res => {
+        console.log(res.data)
+        if (res.status === 0) {
+          this.$store.commit('$_setToken', res.token)
+          this.$message.success('登录成功')
+          this.$router.push({
+            name: 'index',
+            params: {
+              from: 'login'
+            }
+          })
+        } else {
+          this.$message.error(res.message)
+        }
       })
     },
     register () {
@@ -75,14 +79,6 @@ export default {
         this.$message.warning('密码必须包含字母和数字，且至少为8位')
         return
       }
-      if (JSON.parse(localStorage.getItem('user'))) {
-        localStorage.removeItem('user')
-      }
-      const user = {
-        username: this.username,
-        password: this.password
-      }
-      localStorage.setItem('user', JSON.stringify(user))
       this.$message.success('注册成功')
       this.$router.push({
         path: '/'

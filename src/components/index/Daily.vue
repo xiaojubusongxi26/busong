@@ -69,7 +69,7 @@
     <div class="myText" v-for="(textItem,textIndex) in daily" :key="textIndex">
       <!-- 头像，名称，发布日常 -->
       <div class="myHeader">
-        <img src="@/assets/images/avatar/mmexport1603512250737.jpg" alt="">
+        <img :src="$store.state.userInfo.userAvatar ? $store.state.userInfo.userAvatar : defaultAvatar" alt="">
         <div class="nTime">
           <span class="userName">{{ textItem.username }}</span>
           <span class="time">{{ textItem.releaseTime }}</span>
@@ -121,6 +121,8 @@ export default {
     return {
       // 发布动态
       showWrite: false,
+      // 默认头像
+      defaultAvatar: require('@/assets/images/lazy/加载中.png'),
       release: {
         id: '1',
         username: '小橘不颂兮',
@@ -142,7 +144,7 @@ export default {
         {
           id: '1',
           username: '小橘不颂兮',
-          userAvatar: require('@/assets/images/avatar/mmexport1603512250737.jpg'),
+          userAvatar: this.$store.state.userInfo.userAvatar,
           releaseTime: '2021-12-30 12:00',
           textMain: '新年快乐~',
           dailyImgs: [
@@ -152,7 +154,7 @@ export default {
         {
           id: '1',
           username: '小橘不颂兮',
-          userAvatar: require('@/assets/images/avatar/mmexport1603512250737.jpg'),
+          userAvatar: this.$store.state.userInfo.userAvatar,
           releaseTime: '2021-10-11 05:20',
           textMain: '赏心悦目如是也',
           dailyImgs: [
@@ -192,7 +194,7 @@ export default {
       const day = {
         id: '1',
         username: '小橘不颂兮',
-        userAvatar: require('@/assets/images/mmexport1602954427757.jpg'),
+        userAvatar: this.$store.state.userInfo.userAvatar,
         releaseTime: '',
         textMain: '',
         dailyImgs: []
@@ -260,21 +262,20 @@ export default {
   // background-color: rgba($color: $colorG, $alpha: 0.85);
   align-items: center;
   flex-direction: column;
-  margin-bottom: 20px;
+  margin: 15px 0 20px;
   /* 日常模块头部 */
   .write{
     width: 100%;
-    margin: 0;
+    margin-bottom: 5px;
     padding: 10px 20px 8px;
-    background-color: $colorK;
-    border-radius: 6px;
+    background-color: #ffffff;
+    border-radius: 12px;
     box-shadow: 0 4px 8px 0 rgba(97, 97, 97, 0.2), 0 6px 20px 0 rgba(63, 63, 63, 0.19);
-    color: $colorJ;
+    color: #000000;
     border-bottom: 1px $colorG solid;
     position: relative;
     h5{
       display: inline;
-      font-family: $familyA;
       font-weight: bold;
     }
     i{
@@ -283,27 +284,28 @@ export default {
       display: inline;
       bottom: 0;
       right: 20px;
-      margin-bottom: 7px;
+      margin-bottom: 10px;
       font-size: 20px;
       transition: .2s !important;
     }
-    i:hover{
-      color: $colorG;
-    }
+    /* i:hover{
+      // color: $colorG;
+    } */
   }
   /* 发布日常 */
   .release{
     width: 100%;
     .releaseMain{
       padding: 10px 20px 0 20px;
-      margin-top: 15px;
-      border-radius: 6px;
+      margin: 10px 0;
+      border-radius: 12px;
       background: rgba($color: $colorG, $alpha: 1);
       box-shadow: 0 4px 8px 0 rgba(97, 97, 97, 0.2), 0 6px 20px 0 rgba(63, 63, 63, 0.19);
       border: 1px $colorG solid;
       span{
-        color: $colorK;
-        text-shadow: 1px 1px 2px $colorK;
+        color: #000000;
+        font-weight: bold;
+        // text-shadow: 1px 1px 2px $colorK;
         margin: 5px 0;
         display: block;
       }
