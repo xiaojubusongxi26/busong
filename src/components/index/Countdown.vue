@@ -1,11 +1,12 @@
+/* 倒计时组件 */
 <template>
 <div class="countdown" @click="isEdit = true">
   <div class="title">
-    <span> {{ thingName }} </span>
+    <span> {{ showName }} </span>
   </div>
   <div class="time">
     <span>{{ showTime }}</span>
-    <span class="time-label">天</span>
+    <span class="time-label" v-if="(typeof showTime).toString() === 'number'">天</span>
   </div>
   <div class="setting-time">
     <el-dialog title="编辑倒计时"
@@ -51,22 +52,22 @@ export default {
   data () {
     return {
       isEdit: false,
-      thingName: '考研倒计时',
+      showName: '',
+      thingName: '',
       setTime: '',
       nowTime: new Date(),
       showTime: 260,
-      thingLoop: '',
-      value1: ''
+      thingLoop: ''
     }
   },
   watch: {},
   computed: {},
   methods: {
     updateCountDown () {
-      // console.log(this.setTime, this.nowTime)
-      // 处理时间差
-      this.showTime = Math.ceil((this.setTime.getTime() - this.nowTime.getTime()) / (24 * 60 * 60 * 1000))
-
+      if (this.setTime === '' || this.thingName === '') {
+        this.$message('请设置倒计时名称和目标时间')
+        return
+      }
       // 实例化对象，上传至后端
       const countDown = {
         countDownName: this.thingName,
@@ -79,14 +80,49 @@ export default {
          ':' + this.setTime.getSeconds().toString().padStart(2, '0'),
         countDownLoop: this.thingLoop
       }
-
+      this.axios({
+        method: 'post',
+        url: 'http://localhost:1212/api/setCountDown',
+        data: countDown
+      }).then(res => {
+        // console.log(res)
+        if (!res.status) {
+          // 处理时间差
+          this.showTime = Math.ceil((this.setTime.getTime() - this.nowTime.getTime()) / (24 * 60 * 60 * 1000))
+          this.showName = this.thingName
+          this.$notify({
+            title: '成功',
+            message: res.message,
+            type: 'success'
+          })
+        } else {
+          this.$message.error(res.message)
+        }
+      })
       // 关闭弹窗
       this.isEdit = false
       console.log(countDown.countDownTime, new Date(countDown.countDownTime))
+    },
+    getCountDown () {
+      this.axios({
+        method: 'get',
+        url: 'http://localhost:1212/api/getCountDown'
+      }).then(res => {
+        // console.log(res)
+        const data = JSON.parse(res.data[0].userCountDown)
+        this.showName = data.countDownName
+        const time = new Date(data.countDownTime)
+        this.showTime = Math.ceil((time.getTime() - this.nowTime.getTime()) / (24 * 60 * 60 * 1000))
+        if (this.showTime < 0) {
+          this.showTime = '🏵️'
+        }
+      })
     }
   },
   created () {},
-  mounted () {}
+  mounted () {
+    this.getCountDown()
+  }
 }
 </script>
 <style lang="scss" scoped>

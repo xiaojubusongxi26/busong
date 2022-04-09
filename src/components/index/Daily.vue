@@ -71,7 +71,7 @@
       <div class="myHeader">
         <img :src="$store.state.userInfo.userAvatar ? $store.state.userInfo.userAvatar : defaultAvatar" alt="">
         <div class="nTime">
-          <span class="userName">{{ textItem.username }}</span>
+          <span class="userName">{{ $store.state.userInfo.username }}</span>
           <span class="time">{{ textItem.releaseTime }}</span>
         </div>
         <i class="el-icon-close" @click="deleteModel(textIndex)"></i>
@@ -160,28 +160,26 @@ export default {
       /* 日常动态数组 */
       daily: [
         {
-          id: '1',
-          username: '小橘不颂兮',
-          userAvatar: this.$store.state.userInfo.userAvatar,
           releaseTime: '2021-12-30 12:00',
-          textMain: '新年快乐~',
+          textMain: '烟火~ 🎵',
           dailyImgs: [
-            require('@/assets/images/dailyImgs/wallhaven-3z7exy.jpg')
+            require('@/assets/images/dailyImgs/005GP1Jnly1h0t37fogbkj335s1bc4qq.jpg'),
+            require('@/assets/images/dailyImgs/005GP1Jnly1h0t37nphcrj335s1bcu0x.jpg')
           ]
         },
         {
-          id: '1',
-          username: '小橘不颂兮',
-          userAvatar: this.$store.state.userInfo.userAvatar,
           releaseTime: '2021-10-11 05:20',
-          textMain: '赏心悦目如是也',
+          textMain: 'Green Planet ☘️',
           dailyImgs: [
-            require('@/assets/images/dailyImgs/wallhaven-3z2rvy.jpg'),
-            require('@/assets/images/dailyImgs/wallhaven-57mly5.jpg'),
-            require('@/assets/images/dailyImgs/wallhaven-57rmj5.jpg'),
-            require('@/assets/images/dailyImgs/wallhaven-72lvqe.jpg'),
-            require('@/assets/images/dailyImgs/wallhaven-g71pve.jpg'),
-            require('@/assets/images/dailyImgs/wallhaven-g718wd.jpg')
+            require('@/assets/images/dailyImgs/spring/绿 (1).png'),
+            require('@/assets/images/dailyImgs/spring/绿 (2).png'),
+            require('@/assets/images/dailyImgs/spring/绿 (3).png'),
+            require('@/assets/images/dailyImgs/spring/绿 (4).png'),
+            require('@/assets/images/dailyImgs/spring/绿 (5).png'),
+            require('@/assets/images/dailyImgs/spring/绿 (6).png'),
+            require('@/assets/images/dailyImgs/spring/绿 (7).png'),
+            require('@/assets/images/dailyImgs/spring/绿 (8).png'),
+            require('@/assets/images/dailyImgs/spring/绿 (9).png')
           ]
         }
       ]
@@ -216,9 +214,7 @@ export default {
         return
       }
       const day = {
-        id: '1',
-        username: '小橘不颂兮',
-        userAvatar: this.$store.state.userInfo.userAvatar,
+        id: this.$store.state.userInfo.id,
         releaseTime: '',
         textMain: '',
         dailyImgs: []
