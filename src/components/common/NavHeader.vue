@@ -27,52 +27,30 @@
           <div class="n-line"></div>
         </li>
         <li class=" ">
-          <a href="/#/index">
-            <i class="el-icon-video-camera-solid"></i>
-            摄影
+          <a href="/#/collect">
+            <i class="el-icon-s-management"></i>
+            收藏
           </a>
           <div class="n-line"></div>
         </li>
         <li class=" ">
-          <a>
-            <i class="el-icon-picture"></i>
-            壁纸
+          <a href="/#/notes">
+            <i class="el-icon-s-order"></i>
+            文档
           </a>
           <div class="n-line"></div>
         </li>
         <li class=" ">
-            <a href="javascript:;">
-              <i class="el-icon-video-camera-solid"/>
-              电影
+            <a href="/#/timeTree">
+              <i class="el-icon-s-promotion"/>
+              时间树
             </a>
             <div class="n-line"></div>
         </li>
         <li class=" ">
-            <a href="/#/music">
-              <!-- <svg t="1633865672236" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="11295" width="20" height="20"><path d="M514 114.3c-219.9 0-398.8 178.9-398.8 398.8 0 220 178.9 398.9 398.8 398.9s398.8-178.9 398.8-398.8S733.9 114.3 514 114.3z m200.6 311.5c-20.2 21-53.6 21.6-74.5 1.4L592 380.8c-5.2-5-13.9-1.3-13.9 5.9v327.2c0 59-53.6 105.3-122 105.3s-122-46.2-122-105.3c0-56.5 49.1-101.3 113.3-105 4.7-0.3 8.7 3.5 8.7 8.2v87.2c0 5.4 5.1 9.5 10.3 7.9 0.3-0.1 0.5-0.2 0.7-0.2 3.4-1.1 5.6-4.3 5.6-7.8V274.1c0-58 69.6-87.6 111.4-47.4l129.2 124.4c20.9 20.4 21.5 53.7 1.3 74.7z" p-id="11296" fill="#f4f5f7"></path></svg> -->
-              <i class="el-icon-headset"></i>
-              音乐
-            </a>
-            <div class="n-line"></div>
-        </li>
-        <li class=" ">
-            <a href="javascript:;">
-              <i class="el-icon-s-management"></i>
-              书架
-            </a>
-            <div class="n-line"></div>
-        </li>
-        <li class=" ">
-            <a href="/#/notes">
-              <i class="el-icon-s-order"></i>
-              文档
-            </a>
-            <div class="n-line"></div>
-        </li>
-        <li class=" ">
-          <a href="/#/task">
-            <i class="el-icon-s-promotion"/>
-            历程树
+          <a href="/#/topic">
+            <i class="el-icon-s-comment"/>
+            话题
           </a>
           <div class="n-line"></div>
         </li>
@@ -97,58 +75,30 @@
                 <div class="n-line"></div>
               </el-menu-item>
               <el-menu-item index="2">
-                <a>
-                  <i class="el-icon-video-camera-solid"></i>
-                  摄影
+                <a href="/#/collect">
+                  <i class="el-icon-s-management"></i>
+                  收藏
                 </a>
                 <div class="n-line"></div>
               </el-menu-item>
               <el-menu-item index="3">
-                <a>
-                  <i class="el-icon-picture" style="width: 21px;margin-right: 8px;"></i>
-                  壁纸
+                <a href="/#/notes">
+                  <i class="el-icon-s-order" style="width: 21px;margin-right: 8px;"></i>
+                  文档
                 </a>
                 <div class="n-line"></div>
               </el-menu-item>
               <el-menu-item index="4">
-                <a>
-                  <i class="el-icon-video-camera-solid"/>
-                  电影
+                <a href="/#/timeTree">
+                  <i class="el-icon-s-promotion"/>
+                  时间树
                 </a>
                 <div class="n-line"></div>
               </el-menu-item>
               <el-menu-item index="5">
-                <a href="/#/music">
-                  <i class="el-icon-headset" style="width: 21px;margin-right: 4px;"></i>
-                  音乐
-                </a>
-                <div class="n-line"></div>
-              </el-menu-item>
-              <el-menu-item index="6">
-                <a>
-                  <i class="el-icon-s-management"></i>
-                  书架
-                </a>
-                <div class="n-line"></div>
-              </el-menu-item>
-              <el-menu-item index="7">
-                  <a href="/#/notes">
-                    <i class="el-icon-s-order"></i>
-                    文档
-                  </a>
-                  <div class="n-line"></div>
-              </el-menu-item>
-              <el-menu-item index="8">
-                <a href="/#/task">
-                  <i class="el-icon-s-promotion"/>
-                  历程树
-                </a>
-                <div class="n-line"></div>
-              </el-menu-item>
-              <el-menu-item index="9">
-                <a href="/#/user">
-                  <i class="el-icon-user-solid"/>
-                  个人信息
+                <a href="/#/topic">
+                  <i class="el-icon-s-comment" style="width: 21px;margin-right: 4px;"></i>
+                  话题
                 </a>
                 <div class="n-line"></div>
               </el-menu-item>

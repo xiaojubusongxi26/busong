@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view/>
-    <div class="scroll" :style="changeScroll"></div>
+    <!-- <div class="scroll" :style="changeScroll"></div> -->
   </div>
 </template>
 
@@ -66,7 +66,10 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/sass/config.scss';
 
-.scroll{
+#app {
+  overflow-x: hidden;
+}
+/* .scroll{
   z-index: 8;
   position: fixed;
   top: 0;
@@ -82,5 +85,5 @@ export default {
       right: 0;
     }
   }
-}
+} */
 </style>

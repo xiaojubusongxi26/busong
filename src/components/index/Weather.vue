@@ -3,9 +3,9 @@
   <div class="today">
     <i :class="climateType" :style="{ color: climateColor }"></i>
     <span :style="{ color: climateColor }">{{ this.nowTem | temperature }} {{ this.type }}</span>
-    <p>{{ this.nowTime + ' ' + this.lowTem + '~' + this.hightTem}}</p>
+    <p>{{ this.nowTime + ' ' + this.lowTem + '~' + this.highTem }}</p>
   </div>
-  <span>{{ this.tell }}</span>
+  <span>{{ this.tip }}</span>
   <div class="city">
     <div class="demo-input-suffix" @keyup.enter="changeCity">
       <el-input
@@ -26,11 +26,11 @@ export default {
     return {
       // 获取天气信息,
       nowTem: '',
-      hightTem: '',
+      highTem: '',
       lowTem: '',
       weatherList: [],
       nowTime: '',
-      tell: '',
+      tip: '',
       type: '',
       currentCity: '',
       // 当前天气状态，晴为1，多云为2,阴天为3,小雨为4，大雨为5
@@ -54,26 +54,16 @@ export default {
       })
     },
     searchWeather () {
-      this.axios.get('http://wthrcdn.etouch.cn/weather_mini?city=' + this.currentCity).then((res) => {
-        if (res.data.status === 1002 && this.currentCity === undefined) {
-          this.currentCity = this.$store.state.userInfo.userCity
-          // this.$message.warning('请输入正确的地名')
-        }
-        // 获取当前温度
-        this.nowTem = res.data.data.wendu
-        // 获得今日天气数据
-        this.weatherList = res.data.data.forecast
-        this.type = res.data.data.forecast[0].type
-        // 得到今日日期
-        const date = new Date()
-        const arr = (date.toLocaleString() + '').split(' ')
-        this.nowTime = arr[0]
-        // 获取今日最高和最低气温
-        this.hightTem = (this.weatherList[0].high.split(' '))[1]
-        this.lowTem = (this.weatherList[0].low.split(' '))[1]
-        // 获得天气提醒
-        this.tell = res.data.data.ganmao
-        this.changeClimateType(res.data.data.forecast[0].type)
+      this.axios.get('https://api.vvhan.com/api/weather?city=' + this.currentCity).then((res) => {
+        const data = res.data.info
+        console.log('________________', data)
+        this.nowTime = data.date
+        this.lowTem = data.low.slice(data.low.search(' '))
+        this.highTem = data.high.slice(data.high.search(' '))
+        this.tip = data.tip
+        this.type = data.type
+        this.nowTem = data.high.slice(data.high.search(' '), data.high.search('°'))
+        this.changeClimateType()
       })
     },
     // 更改天气标签

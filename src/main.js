@@ -73,15 +73,16 @@ axios.interceptors.response.use(function (response) {
 axios.interceptors.request.use(
   config => {
     // console.log(config)
-    if (!config.url.includes('http://localhost:1212')) { return config }
-    if (localStorage.getItem('token') && config.url.includes('http://localhost:1212')) {
+    if (!config.url.includes('http://localhost:9090')) { return config }
+    if (localStorage.getItem('token') && config.url.includes('http://localhost:9090')) {
       config.headers.Authorization = localStorage.getItem('token')
     }
     return config
   },
   error => {
     return Promise.reject(error)
-  })
+  }
+)
 
 Vue.config.productionTip = false
 

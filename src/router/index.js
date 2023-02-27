@@ -1,20 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Home from '@/views/home.vue'
-import Index from '@/views/index.vue'
-import Music from '@/views/music.vue'
-import Task from '@/views/task.vue'
-import Notes from '@/views/notes.vue'
-import User from '@/views/user.vue'
-
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home,
+    component: () => import('@/views/home.vue'),
     redirect: '/',
     meta: {
       title: '不颂'
@@ -23,12 +16,36 @@ const routes = [
       {
         path: '/',
         name: 'index',
-        component: Index
+        component: () => import('@/views/index.vue')
+      },
+      {
+        path: '/collect',
+        name: 'collect',
+        component: () => import('@/views/collect.vue'),
+        meta: {
+          title: '收藏'
+        }
+      },
+      {
+        path: '/topic',
+        name: 'topic',
+        component: () => import('@/views/topic.vue'),
+        meta: {
+          title: '话题'
+        }
+      },
+      {
+        path: '/timeTree',
+        name: 'timeTree',
+        component: () => import('@/views/timeTree.vue'),
+        meta: {
+          title: '时间树'
+        }
       },
       {
         path: '/music',
         name: 'music',
-        component: Music,
+        component: () => import('@/views/music.vue'),
         meta: {
           title: '来听听音乐吧~'
         }
@@ -36,7 +53,7 @@ const routes = [
       {
         path: '/task',
         name: 'task',
-        component: Task,
+        component: () => import('@/views/task.vue'),
         meta: {
           title: '历程'
         }
@@ -44,15 +61,15 @@ const routes = [
       {
         path: '/notes',
         name: 'notes',
-        component: Notes,
+        component: () => import('@/views/notes.vue'),
         meta: {
-          title: '笔记'
+          title: '文档'
         }
       },
       {
         path: '/user',
         name: 'user',
-        component: User,
+        component: () => import('@/views/user.vue'),
         meta: {
           title: '个人信息'
         }
@@ -65,7 +82,7 @@ const routes = [
     meta: {
       title: '不颂'
     },
-    component: () => import('@/views/login')
+    component: () => import('@/views/login/login.vue')
   }
 ]
 
@@ -76,7 +93,7 @@ const router = new VueRouter({
 })
 
 // 导航守卫
-router.beforeEach(async (to, from, next) => {
+/* router.beforeEach(async (to, from, next) => {
   // 从 Cookie 获取 Token
   const hasToken = localStorage.getItem('token')
   if (hasToken !== null) {
@@ -92,6 +109,6 @@ router.beforeEach(async (to, from, next) => {
     }
   }
   return false
-})
+}) */
 
 export default router

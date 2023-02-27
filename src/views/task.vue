@@ -499,7 +499,7 @@ export default {
         transition: 1s;
         @keyframes inputBorder {
           from{
-            box-shadow: 0
+            box-shadow: none;
           }
           to{
             box-shadow: inset 0 0 4px rgba(143, 143, 143, 0.096),0 0 18px rgb(255, 255, 255);

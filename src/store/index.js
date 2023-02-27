@@ -7,12 +7,12 @@ const state = { // 全局管理的数据存储
   isLogin: '0',
   userInfo: sessionStorage.getItem('userinfo') ? sessionStorage.getItem('userinfo') : {
     id: 0,
-    username: '',
-    userTitle: '',
-    userCity: '',
-    userAvatar: '',
-    userSign: '',
-    userBg: null
+    username: '王谢棠',
+    userTitle: 'Hello 王谢棠',
+    userCity: '成都',
+    userAvatar: require('@/assets/images/avatar/mmexport1583563214956.jpg'),
+    userSign: '好久不见',
+    userBg: require('@/assets/images/home/755ce8eegy1gjw0am3xs8j21fe2us1ky.png')
   },
   token: localStorage.getItem('token') ? localStorage.getItem('token') : '' // token
 }
