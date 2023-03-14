@@ -2,17 +2,16 @@
   <div class="footer">
     <div class="mark-footer">
       <ul>
-        <li><a href="">关于不颂</a></li>
-        <li><a href="">联系小橘</a></li>
-        <li><a href="">公共资源</a></li>
-        <li><a href="">壁纸站</a></li>
+        <li><a href="javascript:;">关于不颂</a></li>
+        <li><a href="javascript:;">联系我们</a></li>
+        <li><a href="javascript:;">友情链接</a></li>
+        <li><a href="javascript:;">资源导航</a></li>
       </ul>
       <div style="width:300px;margin:0 auto; padding:20px 0;" class="beian">
         <!-- http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51012202001137 -->
         <a target="_blank" href="http://www.beian.gov.cn" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;">
-          <img src="@/assets/images/备案图标.png" style="float:left;"/>
+<!--          <img src="@/assets/images/备案图标.png" style="float:left;"/>-->
           <p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px;">
-            川公网安备 51012202001137号
           </p>
         </a>
       </div>
@@ -33,7 +32,7 @@ export default {
   width: 100%;
   height: 30vh;
   display: block;
-  background: #ccccccb4;
+  background: #282828;
   background-position: center;
   background-size: cover;
   position: relative;

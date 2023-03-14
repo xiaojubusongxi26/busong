@@ -5,6 +5,7 @@ import Vuex from 'vuex'
 import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import bus from '@/utils/eventBus'
 // 引入markdown
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
@@ -32,6 +33,7 @@ import VueCropper from 'vue-cropper'
 Vue.prototype.$qs = qs
 
 Vue.prototype.$axios = axios
+Vue.prototype.$bus = bus
 // 根据前端的跨域方式做调整 /a/b : /api/a/b => /a/b
 axios.defaults.baseURL = '/api'
 axios.defaults.timeout = 8000 // 延迟时间8秒

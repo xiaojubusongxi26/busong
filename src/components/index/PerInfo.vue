@@ -54,7 +54,7 @@ export default {
   width: 100%;
   background-color: rgba($color: $colorG, $alpha: 1);
   border-radius: 15px;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
   /* 个人头像面板 */
   .avatar{
     width: 150px;

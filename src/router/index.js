@@ -19,9 +19,9 @@ const routes = [
         component: () => import('@/views/index.vue')
       },
       {
-        path: '/collect',
-        name: 'collect',
-        component: () => import('@/views/collect.vue'),
+        path: '/drawer',
+        name: 'drawer',
+        component: () => import('@/views/drawer.vue'),
         meta: {
           title: '收藏'
         }

@@ -27,7 +27,7 @@
           <div class="n-line"></div>
         </li>
         <li class=" ">
-          <a href="/#/collect">
+          <a href="/#/drawer">
             <i class="el-icon-s-management"></i>
             收藏
           </a>
@@ -75,7 +75,7 @@
                 <div class="n-line"></div>
               </el-menu-item>
               <el-menu-item index="2">
-                <a href="/#/collect">
+                <a href="/#/drawer">
                   <i class="el-icon-s-management"></i>
                   收藏
                 </a>

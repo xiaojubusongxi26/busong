@@ -1,0 +1,66 @@
+.sidebar {
+  height: 100%;
+  width: 100%;
+  background: #f5f8ff;
+  border-right: 1px solid #e3e7f7;
+  box-sizing: border-box;
+  padding: 80px 50px;
+  overflow: hidden;
+  header {
+    height: 50px;
+    line-height: 50px;
+    cursor: default;
+    position: relative;
+    .func {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      right: -25px;
+      top: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all .2s ease-out;
+      &:hover {
+        background: #c3cff4;
+        .circle {
+          background-color: #ffffff;
+          box-shadow: -6px 0 0 0 #ffffff, 6px 0 0 0 #ffffff;
+        }
+        .func-add {
+          i {
+            color: #FFFFFF;
+          }
+        }
+      }
+      .circle {
+        border-radius: 50%;
+        width: 4px;
+        height: 4px;
+        background-color: #d5d7e3;
+        box-shadow: -6px 0 0 0 #d5d7e3, 6px 0 0 0 #d5d7e3;
+      }
+      .func-add {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        i {
+          position: absolute;
+          left: 7px;
+          top: 7px;
+          font-size: 22px;
+          font-weight: bolder;
+        }
+      }
+    }
+  }
+  .collect-list {
+
+  }
+  /*修改element-ui样式*/
+  ::v-deep .el-input {
+    width: 300px !important;
+  }
+}

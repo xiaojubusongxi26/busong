@@ -1,7 +1,23 @@
 <template>
   <div class="daily-container">
     <div class="write">
+      <span class="pre-block"></span>
       <h5>我的日常</h5>
+      <transition name="daily-search">
+        <input type="text" v-model="searchContent" v-if="isShowSearch" @keydown.enter="dailySearch()"/>
+      </transition>
+      <i class="el-icon-search daily_search" @click="isShowSearch = !isShowSearch"></i>
+      <i class="el-icon-s-grid daily_order"
+         @click="isShowOrderList = !isShowOrderList"
+      ></i>
+      <ul class="daily_order_list"
+          v-show="isShowOrderList"
+          @mouseenter="isShowOrderList = true"
+          @mouseleave="isShowOrderList = false"
+      >
+        <li @click="dailyOrder(1)">按时间降序</li>
+        <li @click="dailyOrder(2)">按时间升序</li>
+      </ul>
       <i class="el-icon-edit-outline" @click="showWrite = !showWrite"></i>
     </div>
     <div class="release">
@@ -135,6 +151,12 @@ export default {
   name: 'Daily',
   data () {
     return {
+      // 展示动态搜索框
+      isShowSearch: false,
+      // 展示动态排序选择列表
+      isShowOrderList: false,
+      // 搜索动态内容
+      searchContent: '',
       // 发布动态
       showWrite: false,
       // 默认头像
@@ -189,6 +211,14 @@ export default {
     // Model
   },
   methods: {
+    // 切换动态排序方式
+    dailyOrder () {
+      // TODO: 1为降序排列，2为升序排列
+    },
+    // 动态搜索
+    dailySearch () {
+      // TODO:
+    },
     // 删除动态
     deleteDaily () {
       // console.dir(this.delDaily)
@@ -316,27 +346,98 @@ export default {
   /* 日常模块头部 */
   .write{
     width: 100%;
+    height: 50px;
     margin-bottom: 5px;
     padding: 10px 20px 8px;
     background-color: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 4px 8px 0 rgba(97, 97, 97, 0.2), 0 6px 20px 0 rgba(63, 63, 63, 0.19);
+    box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
     color: #000000;
     border-bottom: 1px $colorG solid;
     position: relative;
     h5{
       display: inline;
       font-weight: bold;
+      margin-left: 15px;
+      font-size: 24px;
     }
     i{
+      padding: 8px;
+      border-radius: 3px;
       cursor: pointer;
       position: absolute;
       display: inline;
-      bottom: 0;
+      bottom: -3px;
       right: 20px;
       margin-bottom: 10px;
       font-size: 20px;
       transition: .2s !important;
+      &:hover {
+        background: #c3cff4;
+        color: #FFFFFF;
+      }
+    }
+    .pre-block {
+      display: inline-block;
+      position: absolute;
+      width: 8px;
+      height: 25px;
+      border-radius: 3px;
+      top: 12px;
+      background: #fcd217;
+    }
+    input {
+      position: absolute;
+      right: 140px;
+      height: 34px;
+      top: 8px;
+      width: 310px;
+      padding: 0 10px;
+      border-radius: 7px;
+      border: none;
+      background: #f7f7f7;
+      outline-style: none ;
+    }
+    .daily_order {
+      right: 60px;
+    }
+    .daily_search {
+      right: 100px;
+    }
+    /* 动态搜索框 */
+    .daily-search-enter-active,
+    .daily-search-leave-active {
+      transition: all 0.2s linear;
+    }
+    .daily-search-enter,
+    .daily-search-leave-to {
+      opacity: 0 !important;
+    }
+    /* 动态排序选择列表 */
+    .daily_order_list {
+      position: absolute;
+      outline-style: none;
+      list-style-type: none;
+      background: #fcfcfc;
+      width: 120px;
+      right: 15px;
+      top: 44px;
+      margin: 0;
+      padding: 0 !important;
+      z-index: 100;
+      border-radius: 15px;
+      overflow: hidden;
+      li {
+        width: 100%;
+        height: 45px;
+        line-height: 45px;
+        text-align: center;
+        cursor: pointer;
+        &:hover {
+          color: #FFFFFF;
+          background: #c3cff4;
+        }
+      }
     }
     /* i:hover{
       // color: $colorG;
@@ -350,7 +451,7 @@ export default {
       margin: 10px 0;
       border-radius: 12px;
       background: rgba($color: $colorG, $alpha: 1);
-      box-shadow: 0 4px 8px 0 rgba(97, 97, 97, 0.2), 0 6px 20px 0 rgba(63, 63, 63, 0.19);
+      box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
       border: 1px $colorG solid;
       span{
         color: #000000;
@@ -425,6 +526,9 @@ export default {
         .el-button--primary{
           background-color: $colorK;
           border: $colorK;
+          &:hover {
+            color: #ddebff;
+          }
         }
       }
     }
@@ -432,7 +536,7 @@ export default {
   .myText{
     width: 100%;
     background: rgba($color: $colorG, $alpha: 0.9);
-    box-shadow: 0 4px 8px 0 rgba(97, 97, 97, 0.2), 0 6px 20px 0 rgba(63, 63, 63, 0.19);
+    box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
     border-bottom: 1px $colorE solid;
     border-radius: 15px;
     margin: 10px 20px;

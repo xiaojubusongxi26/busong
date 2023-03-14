@@ -101,7 +101,7 @@ export default {
       // 展示登录方式或注册，1 验证码登录，2 密码登录
       showLogin: 2,
       // 密码登录验证码图片
-      verificationPic: require('@/assets/images/wallhaven-72x2k3.jpg'),
+      verificationPic: require('@/assets/images/wallhaven-1krw81.png'),
       // 忘记密码展示
       centerDialogVisible: false,
       formLabelWidth: '120px',
@@ -229,7 +229,7 @@ export default {
 }
 </script>
 
-<style lang="scss" socped>
+<style lang="scss" scoped>
 @import '@/assets/sass/config.scss';
 @import '@/assets/sass/login.scss';
 

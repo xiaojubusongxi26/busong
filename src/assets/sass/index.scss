@@ -4,6 +4,7 @@
   // width: 100vw;
   padding: 50px 0;
   backdrop-filter: blur(2px);
+  background: $colorJ;
   // 改变文字被选中时的颜色及背景
   ::selection {
     background: $colorK;
