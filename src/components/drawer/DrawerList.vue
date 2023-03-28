@@ -7,6 +7,7 @@
       </transition>
       <div>
         <i class="el-icon-search" @click="isSearch = !isSearch"></i>
+        <i class="el-icon-edit" @click="isModify = true"></i>
         <i class="el-icon-sort"></i>
         <i class="el-icon-delete"></i>
       </div>
@@ -30,6 +31,20 @@
         </div>
       </div>
     </div>
+    <el-dialog title="修改抽屉名"
+               :visible.sync="isModify"
+               :width="'500px'"
+               center>
+      <el-form :model="newTitle">
+        <el-form-item label="新抽屉名" :label-width="'120px'">
+          <el-input v-model="newTitle" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="isModify = false">取 消</el-button>
+        <el-button type="primary" @click="isModify = false">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -41,6 +56,8 @@ export default {
       // 展开表项
       isOpen: false,
       isSearch: false,
+      isModify: false,
+      newTitle: '',
       drawerList: [
         {
           drawerItemId: 1,
@@ -137,7 +154,7 @@ export default {
     input {
       outline-style: none;
       position: absolute;
-      right: 150px;
+      right: 210px;
       height: 50px;
       top: 13px;
       border: none;
@@ -258,6 +275,9 @@ export default {
         color: #7a7a8b;
       }
     }
+  }
+  ::v-deep .el-input__inner {
+    width: 280px !important;
   }
 }
 </style>

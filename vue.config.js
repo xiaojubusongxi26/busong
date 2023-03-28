@@ -14,8 +14,13 @@ module.exports = {
           '/api': ''
         }
       }
+    },
+    overlay: {
+      warnings: false,
+      errors: false
     }
   },
+  lintOnSave: false,
   productionSourceMap: false,
   // lintOnSave:false,
   chainWebpack: (config) => {

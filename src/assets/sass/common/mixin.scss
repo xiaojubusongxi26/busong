@@ -1,0 +1,22 @@
+// 边框
+@mixin border-radius($size:2rem){
+  border-radius: $size;
+}
+
+// 阴影
+@mixin box-shadow(){
+  box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.1);
+}
+
+// 滚动条
+@mixin scrollBarStyle() {
+  &::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px #9b9ba3;
+    background: rgba(152, 155, 163, 0.5);
+  }
+}

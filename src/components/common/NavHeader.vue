@@ -4,7 +4,7 @@
       <ul :class="{ 'changeColor': this.isChange }">
         <li class=" ">不颂</li>
         <li class="avatar" @click="unfoldNav()" type="primary">
-          <a href="/#/user" ref="avatar" @mouseenter="isShow = true">
+          <a href="/user" ref="avatar" @mouseenter="isShow = true">
             <img :src="$store.state.userInfo.userAvatar ? $store.state.userInfo.userAvatar : defaultAvatar" alt="" >
           </a>
           <!-- 头像悬浮卡片 -->
@@ -20,35 +20,35 @@
           </div>
         </li>
         <li class=" ">
-          <a href="/#/">
+          <a href="/">
             <i class="el-icon-s-home"></i>
             首页
           </a>
           <div class="n-line"></div>
         </li>
         <li class=" ">
-          <a href="/#/drawer">
+          <a href="/drawer">
             <i class="el-icon-s-management"></i>
             收藏
           </a>
           <div class="n-line"></div>
         </li>
         <li class=" ">
-          <a href="/#/notes">
+          <a href="/notes">
             <i class="el-icon-s-order"></i>
             文档
           </a>
           <div class="n-line"></div>
         </li>
         <li class=" ">
-            <a href="/#/timeTree">
+            <a href="/timeTree">
               <i class="el-icon-s-promotion"/>
               时间树
             </a>
             <div class="n-line"></div>
         </li>
         <li class=" ">
-          <a href="/#/topic">
+          <a href="/topic">
             <i class="el-icon-s-comment"/>
             话题
           </a>
@@ -68,42 +68,42 @@
               text-color="#fff"
               active-text-color="$colorH">
               <el-menu-item index="1">
-                <a href="/#/index">
+                <a href="/index">
                   <i class="el-icon-s-home"></i>
                   首页
                 </a>
                 <div class="n-line"></div>
               </el-menu-item>
               <el-menu-item index="2">
-                <a href="/#/drawer">
+                <a href="/drawer">
                   <i class="el-icon-s-management"></i>
                   收藏
                 </a>
                 <div class="n-line"></div>
               </el-menu-item>
               <el-menu-item index="3">
-                <a href="/#/notes">
+                <a href="/notes">
                   <i class="el-icon-s-order" style="width: 21px;margin-right: 8px;"></i>
                   文档
                 </a>
                 <div class="n-line"></div>
               </el-menu-item>
               <el-menu-item index="4">
-                <a href="/#/timeTree">
+                <a href="/timeTree">
                   <i class="el-icon-s-promotion"/>
                   时间树
                 </a>
                 <div class="n-line"></div>
               </el-menu-item>
               <el-menu-item index="5">
-                <a href="/#/topic">
+                <a href="/topic">
                   <i class="el-icon-s-comment" style="width: 21px;margin-right: 4px;"></i>
                   话题
                 </a>
                 <div class="n-line"></div>
               </el-menu-item>
               <el-menu-item index="10">
-                <a href="/#/login">
+                <a href="/login">
                   <i class="el-icon-thumb"></i>
                   退出登录
                 </a>

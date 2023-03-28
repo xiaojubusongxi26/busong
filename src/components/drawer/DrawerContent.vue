@@ -3,17 +3,77 @@
     <el-dialog
       :visible.sync="data"
       width="50%"
+      top="10vh"
       :before-close="handleClose">
-      <div class="drawer-content-details">
-        <div class="view">
-          <img :src="data.drawerCover" alt="">
+      <transition name="fade">
+        <div class="drawer-content-details" v-if="data">
+          <div class="drawer-content-header">
+            <i class="el-icon-edit" @click="modifyItem()"></i>
+            <i class="el-icon-delete" @click="isDeleteItem = true"></i>
+            <i class="el-icon-close" @click="data = null; isModifyItem = false"></i>
+          </div>
+          <div class="view">
+            <img :src="data.drawerCover" alt="">
+          </div>
+          <header>{{ data.drawerItemTitle }}</header>
+          <div class="content">
+            {{ data.drawerItemContent }}
+            <span>{{ data.drawerTime }}</span>
+          </div>
+          <!-- 修改 -->
+          <el-dialog
+            width="40%"
+            title="修改表项"
+            :visible.sync="isModifyItem"
+            top="10vh"
+            append-to-body
+            center>
+            <el-form :model="form">
+              <el-form-item label="表项标题" :label-width="'120px'">
+                <el-input v-model="form.drawerItemTitle"
+                          autocomplete="off"
+                          style="width: 70%"></el-input>
+              </el-form-item>
+              <el-form-item label="表项封面" :label-width="'120px'">
+                <el-upload
+                  class="upload-demo"
+                  drag
+                  action="https://jsonplaceholder.typicode.com/posts/"
+                  multiple>
+                  <i class="el-icon-upload"></i>
+                  <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                </el-upload>
+              </el-form-item>
+              <el-form-item label="表项封面" :label-width="'120px'">
+                <el-input
+                  type="textarea"
+                  autosize
+                  placeholder="请输入内容"
+                  v-model="form.drawerItemContent"
+                  style="width: 70%">
+                </el-input>
+              </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="isModifyItem = false">取 消</el-button>
+              <el-button type="primary" @click="isModifyItem = false">确 定</el-button>
+            </div>
+          </el-dialog>
+          <!-- 删除 -->
+          <el-dialog
+            width="30%"
+            title="删除表项"
+            :visible.sync="isDeleteItem"
+            append-to-body
+            center>
+            <span>你确认删除该表项吗？</span>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="isDeleteItem = false">取 消</el-button>
+              <el-button type="primary" @click="isDeleteItem = false">确 定</el-button>
+            </span>
+          </el-dialog>
         </div>
-        <header>{{ data.drawerItemTitle }}</header>
-        <div class="content">
-          {{ data.drawerItemContent }}
-          <span>{{ data.drawerTime }}</span>
-        </div>
-      </div>
+      </transition>
     </el-dialog>
   </div>
 </template>
@@ -23,13 +83,26 @@ export default {
   name: 'DrawerContent',
   data () {
     return {
-      data: false
+      data: false,
+      isModifyItem: false,
+      isDeleteItem: false,
+      form: {
+        drawerItemTitle: '',
+        drawerCover: '',
+        drawerItemContent: ''
+      }
     }
   },
   methods: {
     handleClose (done) {
       console.log(done)
       this.data = false
+    },
+    // 修改表项
+    modifyItem () {
+      this.isModifyItem = true
+      this.form.drawerItemTitle = this.data.drawerItemTitle
+      this.form.drawerItemContent = this.data.drawerItemContent
     }
   },
   mounted () {
@@ -44,6 +117,12 @@ export default {
 <style lang="scss" scoped>
 .drawer-content {
   background: #f5f8ff;
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
   ::v-deep .el-dialog__wrapper {
     /*滚动条设置*/
     overflow-x: auto;
@@ -54,8 +133,11 @@ export default {
     }
     .el-dialog {
       border-radius: 8px !important;
+      .el-dialog__header {
+        display: none !important;
+      }
       .el-dialog__body {
-        padding: 20px !important;
+        padding: 10px 20px 20px !important;
       }
     }
   }
@@ -70,6 +152,40 @@ export default {
     -webkit-overflow-scrolling: touch;
     &::-webkit-scrollbar {
       display: none;
+    }
+    .drawer-content-header {
+      height: 40px;
+      position: relative;
+      i {
+        position: absolute;
+        top: 2px;
+        font-size: 22px;
+        font-weight: bolder;
+        width: 36px;
+        height: 36px;
+        cursor: pointer;
+        text-align: center;
+        line-height: 36px;
+        color: #050505;
+        transition: all .3s;
+        border-radius: 4px;
+        &:hover {
+          background: #c3cff4;
+          color: #FFFFFF;
+        }
+        &:nth-child(1) {
+          right: 90px;
+        }
+        &:nth-child(2) {
+          right: 45px;
+        }
+        &:nth-child(3) {
+          right: 0px;
+          &:hover {
+            background: #e66b6b;
+          }
+        }
+      }
     }
     .view {
       //height: 500px;
