@@ -3,12 +3,9 @@
     <div class="window">
       <header>
 <!--        <h2>春日游，杏花吹满头</h2>-->
-        <video src="@/assets/images/topic/无尽夏.mp4"
-               type="video/mp4"
-               controls
-               autoplay
-               loop
-        ></video>
+        <ju-video
+          :src="require('@/assets/images/topic/无尽夏.mp4')"
+        />
       </header>
       <div class="details">
         若夫气霁地表，云敛天末，洞庭始波，木叶微脱。菊散芳于山椒，雁流哀于江濑。升清质之悠悠，降澄辉之蔼蔼。列宿掩缛，长河韬映，柔祇雪凝，圆灵水镜。连观霜缟，周除冰净。君王乃厌晨欢，乐宵宴，收妙舞，弛清县。去烛房，即月殿，芳酒登，鸣琴荐。</div>
@@ -21,8 +18,11 @@
 </template>
 
 <script>
+import JuVideo from "@/components/common/JuVideo.vue";
+
 export default {
   name: 'TopicWindow',
+  components: {JuVideo},
   data () {
     return {
       topicImg: require('@/assets/images/task/wallhaven-l3gq1q.jpg'),
@@ -72,12 +72,6 @@ export default {
         font-size: 86px;
         font-family: 钟齐志莽行书;
         color: #ffffff;
-      }
-      video {
-        width: 100%;
-        height: 100%;
-        background: #000000;
-        object-fit: cover;
       }
     }
     .details {

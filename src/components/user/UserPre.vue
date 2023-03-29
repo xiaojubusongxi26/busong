@@ -70,7 +70,7 @@ export default {
   backdrop-filter: blur(3px);
   margin-top: 20px;
   padding: 20px 50px;
-  border-radius: 4px;
+  border-radius: 8px;
   border-left: 10px solid #418ac3;
   background-color: rgba($color: rgb(255, 255, 255), $alpha: 1);
   box-shadow: 0 2px 4px 0 rgba(97, 97, 97, 0.2), 0 3px 5px 0 rgba(131, 131, 131, 0.19);

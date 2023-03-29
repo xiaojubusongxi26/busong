@@ -1,0 +1,70 @@
+@charset "UTF-8";
+.index {
+  display: flex;
+  justify-content: center;
+  padding: 50px 0;
+  backdrop-filter: blur(2px);
+  background: #f3f6fd;
+  /* 主页左侧区域：个人头像以及天气 */
+  /* 主页中间区域：日常动态展示以及发布 */
+  /* 主页右侧区域：今日任务栏 */
+}
+.index ::selection {
+  background: #f1939c;
+  color: #fff;
+}
+.index ::-moz-selection {
+  background: #f1939c;
+  color: #fff;
+}
+.index ::-webkit-selection {
+  background: #f1939c;
+  color: #fff;
+}
+.index .left {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 15px 0px;
+  width: 20vw;
+  max-width: 220px;
+  height: 600px;
+  border-radius: 15px;
+}
+.index .main {
+  width: 800px;
+  min-width: 320px;
+  padding: 0 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-radius: 10px;
+}
+.index .right {
+  margin: 15px 0px;
+  width: 30vw;
+  max-width: 250px;
+  min-height: 500px;
+  border-radius: 15px;
+}
+
+.gotop-index {
+  position: fixed;
+  right: 1.6rem;
+  bottom: 1.6rem;
+  display: block;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  z-index: 999;
+}
+
+.gotop-a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url("~@/assets/images/home/backTop.png") no-repeat;
+  background-size: cover;
+  margin: auto;
+}
+
+/*# sourceMappingURL=index.css.map */

@@ -83,7 +83,7 @@ export default {
   justify-content: center;
   .bg{
     top: 0;
-    background-color: #f8f8f8;
+    background-color: $colorJ_bg;
     width: 100vw;
     height: 100vh;
     background-size: cover;
