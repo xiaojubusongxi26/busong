@@ -15,60 +15,21 @@
     <draggable :List="rightList"></draggable>
   </div>
   <div class="user-main">
-    <div class="user-main-header">
-      <h3>基本信息</h3>
-    </div>
-    <ul>
-      <li>
-        <div class="user-title">
-          <span>我的昵称：</span>
-        </div>
-        <div class="user-input">
-          <el-input type="text" :placeholder="userInfo.username" v-model="userInfoSet.username"  maxlength="7" show-word-limit/>
-          <!-- <input type="text" v-model="userInfoSet.username" :placeholder="userInfo.username"> -->
-        </div>
-      </li>
-      <li>
-        <div class="user-title">
-          <span>见面语：</span>
-        </div>
-        <div class="user-input">
-          <el-input type="text" :placeholder="userInfo.userTitle" v-model="userInfoSet.userTitle"  maxlength="6" show-word-limit/>
-          <!-- <input type="text" v-model="userInfoSet.userTitle" :placeholder="userInfo.userTitle"> -->
-        </div>
-      </li>
-      <li>
-        <div class="user-title">
-          <span>我的签名：</span>
-        </div>
-        <div class="user-input">
-          <el-input type="text" :placeholder="userInfo.userSign" v-model="userInfoSet.userSign"  maxlength="20" show-word-limit/>
-          <!-- <input type="text" v-model="userInfoSet.userSign" :placeholder="userInfo.userSign"> -->
-        </div>
-      </li>
-      <li>
-        <div class="user-title">
-          <span>居住城市：</span>
-        </div>
-        <div class="user-input">
-          <el-input type="text" :placeholder="userInfo.userCity" v-model="userInfoSet.userCity"/>
-          <!-- <input type="text" v-model="userInfoSet.userCity" :placeholder="userInfo.userCity"> -->
-        </div>
-      </li>
-    </ul>
-    <div class="submit">
-      <el-button type="primary" @click="cancelChange()">取消</el-button>
-      <el-button type="primary" @click="changeUserInfo()">保存</el-button>
-    </div>
+    <base-info v-if="false"/>
+    <email-setting v-else-if="false"/>
+    <phone-setting v-else-if="true"/>
   </div>
 </div>
 </template>
 
 <script>
 import Draggable from '@/components/common/Draggable.vue'
+import BaseInfo from "@/components/user/BaseInfo.vue";
+import EmailSetting from "@/components/user/EmailSetting.vue";
+import PhoneSetting from "@/components/user/PhoneSetting.vue";
 
 export default {
-  components: { Draggable },
+  components: {PhoneSetting, EmailSetting, BaseInfo, Draggable },
   data () {
     return {
       // 清单组件
@@ -101,8 +62,6 @@ export default {
           isShow: false
         }
       ],
-      userInfo: '',
-      userInfoSet: ''
     }
   },
   watch: {},
@@ -137,45 +96,6 @@ export default {
         this.$store.dispatch('update_userBg', userBg)
       })
     },
-    cancelChange () {
-      this.userInfoSet = Object.assign({}, this.userInfo)
-    },
-    changeUserInfo () {
-      const msg = this.checkInfo()
-      if (msg !== true) {
-        this.$message.warn(msg)
-      } else {
-        this.axios({
-          method: 'post',
-          url: 'http://localhost:1212/api/changeUserTask',
-          data: this.userInfoSet
-        }).then(res => {
-          // console.log(res)
-          if (!res.status) {
-            this.$notify({
-              title: '成功',
-              message: '修改成功',
-              type: 'success'
-            })
-          }
-          this.getUserInfo()
-        })
-      }
-    },
-    checkInfo () {
-      if (this.userInfoSet.username > 7) {
-        return '用户名超出最大长度'
-      } else if (!this.userInfoSet.username) {
-        return '请输入用户名'
-      } else if (this.userInfoSet.userTitle > 4) {
-        return '招呼语超出最大长度'
-      } else if (this.userInfoSet.userSign > 20) {
-        return '签名超出最大长度'
-      } else if (!this.userInfoSet.userCity) {
-        return '请输入城市名称'
-      }
-      return true
-    }
   },
   created () {
   },
@@ -251,86 +171,7 @@ export default {
     background-color: #fafafa;
     box-shadow: 0 2px 4px 0 rgba(97, 97, 97, 0.2), 0 3px 5px 0 rgba(131, 131, 131, 0.19);
     position: relative;
-    ul {
-      list-style: none;
-      margin: 20px 40px;
-      padding: 0;
-      li {
-        height: 80px;
-        line-height: 80px;
-        width: 100%;
-        .user-title {
-          display: inline-block;
-          height: 80px;
-          width: 120px;
-          box-sizing: border-box;
-          padding-right: 30px;
-          color: #707070;
-          text-align: end;
-        }
-        .user-input {
-          width: 100%;
-          max-width: 350px;
-          // margin-left: 120px;
-          display: inline-block;
-          // position: absolute;
-          input {
-            display: inline-block;
-            width: 100%;
-            height: 40px;
-            color: #404040;
-            font-size: 14px;
-            outline: none;
-            border: 1px solid #e6e6e6;
-            padding-left: 10px;
-            border-radius: 4px;
-            transition: ease-out .3s;
-          }
-          ::v-deep .el-input__inner:focus {
-            color: #418ac3 !important;
-            border: 1px solid #418ac3 !important;
-          }
-          input::-webkit-input-placeholder{
-              color:#929292;
-          }
-          input::-moz-placeholder{   /* Mozilla Firefox 19+ */
-              color:#929292;
-          }
-          input:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
-              color:#929292;
-          }
-          input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
-              color:#929292;
-          }
-        }
-      }
-      .upBg {
-        height: 80px;
-      }
-    }
-    .submit{
-      width: 100%;
-      border-bottom: 0;
-      margin-top: 30px;
-      display: flex;
-      justify-content: center;
-      button {
-        width: 90px;
-        display: block;
-        margin: 0 10px;
-        &:first-child {
-          background: #aaaaaa;
-          border-color: #bbbbbb;
-        }
-      }
-      ::v-deep .el-button {
-        display: inline-block;
-      }
-      ::v-deep .el-button--primary {
-        background: #418ac3;
-        border-color: #418ac3;
-      }
-    }
+
   }
 }
 </style>

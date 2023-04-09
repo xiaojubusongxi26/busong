@@ -1,0 +1,111 @@
+.user_info-setting .user-main-header {
+  height: 60px;
+  padding: 0 20px;
+  border-radius: 8px 8px 0 0;
+  background: #ffffff;
+  border-bottom: 1px solid #e6e6e6;
+}
+.user_info-setting .user-main-header h3 {
+  height: 60px;
+  line-height: 60px;
+  margin: 0;
+  font-size: 20px;
+  font-weight: bolder;
+  position: relative;
+}
+.user_info-setting .user-main-header h3 span {
+  position: absolute;
+  right: 0;
+  font-size: 14px;
+  color: #707070;
+}
+.user_info-setting ul {
+  list-style: none;
+  margin: 20px 40px;
+  padding: 0;
+}
+.user_info-setting ul li {
+  height: 80px;
+  line-height: 80px;
+  width: 100%;
+}
+.user_info-setting ul li .user-title {
+  display: inline-block;
+  height: 80px;
+  width: 120px;
+  box-sizing: border-box;
+  padding-right: 30px;
+  color: #707070;
+  text-align: end;
+}
+.user_info-setting ul li .user-input {
+  width: 100%;
+  max-width: 350px;
+  display: inline-block;
+  position: relative;
+}
+.user_info-setting ul li .user-input input {
+  display: inline-block;
+  width: 100%;
+  height: 40px;
+  color: #404040;
+  font-size: 14px;
+  outline: none;
+  border: 1px solid #e6e6e6;
+  padding-left: 10px;
+  border-radius: 4px;
+  transition: ease-out 0.3s;
+}
+.user_info-setting ul li .user-input ::v-deep .el-input__inner:focus {
+  color: #418ac3 !important;
+  border: 1px solid #418ac3 !important;
+}
+.user_info-setting ul li .user-input input::-webkit-input-placeholder {
+  color: #929292;
+}
+.user_info-setting ul li .user-input input::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #929292;
+}
+.user_info-setting ul li .user-input input:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #929292;
+}
+.user_info-setting ul li .user-input input:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #929292;
+}
+.user_info-setting ul li .user-input button {
+  position: absolute;
+  right: 0;
+  top: 21px;
+  width: 150px;
+}
+.user_info-setting ul .upBg {
+  height: 80px;
+}
+.user_info-setting .submit {
+  width: 100%;
+  border-bottom: 0;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+.user_info-setting .submit button {
+  width: 90px;
+  display: block;
+  margin: 0 10px;
+}
+.user_info-setting .submit button:first-child {
+  background: #aaaaaa;
+  border-color: #bbbbbb;
+}
+.user_info-setting .submit ::v-deep .el-button {
+  display: inline-block;
+}
+.user_info-setting .submit ::v-deep .el-button--primary {
+  background: #418ac3;
+  border-color: #418ac3;
+}
+
+/*# sourceMappingURL=setting.css.map */

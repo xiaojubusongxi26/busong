@@ -9,15 +9,15 @@
   /* 主页中间区域：日常动态展示以及发布 */
   /* 主页右侧区域：今日任务栏 */
 }
-.index ::selection {
+.index::selection {
   background: #f1939c;
   color: #fff;
 }
-.index ::-moz-selection {
+.index::-moz-selection {
   background: #f1939c;
   color: #fff;
 }
-.index ::-webkit-selection {
+.index::-webkit-selection {
   background: #f1939c;
   color: #fff;
 }

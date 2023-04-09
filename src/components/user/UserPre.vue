@@ -19,6 +19,7 @@
       <input type="text" class="sign" v-model="$store.state.userInfo.userSign" readonly>
     </div>
   </div>
+  <div class="user-settings"></div>
 </div>
 </template>
 

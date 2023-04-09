@@ -7,15 +7,15 @@
   backdrop-filter: blur(2px);
   background: $colorJ_bg;
   // 改变文字被选中时的颜色及背景
-  ::selection {
+  &::selection {
     background: $colorK;
     color:#fff;
   }
-  ::-moz-selection {
+  &::-moz-selection {
     background: $colorK;
     color:#fff;
   }
-  ::-webkit-selection {
+  &::-webkit-selection {
     background: $colorK;
     color:#fff;
   }

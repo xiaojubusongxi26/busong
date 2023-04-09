@@ -23,14 +23,14 @@
         <!-- 验证码登录 -->
         <div class="login_info_inputs" v-show="showLogin===1">
           <div class="login_info_input">
-            <input type="text" placeholder="手机号/邮箱">
+            <input type="text" v-model="inputObj.inputAccount" placeholder="手机号/邮箱">
           </div>
           <div class="login_info_input verification">
-            <input type="text" placeholder="验证码">
-            <div class="verification_code">获取验证码</div>
+            <input type="text" v-model="inputObj.inputCode" placeholder="验证码">
+            <div class="verification_code" @click="sendCode">获取验证码</div>
           </div>
           <div class="login_info_input">
-            <button>登录/注册</button>
+            <button @click="login()">登录/注册</button>
           </div>
         </div>
         <!-- 密码登录 -->
@@ -93,18 +93,27 @@
 
 <script>
 import axios from 'axios'
-import verificaty from '@/assets/js/verificaty'
+import { sendVerificationCode } from '@/api/authApi'
+import { registerByMobileCode } from '@/api/userApi'
+import { checkAccount } from '@/utils/util'
 export default {
   name: 'login',
   data () {
     return {
+      // 是否存在用户
+      isExistence: true,
       // 展示登录方式或注册，1 验证码登录，2 密码登录
-      showLogin: 2,
+      showLogin: 1,
       // 密码登录验证码图片
       verificationPic: require('@/assets/images/wallhaven-1krw81.png'),
       // 忘记密码展示
       centerDialogVisible: false,
       formLabelWidth: '120px',
+      // 验证码登录
+      inputObj: {
+        inputAccount: '',
+        inputCode: ''
+      },
       // 忘记密码提交表单
       form: {
         phoneOrEmail: '',
@@ -122,7 +131,76 @@ export default {
       this.showLogin = val
       // console.log(val)
     },
-    login () {
+    // 发送验证码
+    async sendCode () {
+      if(this.inputObj.inputAccount === '') {
+        this.$message('请输入手机号或邮箱')
+        return
+      }
+      let res
+      const ACCOUNT = this.inputObj.inputAccount
+      // 判断是邮箱还是手机号
+      if (checkAccount(ACCOUNT) === 1) {
+        // 手机验证码
+        res = await sendVerificationCode({
+          type: 'LOGIN',
+          mobile: ACCOUNT
+        })
+        if (res.data.message === '账户不存在') {
+          this.isExistence = false
+          res = await sendVerificationCode({
+            type: 'REGISTER',
+            mobile: ACCOUNT
+          })
+          this.$message.success('验证码已发送')
+        }
+      } else if (checkAccount(ACCOUNT) === 2) {
+        // 邮箱验证码
+        res = await sendVerificationCode({
+          type: 'LOGIN',
+          email: ACCOUNT
+        })
+        if (res.data.message === '账户不存在') {
+          this.isExistence = false
+          res = await sendVerificationCode({
+            type: 'REGISTER',
+            mobile: ACCOUNT
+          })
+          this.$message.success('验证码已发送')
+        }
+      } else {
+        this.$message('请输入正确的手机号或邮箱')
+        return
+      }
+    },
+    async login () {
+      if (this.inputObj.inputCode === '') {
+        this.$message('请输入验证码')
+        return
+      }
+      if(this.inputObj.inputAccount === '') {
+        this.$message('请输入手机号或邮箱')
+        return
+      }
+      let res
+      const ACCOUNT = this.inputObj.inputAccount
+      const CODE = this.inputObj.inputCode
+      if (this.isExistence) {
+        // 账户存在，直接登录
+        if (checkAccount(ACCOUNT) === 1) {
+          // 手机号登录
+        }
+      } else {
+        // 账户不存在，注册
+        if (checkAccount(ACCOUNT) === 1) {
+          // 手机号注册
+          res = await registerByMobileCode({
+            code: CODE,
+            userMobile: ACCOUNT
+          })
+          console.log(res, 'res')
+        }
+      }
       // TODO: 登录函数
       axios({
         method: 'post',
@@ -164,14 +242,6 @@ export default {
         path: '/'
       })
     },
-    judgment (val) {
-      // 判断手机号/邮箱
-      if (verificaty.emailReg.text(val)) {
-        return 1
-      } else if (verificaty.telReg.text(val)) {
-        return 2
-      }
-    },
     forget () {
       // TODO: 忘记密码
       if (this.forgetActive === 0) {
@@ -201,9 +271,9 @@ export default {
       if (this.form.phoneOrEmail === '') {
         this.$message.warning('请输入邮箱/手机号')
         return false
-      } else if (this.judgment(this.form.phoneOrEmail) === 1) {
+      } else if (checkAccount(this.form.phoneOrEmail) === 2) {
         this.emailSend()
-      } else if (this.judgment(this.form.phoneOrEmail) === 2) {
+      } else if (checkAccount(this.form.phoneOrEmail) === 1) {
         this.phoneSend()
       } else {
         this.$message.error('输入有误')
@@ -224,7 +294,6 @@ export default {
     }
   },
   mounted () {
-    console.log(verificaty.a)
   }
 }
 </script>
