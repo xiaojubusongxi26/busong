@@ -2,10 +2,10 @@
 <div>
   <div class="bg"></div>
   <header class="backimg">
-    <loading v-if="$store.state.userInfo.userBg === undefined"/>
-    <img :src="$store.state.userInfo.userBg" alt="">
+<!--    <loading v-if="$store.state.userInfo.userBg === undefined"/>-->
+    <img :src="$store.state.userInfo.userBg === undefined ? defaultBg : $store.state.userInfo.userBg" alt="">
     <div class="centerText">
-      <h1>{{$store.state.userInfo.userTitle }}</h1>
+      <h1>{{$store.state.userInfo.userTitle === undefined ? 'Welcome to Busong' : $store.state.userInfo.userTitle}}</h1>
       <!-- <div class="console-container">
         <span ref='text'></span>
         <div class='console-underscore' ref='con'
@@ -23,6 +23,8 @@ export default {
   props: {},
   data () {
     return {
+      // 默认背景
+      defaultBg: require('@/assets/images/home/defaultBg.jpg'),
       // 打字机文字
       words: [
         '你要去相信,时光且长,你终将长成自己想要的模样,拥抱独属于你的未来.',
@@ -123,7 +125,7 @@ header{
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top;
+    object-position: center;
     position: absolute;
     top: 0;
   }
@@ -133,6 +135,7 @@ header{
     margin: auto 0;
     // margin-bottom: 55vh;
     h1{
+      font-family: "DIN Next LT Pro", serif;
       font-size: 8vmin;
       font-weight: 900;
       color: #fff;

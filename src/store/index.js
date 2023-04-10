@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 const state = { // 全局管理的数据存储
   isLogin: '0',
-  userInfo: sessionStorage.getItem('userinfo') ? sessionStorage.getItem('userinfo') : {
+  userInfo: localStorage.getItem('userinfo') ? localStorage.getItem('userinfo') : {
     id: 0,
     username: '王谢棠',
     userTitle: 'Hello 王谢棠',
@@ -28,12 +28,12 @@ export default new Vuex.Store({
       localStorage.removeItem('token')
     },
     setUserInfo (state, value) {
-      state.userInfo = { ...value.data, password: '', userAvatar: '' }
-      sessionStorage.setItem('userinfo', JSON.stringify({ ...value.data, password: '' }))
+      state.userInfo = { ...value, password: '' }
+      localStorage.setItem('userinfo', JSON.stringify({ ...value, password: '' }))
     },
     setUserAvatar (state, value) {
       state.userInfo.userAvatar = value
-      sessionStorage.setItem('userinfo', JSON.stringify(state.userInfo))
+      localStorage.setItem('userinfo', JSON.stringify(state.userInfo))
     },
     setUserBg (state, value) {
       state.userInfo.userBg = value

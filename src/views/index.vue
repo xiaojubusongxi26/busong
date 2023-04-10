@@ -52,7 +52,7 @@ export default {
   },
   mounted () {
     // 此处true需要加上，不加滚动事件可能绑定不成功
-    window.addEventListener('scroll', this.scrollToTop)
+    // window.addEventListener('scroll', this.scrollToTop)
   },
   methods: {
     backTop () {
@@ -80,5 +80,5 @@ export default {
 @import '@/assets/sass/index.scss';
 
 // 在线字体
-@import url(https://fonts.googleapis.com/css?family=Khula:700);
+//@import url(https://fonts.googleapis.com/css?family=Khula:700);
 </style>

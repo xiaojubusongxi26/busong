@@ -2,7 +2,7 @@
 <div class="weather">
   <div class="today">
     <i :class="climateType" :style="{ color: climateColor }"></i>
-    <span :style="{ color: climateColor }">{{ this.nowTem | temperature }} {{ this.type }}</span>
+    <span :style="{ color: climateColor }">{{ this.type }}</span>
     <p>{{ this.nowTime + ' ' + this.lowTem + '~' + this.highTem }}</p>
   </div>
   <span>{{ this.tip }}</span>
@@ -48,18 +48,17 @@ export default {
   }, */
   computed: {},
   methods: {
-    getUserInfo () {
-      this.$axios.get('http://localhost:1212/api/userinfo').then(res => {
-        this.currentCity = res.data.userCity
-      })
-    },
     searchWeather () {
       this.axios.get('https://api.vvhan.com/api/weather?city=' + this.currentCity).then((res) => {
+        if (!res.data.success) {
+          this.$message(res.data.message)
+          return
+        }
         const data = res.data.info
-        console.log('________________', data)
+        // console.log('________________', data)
         this.nowTime = data.date
-        this.lowTem = data.low.slice(data.low.search(' '))
-        this.highTem = data.high.slice(data.high.search(' '))
+        this.lowTem = data.low
+        this.highTem = data.high
         this.tip = data.tip
         this.type = data.type
         this.nowTem = data.high.slice(data.high.search(' '), data.high.search('°'))
@@ -80,7 +79,7 @@ export default {
         this.climateType = 'el-icon-heavy-rain'
         this.climateColor = '#045da8'
         this.climate = 5
-      } else if (this.type === '阴' || this.type === '霾') {
+      } else if (this.type === '阴' || this.type === '霾' || this.type === '雾') {
         this.climateType = 'el-icon-partly-cloudy'
         this.climateColor = '#555'
         this.climate = 3
@@ -111,8 +110,7 @@ export default {
   beforeUpdate () {
   },
   mounted () {
-    this.getUserInfo()
-    this.currentCity = this.$store.state.userInfo.userCity
+    this.currentCity = this.$store.state.userInfo.userCity ? this.$store.state.userInfo.userCity : '成都'
     this.searchWeather()
   },
   updated () {

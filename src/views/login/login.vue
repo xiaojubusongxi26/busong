@@ -18,6 +18,9 @@
           <div :class="{header_btn: true, header_btn_focus: showLogin===2 }" @click="changeShow(2)">
             密码登录
           </div>
+          <div :class="{header_btn: true, header_btn_focus: showLogin===3 }" @click="changeShow(3)">
+            注册
+          </div>
         </div>
         <!-- 登录方式展示 -->
         <!-- 验证码登录 -->
@@ -27,27 +30,40 @@
           </div>
           <div class="login_info_input verification">
             <input type="text" v-model="inputObj.inputCode" placeholder="验证码">
-            <div class="verification_code" @click="sendCode">获取验证码</div>
+            <div class="verification_code" @click="sendCode(inputObj.inputAccount)">获取验证码</div>
           </div>
           <div class="login_info_input">
-            <button @click="login()">登录/注册</button>
+            <button @click="loginByCode()">登录</button>
           </div>
         </div>
         <!-- 密码登录 -->
         <div class="login_info_inputs" v-show="showLogin===2">
           <div class="login_info_input">
-            <input type="text" placeholder="手机号/邮箱/用户名">
+            <input type="text" placeholder="手机号/邮箱/用户名" v-model="inputPwdObj.inputAccount">
           </div>
           <div class="login_info_input verification">
-            <input type="password" placeholder="密码">
+            <input type="password" placeholder="密码" v-model="inputPwdObj.inputPwd">
           </div>
           <div class="login_info_input verification">
-            <input type="password" placeholder="验证码">
-            <img :src="verificationPic" class="verification_code verification_code_pic">
+<!--            <input type="password" placeholder="验证码">-->
+<!--            <img :src="verificationPic" class="verification_code verification_code_pic">-->
             <div class="forget_pwd" @click="centerDialogVisible = true">忘记密码?</div>
           </div>
           <div class="login_info_input">
-            <button>登录</button>
+            <button @click="loginByPwd()">登录</button>
+          </div>
+        </div>
+        <!-- 注册 -->
+        <div class="login_info_inputs" v-show="showLogin===3">
+          <div class="login_info_input">
+            <input type="text" v-model="inputObjReg.inputAccount" placeholder="手机号/邮箱">
+          </div>
+          <div class="login_info_input verification">
+            <input type="text" v-model="inputObjReg.inputCode" placeholder="验证码">
+            <div class="verification_code" @click="sendCode(inputObjReg.inputAccount)">获取验证码</div>
+          </div>
+          <div class="login_info_input">
+            <button @click="register()">注册</button>
           </div>
         </div>
       </div>
@@ -93,8 +109,8 @@
 
 <script>
 import axios from 'axios'
-import { sendVerificationCode } from '@/api/authApi'
-import { registerByMobileCode } from '@/api/userApi'
+import {sendVerificationCodeByEmail, sendVerificationCodeByPhone} from '@/api/authApi'
+import { registerByMobileCode, loginByMobileCode } from '@/api/userApi'
 import { checkAccount } from '@/utils/util'
 export default {
   name: 'login',
@@ -111,6 +127,14 @@ export default {
       formLabelWidth: '120px',
       // 验证码登录
       inputObj: {
+        inputAccount: '',
+        inputCode: ''
+      },
+      inputPwdObj: {
+        inputAccount: '',
+        inputPwd: ''
+      },
+      inputObjReg: {
         inputAccount: '',
         inputCode: ''
       },
@@ -132,48 +156,59 @@ export default {
       // console.log(val)
     },
     // 发送验证码
-    async sendCode () {
-      if(this.inputObj.inputAccount === '') {
+    async sendCode (V) {
+      if(V === '') {
         this.$message('请输入手机号或邮箱')
         return
       }
       let res
-      const ACCOUNT = this.inputObj.inputAccount
-      // 判断是邮箱还是手机号
-      if (checkAccount(ACCOUNT) === 1) {
-        // 手机验证码
-        res = await sendVerificationCode({
-          type: 'LOGIN',
-          mobile: ACCOUNT
-        })
-        if (res.data.message === '账户不存在') {
-          this.isExistence = false
-          res = await sendVerificationCode({
-            type: 'REGISTER',
+      const ACCOUNT = V
+      // 登录
+      if (this.showLogin === 1) {
+        // 判断是邮箱还是手机号
+        if (checkAccount(ACCOUNT) === 1) {
+          // 手机验证码
+          res = await sendVerificationCodeByPhone({
+            type: 'LOGIN',
             mobile: ACCOUNT
           })
           this.$message.success('验证码已发送')
+        } else if (checkAccount(ACCOUNT) === 2) {
+          // 邮箱验证码
+          res = await sendVerificationCodeByEmail({
+            type: 'LOGIN',
+            email: ACCOUNT
+          })
+          this.$message.success('验证码已发送')
+        } else {
+          this.$message('请输入正确的手机号或邮箱')
+          return
         }
-      } else if (checkAccount(ACCOUNT) === 2) {
-        // 邮箱验证码
-        res = await sendVerificationCode({
-          type: 'LOGIN',
-          email: ACCOUNT
-        })
-        if (res.data.message === '账户不存在') {
-          this.isExistence = false
-          res = await sendVerificationCode({
+      } else if (this.showLogin === 3) {
+        // 注册
+        // 判断是邮箱还是手机号
+        if (checkAccount(ACCOUNT) === 1) {
+          // 手机验证码
+          let {data:res} = await sendVerificationCodeByPhone({
             type: 'REGISTER',
             mobile: ACCOUNT
           })
+        } else if (checkAccount(ACCOUNT) === 2) {
+          // 邮箱验证码
+          let {data:res} = await sendVerificationCodeByEmail({
+            type: 'REGISTER',
+            email: ACCOUNT
+          })
+        } else {
+          this.$message('请输入正确的手机号或邮箱')
+          return
+        }
+        if (res.data.code === 200) {
           this.$message.success('验证码已发送')
         }
-      } else {
-        this.$message('请输入正确的手机号或邮箱')
-        return
       }
     },
-    async login () {
+    async loginByCode () {
       if (this.inputObj.inputCode === '') {
         this.$message('请输入验证码')
         return
@@ -185,62 +220,89 @@ export default {
       let res
       const ACCOUNT = this.inputObj.inputAccount
       const CODE = this.inputObj.inputCode
-      if (this.isExistence) {
-        // 账户存在，直接登录
-        if (checkAccount(ACCOUNT) === 1) {
-          // 手机号登录
-        }
-      } else {
-        // 账户不存在，注册
-        if (checkAccount(ACCOUNT) === 1) {
-          // 手机号注册
-          res = await registerByMobileCode({
-            code: CODE,
-            userMobile: ACCOUNT
-          })
-          console.log(res, 'res')
-        }
-      }
-      // TODO: 登录函数
-      axios({
-        method: 'post',
-        url: 'http://localhost:1212/api/login',
-        data: {
-          username: this.username,
-          password: this.password
-        }
-      }).then(res => {
-        console.log(res.data)
-        if (res.status === 0) {
+      if (checkAccount(ACCOUNT) === 1) {
+        // 手机号登录
+        let {data: res} = await loginByMobileCode({
+          code: CODE,
+          mobile: ACCOUNT
+        })
+        if (res.code === 200) {
           this.$store.commit('$_setToken', res.token)
-          this.$message.success('登录成功')
+          this.$store.commit('setUserInfo', res.user)
           this.$router.push({
             name: 'index',
             params: {
               from: 'login'
             }
           })
-        } else {
-          this.$message.error(res.message)
         }
-      })
+      } else if (checkAccount(ACCOUNT) === 2) {
+        // 邮箱登录
+        let {data: res} = await loginByMobileCode({
+          code: CODE,
+          email: ACCOUNT
+        })
+        if (res.code === 200) {
+          this.$store.commit('$_setToken', res.token)
+          this.$store.dispatch('update_userInfo', res.user)
+          this.$router.push({
+            name: 'index',
+            params: {
+              from: 'login'
+            }
+          })
+        }
+      }
     },
-    register () {
-      // TODO: 注册函数
-      if (this.username === '') {
-        this.$message.warning('请输入用户名')
-        return
-      } else if (this.password === '') {
-        this.$message.warning('请输入密码')
-        return
-      } else if (!/^(?=.*[a-z]|[A-Z])(?=.*\d)[^]{8,}$/.test(this.password)) {
-        this.$message.warning('密码必须包含字母和数字，且至少为8位')
+    async loginByPwd () {
+      const ACCOUNT = this.inputPwdObj.inputAccount
+      const PWD = this.inputPwdObj.inputPwd
+      if (!ACCOUNT) {
+        this.$message('请输入手机号、邮箱或用户名')
         return
       }
-      this.$message.success('注册成功')
-      this.$router.push({
-        path: '/'
-      })
+      if (!PWD) {
+        this.$message('请输入密码')
+        return
+      }
+      let res
+      if (checkAccount(ACCOUNT) === 1) {
+        // 手机号登录
+      } else if (checkAccount(ACCOUNT) === 2) {
+        // 邮箱登录
+      } else {
+        // 默认为用户名登录
+      }
+    },
+    async register () {
+      if (this.inputObjReg.inputCode === '') {
+        this.$message('请输入验证码')
+        return
+      }
+      if(this.inputObjReg.inputAccount === '') {
+        this.$message('请输入手机号或邮箱')
+        return
+      }
+      let res
+      const ACCOUNT = this.inputObjReg.inputAccount
+      const CODE = this.inputObjReg.inputCode
+      if (checkAccount(ACCOUNT) === 1) {
+        // 手机号注册
+        res = await registerByMobileCode({
+          code: CODE,
+          userMobile: ACCOUNT
+        })
+      }  else if (checkAccount(ACCOUNT) === 2)  {
+        // 邮箱注册
+        res = await registerByMobileCode({
+          code: CODE,
+          userEmail: ACCOUNT
+        })
+      }
+      // 注册成功
+      if (res.status === 200) {
+        this.$message.success('注册成功')
+      }
     },
     forget () {
       // TODO: 忘记密码

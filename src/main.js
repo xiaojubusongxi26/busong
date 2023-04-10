@@ -72,7 +72,7 @@ axios.interceptors.response.use(function (response) {
 })
 
 // 添加请求拦截器，在请求头中加token
-axios.interceptors.request.use(
+/*axios.interceptors.request.use(
   config => {
     // console.log(config)
     if (!config.url.includes('http://localhost:9090')) { return config }
@@ -84,7 +84,7 @@ axios.interceptors.request.use(
   error => {
     return Promise.reject(error)
   }
-)
+)*/
 
 Vue.config.productionTip = false
 

@@ -5,10 +5,16 @@ import http from '@/utils/axios/http'
  */
 let resquest = "/open"
 
-// 获取验证码
-export function sendVerificationCode(params){
+// 获取验证码-手机号
+export function sendVerificationCodeByPhone(params){
   return http.post(`${resquest}/thirdpart/sms/send`,params)
 }
+// 获取验证码-邮箱
+export function sendVerificationCodeByEmail(params){
+  return http.post(`${resquest}/thirdpart/email/send`,params)
+}
+
+
 // post请求
 export function postFormAPI(params){
   return http.post(`${resquest}/postForm.json`,params)

@@ -1,7 +1,7 @@
 <template>
 <div class="perInfo">
   <div class="avatar">
-    <a href="/#/user">
+    <a href="/user">
       <img :src="$store.state.userInfo.userAvatar ? $store.state.userInfo.userAvatar : defaultAvatar" alt="">
     </a>
   </div>
@@ -9,7 +9,7 @@
     <h5>{{ $store.state.userInfo.username }}</h5>
   </div>
   <!-- 统计 -->
-  <div class="statistics">
+<!--  <div class="statistics">
     <div class="dailyNum">
       日常
       <p>183</p>
@@ -22,7 +22,7 @@
       书籍
       <p>3</p>
     </div>
-  </div>
+  </div>-->
 </div>
 </template>
 
@@ -33,7 +33,7 @@ export default {
   data () {
     return {
       // 默认头像
-      defaultAvatar: require('@/assets/images/lazy/加载中.png')
+      defaultAvatar: require('@/assets/images/avatar/defaultAvatar.png')
     }
   },
   watch: {},

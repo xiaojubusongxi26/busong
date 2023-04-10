@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="nav" :style="{ background: $store.state.userInfo.userBg === undefined ? '#418ac3' : ''}">
+    <div class="nav">
       <ul :class="{ 'changeColor': this.isChange }">
         <li class=" ">不颂</li>
         <li class="avatar" @click="unfoldNav()" type="primary">

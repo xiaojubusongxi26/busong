@@ -31,13 +31,18 @@ service.interceptors.request.use(config => {
 // 3.响应拦截器
 service.interceptors.response.use(response => {
   //接收到响应数据并成功后的一些共有的处理，关闭loading等
+  if (response.data.code === 500) {
+    Message.error(response.data.message)
+    return
+  }
+  console.log(response, 'response')
   return response
 }, error => {
   /***** 接收到异常响应的处理开始 *****/
   if (error && error.response) {
     // 1.公共错误处理
     // 2.根据响应码具体处理
-    switch (error.response.status) {
+    switch (error.response.code) {
       case 400:
         error.message = '错误请求'
         break;
