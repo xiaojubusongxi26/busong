@@ -15,9 +15,10 @@
     <draggable :List="rightList"></draggable>
   </div>
   <div class="user-main">
-    <base-info v-if="false"/>
-    <email-setting v-else-if="false"/>
-    <phone-setting v-else-if="true"/>
+    <base-info v-if="activeIndex === 1"/>
+    <email-setting v-else-if="activeIndex === 2"/>
+    <phone-setting v-else-if="activeIndex === 3"/>
+    <password-setting v-else/>
   </div>
 </div>
 </template>
@@ -27,9 +28,16 @@ import Draggable from '@/components/common/Draggable.vue'
 import BaseInfo from "@/components/user/BaseInfo.vue";
 import EmailSetting from "@/components/user/EmailSetting.vue";
 import PhoneSetting from "@/components/user/PhoneSetting.vue";
+import PasswordSetting from "@/components/user/PasswordSetting.vue";
 
 export default {
-  components: {PhoneSetting, EmailSetting, BaseInfo, Draggable },
+  props: {
+    activeIndex: {
+      type: Number,
+      default: 1
+    }
+  },
+  components: {PasswordSetting, PhoneSetting, EmailSetting, BaseInfo, Draggable },
   data () {
     return {
       // 清单组件

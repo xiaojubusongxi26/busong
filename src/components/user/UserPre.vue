@@ -19,7 +19,24 @@
       <input type="text" class="sign" v-model="$store.state.userInfo.userSign" readonly>
     </div>
   </div>
-  <div class="user-settings"></div>
+  <div class="user-settings">
+    <div @click="changeIndex(1)">
+      <i class="el-icon-user"></i>
+      <span>基本信息</span>
+    </div>
+    <div @click="changeIndex(2)">
+      <i class="el-icon-message"></i>
+      <span>邮箱绑定</span>
+    </div>
+    <div @click="changeIndex(3)">
+      <i class="el-icon-mobile-phone"></i>
+      <span>手机绑定</span>
+    </div>
+    <div @click="changeIndex(4)">
+      <i class="el-icon-key"></i>
+      <span>修改密码</span>
+    </div>
+  </div>
 </div>
 </template>
 
@@ -40,6 +57,10 @@ export default {
   },
   computed: {},
   methods: {
+    // 切换索引
+    changeIndex (val) {
+      this.$emit('changeIndex', val)
+    },
     // 头像上传成功钩子函数
     handleAvatarSuccess (res, file) {
       this.userAvatar = URL.createObjectURL(file.raw)
@@ -137,6 +158,48 @@ export default {
         &:focus {
           border-bottom: 1px solid #FFFFFF;
         }
+      }
+    }
+  }
+  .user-settings {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    position: absolute;
+    right: 20px;
+    >div {
+      height: 100%;
+      width: 60px;
+      line-height: 80px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      &:hover {
+        color: #418ac3;
+        span {
+          bottom: 0;
+        }
+      }
+      i {
+        display: block;
+        width: 60px;
+        height: 80px;
+        text-align: center;
+        line-height: 80px;
+        font-size: 20px;
+        transition: color .1s;
+      }
+      span {
+        font-size: 14px;
+        display: block;
+        width: 100%;
+        height: 20px;
+        line-height: 20px;
+        position: absolute;
+        text-align: center;
+        bottom: -20px;
+        transition: bottom .3s;
       }
     }
   }

@@ -110,7 +110,7 @@
 <script>
 import axios from 'axios'
 import {sendVerificationCodeByEmail, sendVerificationCodeByPhone} from '@/api/authApi'
-import { registerByMobileCode, loginByMobileCode } from '@/api/userApi'
+import { registerByMobileCode, loginByMobileCode, loginByNamePwd } from '@/api/userApi'
 import { checkAccount } from '@/utils/util'
 export default {
   name: 'login',
@@ -272,6 +272,10 @@ export default {
         // 邮箱登录
       } else {
         // 默认为用户名登录
+        const {data: res} = await loginByNamePwd({
+          userName: ACCOUNT,
+          password: PWD
+        })
       }
     },
     async register () {

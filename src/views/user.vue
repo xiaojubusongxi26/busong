@@ -9,8 +9,8 @@
       </div> -->
       <Tailoring/>
     </div>
-    <UserPre></UserPre>
-    <Settings></Settings>
+    <UserPre @changeIndex="(e) => activeIndex = e"></UserPre>
+    <Settings :activeIndex="activeIndex"></Settings>
   </div>
 </template>
 
@@ -24,6 +24,7 @@ export default {
   name: 'user',
   data () {
     return {
+      activeIndex: 0,
       userTitle: '好久不见',
       userLabel: '风花雪月',
       userCity: '成都',

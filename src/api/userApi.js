@@ -14,6 +14,16 @@ export function registerByMobileCode(params){
 export function loginByMobileCode(params){
   return http.post(`${resquest}/login/mobile`,params)
 }
+
+// 登录：用户名+密码
+export function loginByNamePwd(params){
+  return http.post(`${resquest}/login/name/1`,params)
+}
+
+
+
+
+
 // get请求
 export function getListAPI(params){
   return http.get(`${resquest}/getList.json`,params)
