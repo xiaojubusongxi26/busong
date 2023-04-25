@@ -9,7 +9,7 @@
           <span>绑定手机：</span>
         </div>
         <div class="user-input">
-          <el-input type="text" :placeholder="userInfo.username" v-model="userInfoSet.username"/>
+          <el-input type="text" v-model="userInfoSet.userMobile"/>
           <!-- <input type="text" v-model="userInfoSet.username" :placeholder="userInfo.username"> -->
         </div>
       </li>
@@ -18,29 +18,32 @@
           <span>验证码：</span>
         </div>
         <div class="user-input">
-          <el-input type="text" :placeholder="userInfo.userTitle" v-model="userInfoSet.userTitle" />
-          <el-button type="primary" @click="handleCaptcha()">{{ captcha }}</el-button>
-          <!-- <input type="text" v-model="userInfoSet.userTitle" :placeholder="userInfo.userTitle"> -->
+          <el-input type="text" v-model="userInfoSet.code" />
+          <span class="verification_code" @click="handleCaptcha()">{{ captcha }}</span>
         </div>
       </li>
     </ul>
     <div class="submit">
-      <!--      <el-button type="primary" @click="cancelChange()">取消</el-button>-->
-      <el-button type="primary" @click="changeUserInfo()">绑定</el-button>
-      <el-button type="primary" @click="changeUserInfo()">解绑</el-button>
+      <el-button type="primary" v-if="!userInfoSet.userMobile" @click="changeUserInfo()">绑定</el-button>
+      <el-button type="primary" v-else @click="unbinding()">解绑</el-button>
     </div>
   </div>
 </template>
 
 <script>
+import {unBindingMobile} from "@/api/settingApi";
+import { sendVerificationCodeByPhone} from "@/api/authApi";
+
 export default {
   name: "PhoneSetting",
   props: [],
   watch: {},
   data() {
     return {
-      userInfo: '',
-      userInfoSet: '',
+      userInfoSet: {
+        userMobile: this.$store.state.userInfo.userMobile ? this.$store.state.userInfo.userMobile : null,
+        code: null
+      },
       captcha: '发送验证码',
       totalTime: 60,
       canClick: true,    // 节流
@@ -52,49 +55,39 @@ export default {
   mounted() {
   },
   methods: {
-    cancelChange () {
-      this.userInfoSet = Object.assign({}, this.userInfo)
-    },
-    changeUserInfo () {
-      const msg = this.checkInfo()
-      if (msg !== true) {
-        this.$message.warn(msg)
-      } else {
-        this.axios({
-          method: 'post',
-          url: 'http://localhost:1212/api/changeUserTask',
-          data: this.userInfoSet
-        }).then(res => {
-          // console.log(res)
-          if (!res.status) {
-            this.$notify({
-              title: '成功',
-              message: '修改成功',
-              type: 'success'
-            })
-          }
-          this.getUserInfo()
-        })
+    // 绑定
+    async binding () {},
+    // 解绑
+    async unbinding () {
+      if (!this.userInfoSet.userMobile) {
+        this.$message('请输入手机号')
       }
-    },
-    checkInfo () {
-      if (this.userInfoSet.username > 7) {
-        return '用户名超出最大长度'
-      } else if (!this.userInfoSet.username) {
-        return '请输入用户名'
-      } else if (this.userInfoSet.userTitle > 4) {
-        return '招呼语超出最大长度'
-      } else if (this.userInfoSet.userSign > 20) {
-        return '签名超出最大长度'
-      } else if (!this.userInfoSet.userCity) {
-        return '请输入城市名称'
+      if (!this.userInfoSet.code) {
+        this.$message('请输入验证码')
       }
-      return true
+      let res = await unBindingMobile({
+        mobile: this.userInfoSet.userMobile,
+        code: this.userInfoSet.code
+      })
+      this.userInfoSet.userMobile = null
+      this.userInfoSet.code = null
+      this.$store.commit('setUserInfo', {
+        ...this.$store.state.userInfo,
+        userMobile: null
+      })
+    },
+    async sendCode() {
+      let res = await sendVerificationCodeByPhone({
+        mobile: this.userInfoSet.userMobile,
+        type: 'COMMON'
+      })
+      this.$message.success('验证码已发送')
     },
     handleCaptcha() {
       if (!this.canClick) return  // 节流 防止频繁访问接口
       this.canClick = false
       this.captcha = this.totalTime + 's后重新发送'
+      this.sendCode()
       let that = this
       that.clockTimer = window.setInterval(() => {
         that.totalTime--

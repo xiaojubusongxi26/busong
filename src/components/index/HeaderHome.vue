@@ -3,9 +3,9 @@
   <div class="bg"></div>
   <header class="backimg">
 <!--    <loading v-if="$store.state.userInfo.userBg === undefined"/>-->
-    <img :src="$store.state.userInfo.userBg === undefined ? defaultBg : $store.state.userInfo.userBg" alt="">
+    <img :src="!$store.state.userInfo.userBg ? defaultBg : $store.state.userInfo.userBg" alt="">
     <div class="centerText">
-      <h1>{{$store.state.userInfo.userTitle === undefined ? 'Welcome to Busong' : $store.state.userInfo.userTitle}}</h1>
+      <h1>{{!$store.state.userInfo.userTitle ? 'Welcome to Busong' : $store.state.userInfo.userTitle}}</h1>
       <!-- <div class="console-container">
         <span ref='text'></span>
         <div class='console-underscore' ref='con'

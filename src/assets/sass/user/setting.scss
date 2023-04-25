@@ -71,11 +71,17 @@
         input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
           color:#929292;
         }
-        button {
+        .verification_code {
           position: absolute;
-          right: 0;
+          right: 18px;
           top: 21px;
-          width: 150px;
+          height: 40px;
+          text-align: center;
+          cursor: pointer;
+          line-height: 40px;
+          &:hover {
+            color: #418ac3;
+          }
         }
       }
     }

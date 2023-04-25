@@ -55,16 +55,24 @@
 </template>
 
 <script>
+import http from '@/utils/axios/http'
+import {resetByEmail, resetByMobile} from "@/api/userApi";
+import {sendVerificationCodeByEmail, sendVerificationCodeByPhone} from "@/api/authApi";
 export default {
   name: "PasswordSetting",
-  props: [],
+  props: {
+    userInfo: {
+      type: Object,
+      default: {}
+    }
+  },
   watch: {},
   data() {
     return {
-      userInfo: '',
       userInfoSet: '',
       captcha: '发送验证码',
       totalTime: 60,
+      codeType: 'email',
       canClick: true,    // 节流
       clockTimer: null, // 定时器
       inputObj: {
@@ -104,11 +112,13 @@ export default {
         })
       }
     },
-    handleCaptcha() {
+    handleCaptcha(type) {
       if (!this.canClick) return  // 节流 防止频繁访问接口
+      this.codeType = type
       this.canClick = false
       this.captcha = this.totalTime + 's后重新发送'
       let that = this
+      this.sendCode()
       that.clockTimer = window.setInterval(() => {
         that.totalTime--
         that.captcha = that.totalTime + 's后重新发送'
@@ -120,6 +130,55 @@ export default {
         }
       },1000)
     },
+    // 发送验证码
+    async sendCode () {
+      if (this.codeType === 'sms') {
+        let res = await sendVerificationCodeByPhone({
+          mobile: this.userInfo.userMobile,
+          type: 'RESET_PASSWORD'
+        })
+      } else {
+        let res = await sendVerificationCodeByEmail({
+          email: this.userInfo.userEmail,
+          type: 'RESET_PASSWORD'
+        })
+      }
+      this.$message.success('验证码已发送')
+    },
+    // 修改密码
+    async changePwd () {
+      if (!this.inputObj.code) {
+        this.$message('请输入验证码')
+        return
+      }
+      if (!this.inputObj.password || !this.inputObj.passwordSecond) {
+        this.$message('请输入密码')
+        return
+      }
+      if (this.inputObj.password !== this.inputObj.passwordSecond) {
+        this.$message('两次输入密码不一致')
+        return
+      }
+      let res
+      if (this.codeType === 'sms') {
+        // 手机号重置
+        res = await resetByMobile({
+          code: this.inputObj.code,
+          mobile: this.userInfo.userMobile,
+          password: this.inputObj.password
+        })
+      } else {
+        // 邮箱重置
+        res = await resetByEmail({
+          code: this.inputObj.code,
+          email: this.userInfo.userEmail,
+          password: this.inputObj.password
+        })
+      }
+      if (res.status === 200) {
+        this.$message.success('修改密码成功')
+      }
+    }
   },
   components: {}
 }

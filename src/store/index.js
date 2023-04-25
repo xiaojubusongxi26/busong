@@ -5,15 +5,7 @@ Vue.use(Vuex)
 
 const state = { // 全局管理的数据存储
   isLogin: '0',
-  userInfo: localStorage.getItem('userinfo') ? localStorage.getItem('userinfo') : {
-    id: 0,
-    username: '王谢棠',
-    userTitle: 'Hello 王谢棠',
-    userCity: '成都',
-    userAvatar: require('@/assets/images/avatar/花.png'),
-    userSign: '好久不见',
-    userBg: require('@/assets/images/home/755ce8eegy1gjw0am3xs8j21fe2us1ky.png')
-  },
+  userInfo: JSON.parse(localStorage.getItem('userinfo')),
   token: localStorage.getItem('token') ? localStorage.getItem('token') : '' // token
 }
 
@@ -29,6 +21,9 @@ export default new Vuex.Store({
     },
     setUserInfo (state, value) {
       state.userInfo = { ...value, password: '' }
+      if(!state.userInfo.userAvatar) {
+        state.userInfo.userAvatar = require('@/assets/images/lazy/加载中.png')
+      }
       localStorage.setItem('userinfo', JSON.stringify({ ...value, password: '' }))
     },
     setUserAvatar (state, value) {
@@ -37,7 +32,7 @@ export default new Vuex.Store({
     },
     setUserBg (state, value) {
       state.userInfo.userBg = value
-      sessionStorage.setItem('userinfo', JSON.stringify(state.userInfo))
+      localStorage.setItem('userinfo', JSON.stringify(state.userInfo))
     },
     updateCountDown (state, value) {
       state.isMask = value

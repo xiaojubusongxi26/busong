@@ -15,10 +15,10 @@
     <draggable :List="rightList"></draggable>
   </div>
   <div class="user-main">
-    <base-info v-if="activeIndex === 1"/>
+    <base-info  v-if="activeIndex === 1"/>
     <email-setting v-else-if="activeIndex === 2"/>
     <phone-setting v-else-if="activeIndex === 3"/>
-    <password-setting v-else/>
+    <password-setting :user-info="userInfo" v-else/>
   </div>
 </div>
 </template>
@@ -40,6 +40,7 @@ export default {
   components: {PasswordSetting, PhoneSetting, EmailSetting, BaseInfo, Draggable },
   data () {
     return {
+      userInfo: {},
       // 清单组件
       leftList: [
         {
@@ -106,9 +107,10 @@ export default {
     },
   },
   created () {
+    this.userInfo = this.$store.state.userInfo
   },
   mounted () {
-    this.getUserInfo()
+    // this.getUserInfo()
   }
 }
 </script>

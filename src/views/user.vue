@@ -2,15 +2,15 @@
   <div class="user-container">
     <div class="bg" ></div>
     <div class="header" ref="userimg" @click="changeImg = true">
-      <img :src="$store.state.userInfo.userBg" top alt="">
+      <img :src="userInfo.userBg ? userInfo.userBg : defaultBg" top alt="">
       <!-- <div class="maskBg" v-if="changeImg" @click.stop="changeImg = false">
       </div>
       <div class="selectBg" v-if="changeImg">
       </div> -->
       <Tailoring/>
     </div>
-    <UserPre @changeIndex="(e) => activeIndex = e"></UserPre>
-    <Settings :activeIndex="activeIndex"></Settings>
+    <UserPre @changeIndex="(e) => activeIndex = e" :user-info="userInfo"></UserPre>
+    <Settings :activeIndex="activeIndex" :user-info="userInfo"></Settings>
   </div>
 </template>
 
@@ -24,14 +24,11 @@ export default {
   name: 'user',
   data () {
     return {
-      activeIndex: 0,
-      userTitle: '好久不见',
-      userLabel: '风花雪月',
-      userCity: '成都',
-      // userBg: require('@/assets/images/home/755ce8eegy1gjw0am3xs8j21fe2us1ky.png'),
+      activeIndex: 1,
       userColor: '#2d3059',
       userWord: '',
       changeImg: false,
+      defaultBg: require('@/assets/images/home/defaultBg.jpg'),
       words: [
         '你要去相信,时光且长,你终将长成自己想要的模样,拥抱独属于你的未来.',
         '你的心要如溪水般柔软,你的眼波要像春天般明媚.',
@@ -44,8 +41,12 @@ export default {
     // setTimeout(function () {
     //   console.log('等待')
     // }, 3000)
+    this.fetchInfo()
   },
   methods: {
+    fetchInfo () {
+      this.userInfo = this.$store.state.userInfo
+    },
     async getUserInfo () {
       // 获取背景图
       await this.axios({
@@ -98,7 +99,7 @@ export default {
     position: relative;
     img {
       object-fit: cover;
-      object-position: top;
+      object-position: center;
       width: 100%;
       height: 100%;
     }

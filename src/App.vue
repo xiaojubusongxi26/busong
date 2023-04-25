@@ -23,6 +23,13 @@ export default {
       unfold: false
     }
   },
+  created() {
+    if (!localStorage.getItem('token') && !localStorage.getItem('userinfo')) {
+      localStorage.clear('token')
+      localStorage.clear('userinfo')
+      this.$router.push('/login')
+    }
+  },
   mounted () {
     this.timer = setInterval(this.setScroll, 0)
   },

@@ -6,7 +6,7 @@ import { Message} from 'element-ui';
 //1. 创建新的axios实例，
 const service = axios.create({
   // 公共接口--这里注意后面会讲
-  baseURL: 'http://192.168.101.40:19090',
+  baseURL: 'http://192.168.101.40:19090/',
   // 超时时间 单位是ms，这里设置了20s的超时时间
   timeout: 20 * 1000
 })
@@ -20,8 +20,8 @@ service.interceptors.request.use(config => {
   //注意使用token的时候需要引入cookie方法或者用本地localStorage等方法，推荐js-cookie
   const token = localStorage.getItem('token');//这里取token之前，你肯定需要先拿到token,存一下
   if(token){
-    config.params = {'token':token} //如果要求携带在参数中
-    config.headers.token= token; //如果要求携带在请求头中
+    // config.params = {'token':token} //如果要求携带在参数中
+    config.headers['Jwt-Token']= token; //如果要求携带在请求头中
   }
   return config
 }, error => {

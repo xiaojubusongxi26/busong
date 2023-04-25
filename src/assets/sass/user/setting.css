@@ -75,11 +75,17 @@
   /* Internet Explorer 10-11 */
   color: #929292;
 }
-.user_info-setting ul li .user-input button {
+.user_info-setting ul li .user-input .verification_code {
   position: absolute;
-  right: 0;
+  right: 18px;
   top: 21px;
-  width: 150px;
+  height: 40px;
+  text-align: center;
+  cursor: pointer;
+  line-height: 40px;
+}
+.user_info-setting ul li .user-input .verification_code:hover {
+  color: #418ac3;
 }
 .user_info-setting ul .upBg {
   height: 80px;

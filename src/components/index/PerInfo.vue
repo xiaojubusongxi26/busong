@@ -33,7 +33,7 @@ export default {
   data () {
     return {
       // 默认头像
-      defaultAvatar: require('@/assets/images/avatar/defaultAvatar.png')
+      defaultAvatar: require('@/assets/images/lazy/加载中.png')
     }
   },
   watch: {},

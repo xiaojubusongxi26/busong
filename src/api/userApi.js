@@ -15,28 +15,24 @@ export function loginByMobileCode(params){
   return http.post(`${resquest}/login/mobile`,params)
 }
 
+// 用户登录：邮箱 + 验证码
+export function loginByEmailCode(params){
+  return http.post(`${resquest}/login/name/email`,params)
+}
+
 // 登录：用户名+密码
 export function loginByNamePwd(params){
   return http.post(`${resquest}/login/name/1`,params)
 }
 
+// 修改密码： 手机号 + 验证码
+export function resetByMobile(params){
+  return http.post(`${resquest}/reset/password/mobile`,params)
+}
+
+// 修改密码： 邮箱 + 验证码
+export function resetByEmail(params){
+  return http.post(`${resquest}/reset/password/email`,params)
+}
 
 
-
-
-// get请求
-export function getListAPI(params){
-  return http.get(`${resquest}/getList.json`,params)
-}
-// post请求
-export function postFormAPI(params){
-  return http.post(`${resquest}/postForm.json`,params)
-}
-// put 请求
-export function putSomeAPI(params){
-  return http.put(`${resquest}/putSome.json`,params)
-}
-// delete 请求
-export function deleteListAPI(params){
-  return http.delete(`${resquest}/deleteList.json`,params)
-}

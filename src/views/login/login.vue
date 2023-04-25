@@ -110,7 +110,7 @@
 <script>
 import axios from 'axios'
 import {sendVerificationCodeByEmail, sendVerificationCodeByPhone} from '@/api/authApi'
-import { registerByMobileCode, loginByMobileCode, loginByNamePwd } from '@/api/userApi'
+import { registerByMobileCode, loginByMobileCode, loginByNamePwd, loginByEmailCode } from '@/api/userApi'
 import { checkAccount } from '@/utils/util'
 export default {
   name: 'login',
@@ -238,13 +238,13 @@ export default {
         }
       } else if (checkAccount(ACCOUNT) === 2) {
         // 邮箱登录
-        let {data: res} = await loginByMobileCode({
+        let {data: res} = await loginByEmailCode({
           code: CODE,
           email: ACCOUNT
         })
         if (res.code === 200) {
-          this.$store.commit('$_setToken', res.token)
-          this.$store.dispatch('update_userInfo', res.user)
+          this.$store.commit('$_setToken', res.data.token)
+          this.$store.dispatch('update_userInfo', res.data.user)
           this.$router.push({
             name: 'index',
             params: {
@@ -268,13 +268,32 @@ export default {
       let res
       if (checkAccount(ACCOUNT) === 1) {
         // 手机号登录
+        res = await loginByNamePwd({
+          mobile: ACCOUNT,
+          password: PWD
+        })
       } else if (checkAccount(ACCOUNT) === 2) {
         // 邮箱登录
+        res = await loginByNamePwd({
+          email: ACCOUNT,
+          password: PWD
+        })
       } else {
         // 默认为用户名登录
-        const {data: res} = await loginByNamePwd({
+        res= await loginByNamePwd({
           userName: ACCOUNT,
           password: PWD
+        })
+      }
+      res = res.data
+      if (res.code === 200) {
+        this.$store.commit('$_setToken', res.data.token)
+        this.$store.dispatch('update_userInfo', res.data.user)
+        this.$router.push({
+          name: 'index',
+          params: {
+            from: 'login'
+          }
         })
       }
     },

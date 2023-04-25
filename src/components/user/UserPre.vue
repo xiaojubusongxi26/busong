@@ -2,21 +2,23 @@
 <div class="user-pre">
   <div class="user-avater">
     <el-upload
-      name="head"
+      name="file"
       class="avatar-uploader"
-      :action="'http://localhost:1212/api/article_upload/' + $store.state.userInfo.id "
+      action="https://busong-tch.oss-cn-chengdu.aliyuncs.com"
+      :data="dataObj"
       :show-file-list="false"
+      :multiple="false"
       :on-success="handleAvatarSuccess"
       :before-upload="beforeAvatarUpload">
-      <img :src="$store.state.userInfo.userAvatar ? $store.state.userInfo.userAvatar : defaultAvatar" class="avatar">
+      <img :src="userInfo.userAvatar ? userInfo.userAvatar : defaultAvatar" class="avatar">
     </el-upload>
   </div>
   <div class="user-name-sign">
     <div class="user-name">
-      <input type="text" class="username" v-model='$store.state.userInfo.username' readonly>
+      <input type="text" class="username" v-model='userName' readonly>
     </div>
     <div class="user-sign">
-      <input type="text" class="sign" v-model="$store.state.userInfo.userSign" readonly>
+      <input type="text" class="sign" v-model="userSign" readonly>
     </div>
   </div>
   <div class="user-settings">
@@ -41,42 +43,124 @@
 </template>
 
 <script>
+import {uploadFile} from "@/api/commonApi";
+import {modifyUserInfo} from "@/api/settingApi";
+
 export default {
   name: 'UserPre',
   components: {},
-  props: {},
+  props: {
+    userInfo: {
+      type: Object,
+      default: {}
+    }
+  },
   data () {
     return {
-      userName: '小橘不颂兮',
-      userSign: '最是人间留不住，朱颜辞镜花辞树',
+      // 请求头
+      header: {
+        token: this.$store.state.token
+      },
+      userName: this.userInfo.userName,
+      userSign: this.userInfo.userSign,
+      dataObj: {},
       // 默认头像
       defaultAvatar: require('@/assets/images/lazy/加载中.png'),
       userAvatar: require('@/assets/images/avatar/mmexport1603512250737.jpg'),
-      userInfo: this.$store.state.userInfo
     }
   },
   computed: {},
   methods: {
+    // 自定义上传
+    handleFileUpload () {
+
+    },
     // 切换索引
     changeIndex (val) {
       this.$emit('changeIndex', val)
     },
     // 头像上传成功钩子函数
-    handleAvatarSuccess (res, file) {
-      this.userAvatar = URL.createObjectURL(file.raw)
-      this.$store.commit('setUserAvatar', this.userAvatar)
+    async handleAvatarSuccess (res, file) {
+      // console.log(file, res)
+      console.log(this.dataObj.host + "/" + this.dataObj.key.replace("${filename}", file.name))
+      const url = this.dataObj.host + "/" + this.dataObj.key.replace("${filename}", file.name)
+      // this.userAvatar = URL.createObjectURL(file.raw)
+      this.$store.commit('setUserAvatar', url)
+      let res1 = await modifyUserInfo({
+        userAvatar: url
+      })
+      if (res1.status === 200) {
+        this.$message.success('头像修改成功')
+      }
     },
     // 上传文件之前的钩子，参数为上传的文件
-    beforeAvatarUpload (file) {
+    async beforeAvatarUpload (file) {
       const isJPG = file.type === 'image/jpeg'
       const isLt2M = file.size / 1024 / 1024 < 4
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 4MB!')
-      }
-      return isJPG && isLt2M
+      return new Promise((resolve, reject) => {
+        new Promise((resolve, reject) => {
+          console.log("reject : {}", reject);
+          this.$axios({
+            url: "/open/thirdpart/oss/upload/policy",
+            method: "post",
+            headers: {
+              Authorization:
+                "Bearer " +  "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RlIjoyMDAsInVzZXJfbmFtZSI6InlpeGloYW4iLCJ1c2VyTW9iaWxlIjoiMTc2MjM4NTA0MjYiLCJzY29wZSI6WyJhbGwiXSwiYXRpIjoiZjIxMTQ2YzEtNzJjMi00NzM1LWJjZjUtZGY2ZTZhMGM5YzMzIiwidXNlckVtYWlsIjoiMzExMzc4ODk5N0BxcS5jb20iLCJleHAiOjE2NjkwMTEzNzIsInVzZXJOYW1lIjoieWl4aWhhbiIsInVzZXJJZCI6MSwiYXV0aG9yaXRpZXMiOlsiU1VQRVJfQURNSU4iLCJVU0VSIiwiQURNSU4iXSwianRpIjoiZTY2YzkxY2UtOTE0OS00OTM0LWFkMjctNTUzNmZjNjAyMDhjIiwiY2xpZW50X2lkIjoieWljb2RlIn0.Se14afGczLJvTVmmyUoJCHfm5jY25GNLTK2tEo_tzT_nbHib6Rbshn43DIGDPOINxFDAqNgjDig6g5aooQcD6BKTwT1SMMXKmTF876-icDXrIB6A5C_JPo-4Sjk8WTe8ZEI_svT-G1XCL9yUqNvhE9OZrpPteWW_LbhNm537gQTYbzrV3C-RDcDYzz52pnBKZm01R0X5yAGluCtbAMXsXCe-97m7revAOFwx3ww1k2kmptzn-JYTm_Ack0FG1kg6Oya0DFF21EMJmYkmlnNCQEiTTpxzkXXPiMpq1cO0ZpTbIFo5djIkVjVpRkgW83clEeGc8UWzKX3ljI-3WguNLg",
+            },
+            data: {
+              fileDir: "22-11-16",
+              userId: 100000006,
+            },
+          }).then(({ data }) => {
+            resolve(data);
+          });
+        })
+          .then(({ data }) => {
+            console.log("response : ", data);
+            this.dataObj.policy = data.policy;
+            this.dataObj.signature = data.signature;
+            this.dataObj.ossaccessKeyId = data.accessKey;
+            this.dataObj.key = data.dir + this.getUUID() + "_${filename}";
+            this.dataObj.dir = data.dir;
+            this.dataObj.host = data.host;
+            resolve(true);
+          })
+          .catch((err) => {
+            reject(false);
+            console.log("失败", err);
+          });
+      });
+      let res = this.$axios({
+        url: "/open/thirdpart/oss/upload/policy",
+        method: "post",
+        headers: {
+          Authorization:
+            "Bearer " +  "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RlIjoyMDAsInVzZXJfbmFtZSI6InlpeGloYW4iLCJ1c2VyTW9iaWxlIjoiMTc2MjM4NTA0MjYiLCJzY29wZSI6WyJhbGwiXSwiYXRpIjoiZjIxMTQ2YzEtNzJjMi00NzM1LWJjZjUtZGY2ZTZhMGM5YzMzIiwidXNlckVtYWlsIjoiMzExMzc4ODk5N0BxcS5jb20iLCJleHAiOjE2NjkwMTEzNzIsInVzZXJOYW1lIjoieWl4aWhhbiIsInVzZXJJZCI6MSwiYXV0aG9yaXRpZXMiOlsiU1VQRVJfQURNSU4iLCJVU0VSIiwiQURNSU4iXSwianRpIjoiZTY2YzkxY2UtOTE0OS00OTM0LWFkMjctNTUzNmZjNjAyMDhjIiwiY2xpZW50X2lkIjoieWljb2RlIn0.Se14afGczLJvTVmmyUoJCHfm5jY25GNLTK2tEo_tzT_nbHib6Rbshn43DIGDPOINxFDAqNgjDig6g5aooQcD6BKTwT1SMMXKmTF876-icDXrIB6A5C_JPo-4Sjk8WTe8ZEI_svT-G1XCL9yUqNvhE9OZrpPteWW_LbhNm537gQTYbzrV3C-RDcDYzz52pnBKZm01R0X5yAGluCtbAMXsXCe-97m7revAOFwx3ww1k2kmptzn-JYTm_Ack0FG1kg6Oya0DFF21EMJmYkmlnNCQEiTTpxzkXXPiMpq1cO0ZpTbIFo5djIkVjVpRkgW83clEeGc8UWzKX3ljI-3WguNLg",
+        },
+        data: {
+          fileDir: "busong",
+          userId: 100000006,
+        },
+      }).then(({ data }) => {
+        // resolve(data);
+        console.log(data)
+        this.dataObj.policy = data.policy;
+        this.dataObj.signature = data.signature;
+        this.dataObj.ossaccessKeyId = data.accessKey;
+        console.log(this.getUUID())
+        this.dataObj.key = data.dir + this.getUUID() + "_${filename}";
+        this.dataObj.dir = data.dir;
+        this.dataObj.host = data.host;
+      });
+      // return isJPG && isLt2M
+    },
+    //生成uuid
+    getUUID() {
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+        return (
+          c === "x" ? (Math.random() * 16) | 0 : "r&0x3" | "0x8"
+        ).toString(16);
+      });
     }
   },
   created () {
