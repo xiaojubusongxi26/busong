@@ -24,14 +24,14 @@
       </li>
     </ul>
     <div class="submit">
-      <el-button type="primary" v-if="!userInfoSet.userMobile" @click="changeUserInfo()">绑定</el-button>
+      <el-button type="primary" v-if="!this.$store.state.userInfo.userMobile" @click="binding()">绑定</el-button>
       <el-button type="primary" v-else @click="unbinding()">解绑</el-button>
     </div>
   </div>
 </template>
 
 <script>
-import {unBindingMobile} from "@/api/settingApi";
+import {bindingMobile, unBindingMobile} from "@/api/settingApi";
 import { sendVerificationCodeByPhone} from "@/api/authApi";
 
 export default {
@@ -56,7 +56,27 @@ export default {
   },
   methods: {
     // 绑定
-    async binding () {},
+    async binding () {
+      if (!this.userInfoSet.userMobile) {
+        this.$message('请输入手机号')
+      }
+      if (!this.userInfoSet.code) {
+        this.$message('请输入验证码')
+      }
+      let res = await bindingMobile({
+        mobile: this.userInfoSet.userMobile,
+        code: this.userInfoSet.code
+      })
+      if (res.code === 200) {
+        this.$store.commit('setUserInfo', {
+          ...this.$store.state.userInfo,
+          userMobile: this.userInfoSet.userMobile
+        })
+        this.userInfoSet.userMobile = null
+        this.userInfoSet.code = null
+        this.$message.success('绑定成功')
+      }
+    },
     // 解绑
     async unbinding () {
       if (!this.userInfoSet.userMobile) {

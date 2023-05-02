@@ -18,4 +18,12 @@ export function unBindingMobile(params){
   return http.post(`${request}/user/unbind/mobile`,params)
 }
 
-//
+// 绑定手机号
+export function bindingMobile(params){
+  return http.post(`${request}/user/bind/mobile`,params)
+}
+
+// 绑定邮箱
+export function bindingEmail(params){
+  return http.post(`${request}/user/bind/email`,params)
+}

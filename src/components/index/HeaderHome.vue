@@ -125,7 +125,7 @@ header{
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: top;
     position: absolute;
     top: 0;
   }

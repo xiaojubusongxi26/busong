@@ -64,6 +64,7 @@ export default {
   font-family: "DIN Next LT Pro", serif;
   font-weight: bold;
   user-select:none;
+  position: relative;
   h3 {
     display: inline-block;
     margin: 0;

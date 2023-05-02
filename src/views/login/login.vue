@@ -110,7 +110,13 @@
 <script>
 import axios from 'axios'
 import {sendVerificationCodeByEmail, sendVerificationCodeByPhone} from '@/api/authApi'
-import { registerByMobileCode, loginByMobileCode, loginByNamePwd, loginByEmailCode } from '@/api/userApi'
+import {
+  registerByMobileCode,
+  loginByMobileCode,
+  loginByNamePwd,
+  loginByEmailCode,
+  registerByEmailCode,
+} from '@/api/userApi'
 import { checkAccount } from '@/utils/util'
 export default {
   name: 'login',
@@ -227,8 +233,8 @@ export default {
           mobile: ACCOUNT
         })
         if (res.code === 200) {
-          this.$store.commit('$_setToken', res.token)
-          this.$store.commit('setUserInfo', res.user)
+          this.$store.commit('$_setToken', res.data.token)
+          this.$store.commit('setUserInfo', res.data.user)
           this.$router.push({
             name: 'index',
             params: {
@@ -317,7 +323,7 @@ export default {
         })
       }  else if (checkAccount(ACCOUNT) === 2)  {
         // 邮箱注册
-        res = await registerByMobileCode({
+        res = await registerByEmailCode({
           code: CODE,
           userEmail: ACCOUNT
         })

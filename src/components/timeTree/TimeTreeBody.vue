@@ -1,7 +1,7 @@
 <template>
   <div class="time_tree-body">
     <time-tree-trunk/>
-    <time-tree-node/>
+    <time-tree-node :position="'right'"/>
   </div>
 </template>
 

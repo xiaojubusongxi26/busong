@@ -84,7 +84,7 @@ export default {
     position: relative;
     img {
       object-fit: cover;
-      object-position: center;
+      object-position: top;
       width: 100%;
       height: 100%;
     }

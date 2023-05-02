@@ -10,6 +10,11 @@ export function registerByMobileCode(params){
   return http.post(`${resquest}/register/mobile`,params)
 }
 
+// 用户注册：邮箱 + 验证码
+export function registerByEmailCode(params){
+  return http.post(`${resquest}/register/email`,params)
+}
+
 // 用户登录：手机号 + 验证码
 export function loginByMobileCode(params){
   return http.post(`${resquest}/login/mobile`,params)

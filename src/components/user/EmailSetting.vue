@@ -9,7 +9,7 @@
           <span>绑定邮箱：</span>
         </div>
         <div class="user-input">
-          <el-input type="text" v-if="userInfoSet.userEmail" v-model="userInfoSet.userEmail"/>
+          <el-input type="text" v-model="userInfoSet.userEmail"/>
         </div>
       </li>
       <li>
@@ -23,7 +23,7 @@
       </li>
     </ul>
     <div class="submit">
-      <el-button type="primary" v-if="!userInfoSet.userEmail" @click="binding()">绑定</el-button>
+      <el-button type="primary" v-if="!$store.state.userInfo.userEmail" @click="binding()">绑定</el-button>
       <el-button type="primary" v-else @click="unbinding()">解绑</el-button>
     </div>
   </div>
@@ -31,7 +31,7 @@
 
 <script>
 import {sendVerificationCodeByEmail} from "@/api/authApi";
-import {unBindingEmail} from "@/api/settingApi";
+import {bindingEmail, unBindingEmail} from "@/api/settingApi";
 
 export default {
   name: "EmailSetting",
@@ -56,7 +56,28 @@ export default {
   },
   methods: {
     // 绑定
-    async binding () {},
+    async binding () {
+      if (!this.userInfoSet.userEmail) {
+        this.$message('请输入邮箱')
+      }
+      if (!this.userInfoSet.code) {
+        this.$message('请输入验证码')
+      }
+      let res = await bindingEmail({
+        email: this.userInfoSet.userEmail,
+        code: this.userInfoSet.code
+      })
+      console.log(res)
+      if (res.code === 200) {
+        this.$store.commit('setUserInfo', {
+          ...this.$store.state.userInfo,
+          userEmail: this.userInfoSet.userEmail
+        })
+        this.userInfoSet.userEmail = null
+        this.userInfoSet.code = null
+        this.$message.success('绑定成功')
+      }
+    },
     // 解绑
     async unbinding () {
       if (!this.userInfoSet.userEmail) {
