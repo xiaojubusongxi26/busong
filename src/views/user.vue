@@ -2,7 +2,7 @@
   <div class="user-container">
     <div class="bg" ></div>
     <div class="header" ref="userimg" @click="changeImg = true">
-      <img :src="userInfo.userBg ? userInfo.userBg : defaultBg" top alt="">
+      <img :src="$store.state.userInfo.userBg ? $store.state.userInfo.userBg : defaultBg" top alt="">
       <!-- <div class="maskBg" v-if="changeImg" @click.stop="changeImg = false">
       </div>
       <div class="selectBg" v-if="changeImg">
@@ -46,24 +46,9 @@ export default {
   methods: {
     fetchInfo () {
       this.userInfo = this.$store.state.userInfo
-    },
-    async getUserInfo () {
-      // 获取背景图
-      await this.axios({
-        url: 'http://localhost:1212/api/getUserBg',
-        method: 'get',
-        responseType: 'blob'
-      }).then(res => {
-        // console.log('封面', res)
-        const userBg = URL.createObjectURL(new Blob([res.data]))
-        this.$store.dispatch('update_userBg', userBg)
-      })
     }
   },
   mounted () {
-    if (this.$store.state.userInfo.userBg) {
-      this.getUserInfo()
-    }
   }
 }
 </script>

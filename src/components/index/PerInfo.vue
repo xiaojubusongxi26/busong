@@ -6,7 +6,7 @@
     </a>
   </div>
   <div class="name">
-    <h5>{{ $store.state.userInfo.username }}</h5>
+    <h5>{{ $store.state.userInfo.userName }}</h5>
   </div>
   <!-- 统计 -->
 <!--  <div class="statistics">

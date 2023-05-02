@@ -46,6 +46,7 @@
 
 <script>
 import Model from '../Model.vue'
+import {modifyUserInfo} from "@/api/settingApi";
 export default {
   components: { },
   props: {},
@@ -63,7 +64,7 @@ export default {
   watch: {},
   computed: {},
   methods: {
-    updateCountDown () {
+    async updateCountDown () {
       if (this.setTime === '' || this.thingName === '') {
         this.$message('请设置倒计时名称和目标时间')
         return
@@ -80,43 +81,37 @@ export default {
          ':' + this.setTime.getSeconds().toString().padStart(2, '0'),
         countDownLoop: this.thingLoop
       }
-      this.axios({
-        method: 'post',
-        url: 'http://localhost:1212/api/setCountDown',
-        data: countDown
-      }).then(res => {
-        // console.log(res)
-        if (!res.status) {
-          // 处理时间差
-          this.showTime = Math.ceil((this.setTime.getTime() - this.nowTime.getTime()) / (24 * 60 * 60 * 1000))
-          this.showName = this.thingName
-          this.$notify({
-            title: '成功',
-            message: res.message,
-            type: 'success'
-          })
-        } else {
-          this.$message.error(res.message)
-        }
+      let res = await modifyUserInfo({
+        userCountdown: JSON.stringify(countDown)
       })
+      if (res.status === 200) {
+        // 处理时间差
+        this.showTime = Math.ceil((this.setTime.getTime() - this.nowTime.getTime()) / (24 * 60 * 60 * 1000))
+        this.showName = this.thingName
+        this.$notify({
+          title: '成功',
+          message: '设置成功',
+          type: 'success'
+        })
+        this.$store.commit('setUserInfo', {
+          ...this.$store.state.userInfo,
+          userCountdown: JSON.stringify(countDown)
+        })
+      } else {
+        this.$message.error(res.message)
+      }
       // 关闭弹窗
       this.isEdit = false
       console.log(countDown.countDownTime, new Date(countDown.countDownTime))
     },
     getCountDown () {
-      this.axios({
-        method: 'get',
-        url: 'http://localhost:1212/api/getCountDown'
-      }).then(res => {
-        // console.log(res)
-        const data = JSON.parse(res.data[0].userCountDown)
-        this.showName = data.countDownName
-        const time = new Date(data.countDownTime)
-        this.showTime = Math.ceil((time.getTime() - this.nowTime.getTime()) / (24 * 60 * 60 * 1000))
-        if (this.showTime < 0) {
-          this.showTime = '🏵️'
-        }
-      })
+      const data = JSON.parse(this.$store.state.userInfo.userCountDown)
+      this.showName = data.countDownName
+      const time = new Date(data.countDownTime)
+      this.showTime = Math.ceil((time.getTime() - this.nowTime.getTime()) / (24 * 60 * 60 * 1000))
+      if (this.showTime < 0) {
+        this.showTime = '🏵️'
+      }
     }
   },
   created () {},

@@ -3,6 +3,7 @@
   class="list-group"
   tag="ul"
   v-model="list"
+  @sort="changeSort('left')"
   v-bind="{
     animation: 200,
     group: 'description',
@@ -20,6 +21,7 @@
     <span>{{ element.data.title }}  </span>
     <el-switch
       v-model="element.data.isShow"
+      @change="changeSwitchState(element)"
       active-color="#418ac3"
       inactive-color="#e4e4e4">
     </el-switch>
@@ -30,7 +32,7 @@
 
 <script>
 import Draggable from 'vuedraggable'
-
+import {modifyUserInfo} from "@/api/settingApi";
 export default {
   components: {
     Draggable
@@ -42,7 +44,51 @@ export default {
         return { data, order: index + 1 }
       }),
       iconList: [],
-      isWeather: true
+      isWeather: true,
+      dictionaries: {
+        '天气': 'A',
+        '快捷清单': 'B',
+        '倒计时': '1',
+        'Today': '2',
+        '日历': '3',
+      }
+    }
+  },
+  computed: {
+  },
+  methods: {
+    changeSort (type) {
+      // console.log(this.list)
+    },
+    async changeSwitchState (el) {
+      // 修改首页组件展示: 天气：A， 快捷清单： B， 倒计时： 1，Today： 2， 日历： 3
+      let index = this.comDw(el.data.title)
+      let ORDER = this.$store.state.userInfo.userOrder ? this.$store.state.userInfo.userOrder : 'AB123'
+      ORDER = ORDER.substring(0, index) + '0' + ORDER.substring(index + 1, ORDER.length)
+      // console.log(ORDER)
+      let res = await modifyUserInfo({
+        userOrder: ORDER
+      })
+      if (res.status === 200) {
+        this.$message.success('修改成功')
+        this.$store.commit('setUserInfo', {
+          ...this.$store.state.userInfo,
+          userOrder: ORDER
+        })
+      }
+    },
+    comDw(title) {
+      if (title === '天气') {
+        return 0
+      } else if (title === '快捷清单') {
+        return 1
+      } else if (title === '倒计时') {
+        return 2
+      } else if (title === 'Today') {
+        return 3
+      } else if (title === '日历') {
+        return 4
+      }
     }
   }
 }

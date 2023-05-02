@@ -99,7 +99,7 @@ export default {
       const isLt2M = file.size / 1024 / 1024 < 4
       return new Promise((resolve, reject) => {
         new Promise((resolve, reject) => {
-          console.log("reject : {}", reject);
+          // console.log("reject : {}", reject);
           this.$axios({
             url: "/open/thirdpart/oss/upload/policy",
             method: "post",
@@ -108,15 +108,15 @@ export default {
                 "Bearer " +  "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RlIjoyMDAsInVzZXJfbmFtZSI6InlpeGloYW4iLCJ1c2VyTW9iaWxlIjoiMTc2MjM4NTA0MjYiLCJzY29wZSI6WyJhbGwiXSwiYXRpIjoiZjIxMTQ2YzEtNzJjMi00NzM1LWJjZjUtZGY2ZTZhMGM5YzMzIiwidXNlckVtYWlsIjoiMzExMzc4ODk5N0BxcS5jb20iLCJleHAiOjE2NjkwMTEzNzIsInVzZXJOYW1lIjoieWl4aWhhbiIsInVzZXJJZCI6MSwiYXV0aG9yaXRpZXMiOlsiU1VQRVJfQURNSU4iLCJVU0VSIiwiQURNSU4iXSwianRpIjoiZTY2YzkxY2UtOTE0OS00OTM0LWFkMjctNTUzNmZjNjAyMDhjIiwiY2xpZW50X2lkIjoieWljb2RlIn0.Se14afGczLJvTVmmyUoJCHfm5jY25GNLTK2tEo_tzT_nbHib6Rbshn43DIGDPOINxFDAqNgjDig6g5aooQcD6BKTwT1SMMXKmTF876-icDXrIB6A5C_JPo-4Sjk8WTe8ZEI_svT-G1XCL9yUqNvhE9OZrpPteWW_LbhNm537gQTYbzrV3C-RDcDYzz52pnBKZm01R0X5yAGluCtbAMXsXCe-97m7revAOFwx3ww1k2kmptzn-JYTm_Ack0FG1kg6Oya0DFF21EMJmYkmlnNCQEiTTpxzkXXPiMpq1cO0ZpTbIFo5djIkVjVpRkgW83clEeGc8UWzKX3ljI-3WguNLg",
             },
             data: {
-              fileDir: "22-11-16",
-              userId: 100000006,
+              fileDir: this.$store.state.userInfo.userId,
+              userId: this.$store.state.userInfo.userId,
             },
           }).then(({ data }) => {
             resolve(data);
           });
         })
           .then(({ data }) => {
-            console.log("response : ", data);
+            // console.log("response : ", data);
             this.dataObj.policy = data.policy;
             this.dataObj.signature = data.signature;
             this.dataObj.ossaccessKeyId = data.accessKey;
@@ -127,30 +127,8 @@ export default {
           })
           .catch((err) => {
             reject(false);
-            console.log("失败", err);
+            // console.log("失败", err);
           });
-      });
-      let res = this.$axios({
-        url: "/open/thirdpart/oss/upload/policy",
-        method: "post",
-        headers: {
-          Authorization:
-            "Bearer " +  "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RlIjoyMDAsInVzZXJfbmFtZSI6InlpeGloYW4iLCJ1c2VyTW9iaWxlIjoiMTc2MjM4NTA0MjYiLCJzY29wZSI6WyJhbGwiXSwiYXRpIjoiZjIxMTQ2YzEtNzJjMi00NzM1LWJjZjUtZGY2ZTZhMGM5YzMzIiwidXNlckVtYWlsIjoiMzExMzc4ODk5N0BxcS5jb20iLCJleHAiOjE2NjkwMTEzNzIsInVzZXJOYW1lIjoieWl4aWhhbiIsInVzZXJJZCI6MSwiYXV0aG9yaXRpZXMiOlsiU1VQRVJfQURNSU4iLCJVU0VSIiwiQURNSU4iXSwianRpIjoiZTY2YzkxY2UtOTE0OS00OTM0LWFkMjctNTUzNmZjNjAyMDhjIiwiY2xpZW50X2lkIjoieWljb2RlIn0.Se14afGczLJvTVmmyUoJCHfm5jY25GNLTK2tEo_tzT_nbHib6Rbshn43DIGDPOINxFDAqNgjDig6g5aooQcD6BKTwT1SMMXKmTF876-icDXrIB6A5C_JPo-4Sjk8WTe8ZEI_svT-G1XCL9yUqNvhE9OZrpPteWW_LbhNm537gQTYbzrV3C-RDcDYzz52pnBKZm01R0X5yAGluCtbAMXsXCe-97m7revAOFwx3ww1k2kmptzn-JYTm_Ack0FG1kg6Oya0DFF21EMJmYkmlnNCQEiTTpxzkXXPiMpq1cO0ZpTbIFo5djIkVjVpRkgW83clEeGc8UWzKX3ljI-3WguNLg",
-        },
-        data: {
-          fileDir: "busong",
-          userId: 100000006,
-        },
-      }).then(({ data }) => {
-        // resolve(data);
-        console.log(data)
-        this.dataObj.policy = data.policy;
-        this.dataObj.signature = data.signature;
-        this.dataObj.ossaccessKeyId = data.accessKey;
-        console.log(this.getUUID())
-        this.dataObj.key = data.dir + this.getUUID() + "_${filename}";
-        this.dataObj.dir = data.dir;
-        this.dataObj.host = data.host;
       });
       // return isJPG && isLt2M
     },

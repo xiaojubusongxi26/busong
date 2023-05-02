@@ -66,6 +66,7 @@ export default {
     return {
       name:this.Name,
       previews: {},
+      file: null,
       option:{
         img: '',             //裁剪图片的地址
         outputSize: 1,       //裁剪生成图片的质量(可选0.1 - 1)
@@ -116,6 +117,7 @@ export default {
     //选择图片
     selectImg (e) {
       let file = e.target.files[0]
+      this.file = file
       if (!/\.(jpg|jpeg|png|JPG|PNG)$/.test(e.target.value)) {
         this.$message({
           message: '图片类型要求：jpeg、jpg、png',
@@ -141,22 +143,62 @@ export default {
     uploadImg (type) {
       if (type === 'blob') {
         //获取截图的blob数据
-        this.$refs.cropper.getCropBlob(async (data) => {
+        this.$refs.cropper.getCropBlob(async (file) => {
           let formData = new FormData();
-          formData.append('file',data,"DX.jpg")
-          // console.log(formData.get('file'));
-          //调用axios上传
-          this.axios.post('http://localhost:1212/api/setUserBg', formData).then(res => {
-            // console.log(res);
-            if (!res.status) {
-              this.$message.success(res.message)
-              this.getUserInfo()
-            } else {
-              this.$message.error(res.message)
-            }
-          })
+          this.$axios({
+            url: "/open/thirdpart/oss/upload/policy",
+            method: "post",
+            headers: {
+              Authorization:
+                "Bearer " +  "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RlIjoyMDAsInVzZXJfbmFtZSI6InlpeGloYW4iLCJ1c2VyTW9iaWxlIjoiMTc2MjM4NTA0MjYiLCJzY29wZSI6WyJhbGwiXSwiYXRpIjoiZjIxMTQ2YzEtNzJjMi00NzM1LWJjZjUtZGY2ZTZhMGM5YzMzIiwidXNlckVtYWlsIjoiMzExMzc4ODk5N0BxcS5jb20iLCJleHAiOjE2NjkwMTEzNzIsInVzZXJOYW1lIjoieWl4aWhhbiIsInVzZXJJZCI6MSwiYXV0aG9yaXRpZXMiOlsiU1VQRVJfQURNSU4iLCJVU0VSIiwiQURNSU4iXSwianRpIjoiZTY2YzkxY2UtOTE0OS00OTM0LWFkMjctNTUzNmZjNjAyMDhjIiwiY2xpZW50X2lkIjoieWljb2RlIn0.Se14afGczLJvTVmmyUoJCHfm5jY25GNLTK2tEo_tzT_nbHib6Rbshn43DIGDPOINxFDAqNgjDig6g5aooQcD6BKTwT1SMMXKmTF876-icDXrIB6A5C_JPo-4Sjk8WTe8ZEI_svT-G1XCL9yUqNvhE9OZrpPteWW_LbhNm537gQTYbzrV3C-RDcDYzz52pnBKZm01R0X5yAGluCtbAMXsXCe-97m7revAOFwx3ww1k2kmptzn-JYTm_Ack0FG1kg6Oya0DFF21EMJmYkmlnNCQEiTTpxzkXXPiMpq1cO0ZpTbIFo5djIkVjVpRkgW83clEeGc8UWzKX3ljI-3WguNLg",
+            },
+            data: {
+              fileDir: this.$store.state.userInfo.userId + "userBg",
+              userId: this.$store.state.userInfo.userId,
+            },
+          }).then(({ data }) => {
+            console.log(data, 'file')
+            data = data.data
+            formData.append("policy", data.policy)
+            formData.append("signature", data.signature)
+            formData.append("key", data.dir + this.getUUID() + "_${filename}")
+            formData.append("ossaccessKeyId", data.accessKey)
+            formData.append("host", data.host)
+            formData.append("dir", data.dir)
+            formData.append('file', this.file)
+
+            // 第三步, 上传文件
+            this.asyncUploadImg(formData).then(() => {
+              // 第四步, 拼装 url
+              const url = formData.get("host") + "/" + formData.get("key").replace("${filename}", this.file.name)
+              this.$store.dispatch('update_userInfo', {
+                ...this.$store.state.userInfo,
+                userBg: url
+              })
+              this.$message.success('修改成功')
+            })
+          });
         })
       }
+    },
+    // 异步方法 => 上传图片至 OSS
+    async asyncUploadImg(data) {
+      await this.$axios({
+        url: "https://busong-tch.oss-cn-chengdu.aliyuncs.com",
+        method: 'post',
+        headers: {
+          "Content-Type": "multipart/form-data"
+        },
+        data: data
+      })
+    },
+    //生成uuid
+    getUUID() {
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+        return (
+          c === "x" ? (Math.random() * 16) | 0 : "r&0x3" | "0x8"
+        ).toString(16);
+      });
     },
     async getUserInfo () {
       // 获取背景图

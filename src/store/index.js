@@ -21,8 +21,12 @@ export default new Vuex.Store({
     },
     setUserInfo (state, value) {
       state.userInfo = { ...value, password: '' }
+      // 设置默认值
       if(!state.userInfo.userAvatar) {
         state.userInfo.userAvatar = require('@/assets/images/lazy/加载中.png')
+      }
+      if (!state.userInfo.userOrder) {
+        state.userInfo.userOrder = 'AB123'
       }
       localStorage.setItem('userinfo', JSON.stringify({ ...value, password: '' }))
     },

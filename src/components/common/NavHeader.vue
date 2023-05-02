@@ -9,7 +9,7 @@
           </a>
           <!-- 头像悬浮卡片 -->
           <div class="avatar_card" v-if="isShow">
-            <h5>{{ $store.state.userInfo.username }}</h5>
+            <h5>{{ $store.state.userInfo.userName }}</h5>
             <h6>风花雪月</h6>
             <p>{{ $store.state.userInfo.userSign }}</p>
             <hr>

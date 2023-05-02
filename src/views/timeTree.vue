@@ -8,6 +8,7 @@
     </div>
     <div class="time_tree-right">
       <time-tree-header/>
+      <time-tree-body/>
     </div>
   </div>
 </template>
@@ -15,10 +16,11 @@
 <script>
 import TimeTreeSidebar from "@/components/timeTree/TimeTreeSidebar.vue";
 import TimeTreeHeader from "@/components/timeTree/TimeTreeHeader.vue";
+import TimeTreeBody from "@/components/timeTree/TimeTreeBody.vue";
 
 export default {
   name: 'timeTree',
-  components: {TimeTreeHeader, TimeTreeSidebar},
+  components: {TimeTreeBody, TimeTreeHeader, TimeTreeSidebar},
   data () {
     return {
       isFlod: false
@@ -70,6 +72,8 @@ export default {
   }
   .time_tree-right {
     flex: 1;
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>

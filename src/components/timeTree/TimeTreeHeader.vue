@@ -53,6 +53,7 @@ export default {
 <style lang="scss" scoped>
 .time_tree-header {
   height: 80px;
+  min-height: 80px;
   line-height: 80px;
   background: #ffffff;
   box-sizing: border-box;

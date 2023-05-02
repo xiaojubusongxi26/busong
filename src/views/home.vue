@@ -79,6 +79,6 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/sass/config.scss';
 @import '@/assets/sass/responsive.scss';
-@import '@/assets/sass/elDialog.scss'
+@import '@/assets/sass/elDialog.scss';
 
 </style>

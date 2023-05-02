@@ -84,7 +84,7 @@ export default {
           this.$message.success('用户信息修改成功')
           this.$store.commit('setUserInfo', this.userInfoSet)
         }
-        console.log(res)
+        // console.log(res)
         return
       }
     },

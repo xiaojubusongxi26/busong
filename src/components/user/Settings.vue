@@ -4,9 +4,9 @@
     <div class="user-main-header">
       <h3>
         首页组件
-        <span>
-          <i class="el-icon-warning-outline"></i>
-          可拖动进行排序</span>
+<!--        <span>-->
+<!--          <i class="el-icon-warning-outline"></i>-->
+<!--          可拖动进行排序</span>-->
       </h3>
     </div>
     <div class="title">左侧</div>

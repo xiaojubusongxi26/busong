@@ -4,15 +4,15 @@
     <div class="index">
       <div class="left">
         <PerInfo/>
-        <Weather/>
+        <Weather v-if="order[0] === 'A'"/>
       </div>
       <div class="main">
         <daily></daily>
       </div>
       <div class="right">
-        <Countdown/>
-        <Today/>
-        <Calendar/>
+        <Countdown v-if="order[2] === '1'"/>
+        <Today v-if="order[3] === '2'"/>
+        <Calendar v-if="order[4] === '3'"/>
       </div>
     </div>
     <div class="gotop-index">
@@ -34,7 +34,8 @@ export default {
   name: 'index',
   data () {
     return {
-      btnFlag: false
+      btnFlag: false,
+      order: this.$store.state.userInfo.userOrder ? this.$store.state.userInfo.userOrder : 'AB123'
     }
   },
   props: {
