@@ -2,6 +2,7 @@
   <div class="time_tree-body">
     <div class="time_tree-body--box">
       <time-tree-trunk/>
+      <time-tree-trunk/>
       <time-tree-node/>
     </div>
   </div>
@@ -33,13 +34,13 @@ export default {
   width: 100%;
   flex: 1;
   overflow-y: scroll;
+  @include scrollBarStyle(14px, 14px);
   .time_tree-body--box {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    @include scrollBarStyle();
   }
 }
 </style>
