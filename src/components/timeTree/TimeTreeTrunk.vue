@@ -22,7 +22,6 @@ export default {
 <style lang="scss" scoped>
 .time_tree-node--trunk {
   width: 12px;
-  height: 2000px;
   background: #FFFFFF;
 }
 </style>

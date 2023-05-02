@@ -2,7 +2,7 @@
   <div class="home-container">
     <nav-header></nav-header>
     <router-view></router-view>
-    <nav-footer></nav-footer>
+    <!--<nav-footer></nav-footer>-->
     <!-- <music></music> -->
     <!-- <MaskBg v-if="$store.state.isMask"></MaskBg> -->
   </div>
